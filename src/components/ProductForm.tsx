@@ -1,6 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
-import { NavigateFunction, Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import * as ProductsService from "../services/product.service";
 import IProduct from "../types/product.type";
 import { getCurrentUser } from "../services/auth.service";
