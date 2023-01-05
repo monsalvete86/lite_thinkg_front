@@ -44,7 +44,7 @@ const Company: React.FC = () => {
           setSubmitted(true);
         
           userDataService.updateCompany(currentUser.id, response.data.id);
-
+          setBanEdit(response.data.id)
           console.log(response.data);
         })
         .catch((e: Error) => {
@@ -85,7 +85,7 @@ const Company: React.FC = () => {
     <div className="submit-form">
       {submitted && (
         <div>
-          <h4>You submitted successfully!</h4>
+          <h4>You company has been saved successfully!</h4>
         </div>
       ) }
       { (

@@ -2,7 +2,7 @@ import axios from "axios";
 import authHeader from "./auth-header";
 import IUser from "../types/user.type"
 
-const API_URL = "http://localhost:8080/api/user/";
+const API_URL = "http://litethinking-env.eba-reisydgj.us-east-1.elasticbeanstalk.com/api/user/";
 
 export const getPublicContent = () => {
   return axios.get(API_URL + "all");

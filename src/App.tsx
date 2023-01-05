@@ -11,15 +11,13 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
-// import BoardUser from "./components/BoardUser";
-// import BoardModerator from "./components/BoardModerator";
-// import BoardAdmin from "./components/BoardAdmin";
-import AddTutorial from "./components/AddTutorial";
 import Tutorial from "./components/Tutorial";
 import TutorialsList from "./components/TutorialsList";
 import Company from "./components/Company";
 
 import EventBus from "./common/EventBus";
+import Products from './components/Products';
+import ProductForm from './components/ProductForm';
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -67,7 +65,7 @@ const App: React.FC = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={"/add"} className="nav-link">
+            <Link to={"/products"} className="nav-link">
               Products
             </Link>
           </li>
@@ -120,7 +118,9 @@ const App: React.FC = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/tutorials" element={<TutorialsList/>} />
           <Route path="/company" element={<Company/>} />
-          <Route path="/add" element={<AddTutorial/>} />
+          <Route path="/products" element={<Products/>} />
+          <Route path="/products/new" element={<ProductForm/>} />
+          <Route path="/products/:id" element={<ProductForm/>} />
           <Route path="/tutorials/:id" element={<Tutorial/>} />
         </Routes>
       </div>

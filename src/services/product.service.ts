@@ -1,20 +1,20 @@
 import axios from "axios";
-import ICompany from "../types/company.type"
+import IProduct from "../types/product.type"
 import authHeader from "./auth-header";
 
-const API_URL = "http://litethinking-env.eba-reisydgj.us-east-1.elasticbeanstalk.com/api/company";
+const API_URL = "http://litethinking-env.eba-reisydgj.us-east-1.elasticbeanstalk.com/api/products";
 
 export const getAll = () => {
   //return axios.get<Array<ITutorialData>>(API_URL + "/", { headers: authHeader() });
   return axios.get(API_URL + "/", { headers: authHeader() });
 };
 
-export const get = (id: any): Promise<ICompany> => {
+export const get = (id: any): Promise<IProduct> => {
   return axios.get(API_URL + `/${id}`, { headers: authHeader() });
 };
 
-export const create = (data: ICompany) => {
-  return axios.post<ICompany>(API_URL + "/", data, { headers: authHeader() });
+export const create = (data: IProduct) => {
+  return axios.post<IProduct>(API_URL + "/", data, { headers: authHeader() });
 };
 
 export const update = (id: any, data: any) => {
