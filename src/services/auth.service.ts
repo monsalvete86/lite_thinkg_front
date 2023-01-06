@@ -12,7 +12,6 @@ export const register = (username: string, email: string, password: string) => {
 
 const headers = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Credential": "true",
   "Access-Control-Allow-Headers": "*",
   "Access-Control-Allow-Methods": "*",
   "Content-Type": "application/json",
