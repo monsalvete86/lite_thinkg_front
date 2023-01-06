@@ -6,9 +6,9 @@ export default function authHeader() {
 
   if (user && user.accessToken) {
     //return { Authorization: 'Bearer ' + user.accessToken }; // for Spring Boot back-end
-    return { 'x-access-token': user.accessToken };       // for Node.js Express back-end
+    return { 'x-access-token': user.accessToken, 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*" };       // for Node.js Express back-end
   } else {
     //return { Authorization: '' }; // for Spring Boot back-end
-    return { 'x-access-token': null }; // for Node Express back-end
+    return { 'x-access-token': null, 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*" }; // for Node Express back-end
   }
 }
