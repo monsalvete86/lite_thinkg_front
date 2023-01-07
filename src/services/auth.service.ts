@@ -10,17 +10,17 @@ export const register = (username: string, email: string, password: string) => {
   });
 };
 
-/*const headers = {
+const headers = {
   "Access-Control-Allow-Origin": "*",
   "Content-Type": "application/json",
-}*/
+}
 
 export const login = (username: string, password: string) => {
   return axios
     .post(API_URL + "signin", {
       username,
       password,
-    }// ,{headers: headers}
+    },{headers: headers}
     )
     .then((response) => {
       if (response.data.accessToken) {
