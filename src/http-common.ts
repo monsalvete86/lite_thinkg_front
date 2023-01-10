@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://rnbo4srhyowueqxf4iokhbxk4m0kbzay.lambda-url.us-east-1.on.aws",
-  headers: { 'Content-Type': 'application/json'},
-
+  baseURL: "https://ziyxa050q7.execute-api.us-east-1.amazonaws.com/dev",
+  headers: {
+    "Content-type": "application/json"
+  }
 });
