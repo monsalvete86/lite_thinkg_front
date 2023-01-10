@@ -2,7 +2,8 @@ import axios from "axios";
 import IProduct from "../types/product.type"
 import authHeader from "./auth-header";
 
-const API_URL = "https://ziyxa050q7.execute-api.us-east-1.amazonaws.com/dev/products";
+//const API_URL = "https://ziyxa050q7.execute-api.us-east-1.amazonaws.com/dev/products";
+const API_URL = "http://litethinkingbackend-env.eba-rzcikbs3.us-east-1.elasticbeanstalk.com/api/products";
 //const API_URL = "http://localhost:3000/api/products";
 
 export const getAll = () => {
