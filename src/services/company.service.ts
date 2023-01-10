@@ -2,8 +2,8 @@ import axios from "axios";
 import ICompany from "../types/company.type"
 import authHeader from "./auth-header";
 
-//const API_URL = "https://ziyxa050q7.execute-api.us-east-1.amazonaws.com/dev/company";
-const API_URL = "http://litethinkingbackend-env.eba-rzcikbs3.us-east-1.elasticbeanstalk.com/api/company";
+const API_URL = "https://ziyxa050q7.execute-api.us-east-1.amazonaws.com/dev/company";
+
 export const getAll = () => {
   //return axios.get<Array<ITutorialData>>(API_URL + "/", { headers: authHeader() });
   return axios.get(API_URL + "/", { headers: authHeader() });

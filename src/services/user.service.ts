@@ -2,8 +2,7 @@ import axios from "axios";
 import authHeader from "./auth-header";
 import IUser from "../types/user.type"
 
-//const API_URL = "https://ziyxa050q7.execute-api.us-east-1.amazonaws.com/dev/user/";
-const API_URL = "http://litethinkingbackend-env.eba-rzcikbs3.us-east-1.elasticbeanstalk.com/api/user";
+const API_URL = "https://ziyxa050q7.execute-api.us-east-1.amazonaws.com/dev/user/";
 //const API_URL = "http://localhost:3000/api/user/";
 
 export const getPublicContent = () => {
