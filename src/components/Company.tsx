@@ -72,7 +72,7 @@ const Company: React.FC = () => {
       if(result.companyId) {
         companyDataService.get(result.companyId)
           .then((result: any) => {
-            //console.log(result);
+            console.log(result);
             
             setBanEdit(result.id)
             setCompany(result);
