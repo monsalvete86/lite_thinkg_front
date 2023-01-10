@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = process.env.PUBLIC_URL + "/auth/";
+const API_URL = "https://ziyxa050q7.execute-api.us-east-1.amazonaws.com/dev/auth/";
 
 export const register = (username: string, email: string, password: string) => {
   return axios.post(API_URL + "signup", {
@@ -15,7 +15,7 @@ export const login = (username: string, password: string) => {
     .post(API_URL + "signin", {
       username,
       password,
-    }
+    } //,{headers: headers}
     )
     .then((response) => {
       if (response.data.accessToken) {

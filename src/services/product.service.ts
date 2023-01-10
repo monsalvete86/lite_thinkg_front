@@ -2,7 +2,7 @@ import axios from "axios";
 import IProduct from "../types/product.type"
 import authHeader from "./auth-header";
 
-const API_URL = "https://rnbo4srhyowueqxf4iokhbxk4m0kbzay.lambda-url.us-east-1.on.aws/api/products";
+const API_URL = "hhttps://ziyxa050q7.execute-api.us-east-1.amazonaws.com/dev/products";
 //const API_URL = "http://localhost:3000/api/products";
 
 export const getAll = () => {

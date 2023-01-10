@@ -2,7 +2,7 @@ import axios from "axios";
 import ICompany from "../types/company.type"
 import authHeader from "./auth-header";
 
-const API_URL = process.env.PUBLIC_URL + "api/company";
+const API_URL = "https://ziyxa050q7.execute-api.us-east-1.amazonaws.com/dev/company";
 
 export const getAll = () => {
   //return axios.get<Array<ITutorialData>>(API_URL + "/", { headers: authHeader() });
