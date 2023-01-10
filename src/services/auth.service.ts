@@ -15,8 +15,7 @@ export const login = (username: string, password: string) => {
     .post(API_URL + "signin", {
       username,
       password,
-    } //,{headers: headers}
-    )
+    })
     .then((response) => {
       if (response.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(response.data));

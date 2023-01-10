@@ -67,7 +67,7 @@ const Company: React.FC = () => {
   };
   
   useEffect(() => {
-    userDataService.get(currentUser.id)
+    userDataService.getUserById(currentUser.id)
      .then((result: any) => {
       if(result.data.companyId) {
         companyDataService.get(result.data.companyId)
