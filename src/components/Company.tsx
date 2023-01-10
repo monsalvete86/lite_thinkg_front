@@ -69,13 +69,13 @@ const Company: React.FC = () => {
   useEffect(() => {
     userDataService.getUserById(currentUser.id)
      .then((result: any) => {
-      if(result.data.companyId) {
-        companyDataService.get(result.data.companyId)
+      if(result.companyId) {
+        companyDataService.get(result.companyId)
           .then((result: any) => {
             //console.log(result);
             
-            setBanEdit(result.data.id)
-            setCompany(result.data);
+            setBanEdit(result.id)
+            setCompany(result);
           })
       }
      })
