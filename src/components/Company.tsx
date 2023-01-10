@@ -74,7 +74,7 @@ const Company: React.FC = () => {
           .then((result: any) => {
             console.log(result);
             
-            setBanEdit(result.id)
+            setBanEdit(result.data.id)
             setCompany(result.data);
           })
       }
