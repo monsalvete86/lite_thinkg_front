@@ -17,7 +17,7 @@ export const get = ((id: any) => {
 export const getUserById = (id: any) => {
   const data = { id: id};
   return axios
-    .post(API_URL +`usergetbyid`,data, {})
+    .post(API_URL +`usergetbyid`,data , { headers: authHeader() })
     .then((response) => {
       if (response.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(response.data));
