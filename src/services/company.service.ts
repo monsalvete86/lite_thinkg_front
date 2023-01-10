@@ -10,7 +10,7 @@ export const getAll = () => {
 };
 
 export const get = (id: any): Promise<ICompany> => {
-  return axios.get(API_URL + `/${id}`, { headers: authHeader() });
+  return axios.get(API_URL + `/${id}`, { });
 };
 
 export const create = (data: ICompany) => {
