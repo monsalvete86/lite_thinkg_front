@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = "https://ziyxa050q7.execute-api.us-east-1.amazonaws.com/dev/auth/";
+const API_URL = "https://w2j8ebzbl7.execute-api.us-east-1.amazonaws.com/api/auth/";
+// const API_URL = "http://localhost:8080/api/auth/";
 
 export const register = (username: string, email: string, password: string) => {
   return axios.post(API_URL + "signup", {
@@ -11,6 +12,8 @@ export const register = (username: string, email: string, password: string) => {
 };
 
 export const login = (username: string, password: string) => {
+  // console.log('process.env');
+  // console.log(process.env.API_URL);
   return axios
     .post(API_URL + "signin", {
       username,
