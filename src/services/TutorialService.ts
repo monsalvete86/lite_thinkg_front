@@ -2,8 +2,8 @@ import ITutorialData from "../types/Tutorial";
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "https://w2j8ebzbl7.execute-api.us-east-1.amazonaws.com/api/tutorials";
-// const API_URL = "http://localhost:8080/api/tutorials";
+// const API_URL = "https://w2j8ebzbl7.execute-api.us-east-1.amazonaws.com/api/tutorials";
+const API_URL = "http://localhost:8080/api/tutorials";
 
 const getAll = () => {
   return axios.get<Array<ITutorialData>>(API_URL + "/", { headers: authHeader() });

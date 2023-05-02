@@ -17,7 +17,9 @@ import Company from "./components/Company";
 
 import EventBus from "./common/EventBus";
 import Products from './components/Products';
+import Categorias from './components/Categorias';
 import ProductForm from './components/ProductForm';
+import CategoriaForm from './components/CategoriaForm';
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -67,6 +69,11 @@ const App: React.FC = () => {
           <li className="nav-item">
             <Link to={"/products"} className="nav-link">
               Products
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to={"/categorias"} className="nav-link">
+              Categorias
             </Link>
           </li>
 
@@ -119,8 +126,11 @@ const App: React.FC = () => {
           <Route path="/tutorials" element={<TutorialsList/>} />
           <Route path="/company" element={<Company/>} />
           <Route path="/products" element={<Products/>} />
+          <Route path="/categorias" element={<Categorias/>} />
           <Route path="/products/new" element={<ProductForm/>} />
           <Route path="/products/:id" element={<ProductForm/>} />
+          <Route path="/categorias/new" element={<CategoriaForm/>} />
+          <Route path="/categoria/:id" element={<CategoriaForm/>} />
           <Route path="/tutorials/:id" element={<Tutorial/>} />
         </Routes>
       </div>
