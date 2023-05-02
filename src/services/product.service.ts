@@ -2,8 +2,8 @@ import axios from "axios";
 import IProduct from "../types/product.type"
 import authHeader from "./auth-header";
 
-const API_URL = "https://w2j8ebzbl7.execute-api.us-east-1.amazonaws.com/api/products";
-// const API_URL = "http://localhost:8080/api/products";
+//const API_URL = "https://w2j8ebzbl7.execute-api.us-east-1.amazonaws.com/api/products";
+ const API_URL = "http://localhost:8080/api/products";
 
 export const getAll = () => {
   //return axios.get<Array<ITutorialData>>(API_URL + "/", { headers: authHeader() });
