@@ -14,11 +14,13 @@ import Profile from "./components/Profile";
 import Tutorial from "./components/Tutorial";
 import TutorialsList from "./components/TutorialsList";
 import Company from "./components/Company";
-import Categorias from './components/Categorias';
+
 
 import EventBus from "./common/EventBus";
 import Products from './components/Products';
+import Categorias from './components/Categorias';
 import ProductForm from './components/ProductForm';
+import CategoriaForm from './components/CategoriaForm';
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -127,7 +129,9 @@ const App: React.FC = () => {
           <Route path="/company" element={<Company/>} />
           <Route path="/products" element={<Products/>} />
           <Route path="/products/new" element={<ProductForm/>} />
+          <Route path="/categorias/new" element={<CategoriaForm/>} />
           <Route path="/products/:id" element={<ProductForm/>} />
+          <Route path="/categorias/:id" element={<CategoriaForm/>} />
           <Route path="/tutorials/:id" element={<Tutorial/>} />
           <Route path="/categorias" element={<Categorias/>} />
         </Routes>

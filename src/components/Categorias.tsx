@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-//import * as ProductService from "../services/product.service";
-import IProduct from '../types/product.type';
+//import * as CategoriaService from "../services/categoria.service";
+import Icategorias from '../types/categoria.type';
 import { Link } from "react-router-dom";
 import ReportPDF from "./ReportPDF";
 import { PDFDownloadLink} from "@react-pdf/renderer" 
@@ -8,23 +8,23 @@ import { PDFDownloadLink} from "@react-pdf/renderer"
 
 const Categorias: React.FC = () => {
     /*
-    const [products, setProducts] = useState<Array<IProduct>>([]);
-    const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null);
+    const [categorias, setCategoria] = useState<Array<ICategorias>>([]);
+    const [currentCategorias, setCurrentCategorias] = useState<ICategorias | null>(null);
     const [currentIndex, setCurrentIndex] = useState<number>(-1);
-    const [searchProduct, setSearchProducts] = useState<string>("");
+    const [searchCategoria, setSearchCategorias] = useState<string>("");
     
-    const productsRef = useRef();
+    const categoriasRef = useRef();
     console.log("process.env");
-    // productsRef.current = products;
+    // categoriasRef.current = categorias;
     
     useEffect(() => {
-        retrieveProducts();
+        retrieveCategorias();
     }, []);
 
-    const retrieveProducts = () => {
-        ProductService.getAll()
+    const retrieveCategorias = () => {
+        CategoriasService.getAll()
         .then((response) => {
-            setProducts(response.data);
+            setCategorias(response.data);
         })
         .catch((e) => {
             console.log(e);
@@ -32,16 +32,16 @@ const Categorias: React.FC = () => {
     };
 
     const refreshList = () => {
-        retrieveProducts();
+        retrieveCategorias();
     };
 
-    const setActiveProduct = (product: IProduct, index: number) => {
-        setCurrentProduct(product);
+    const setActiveCategorias = (categorias: ICategorias, index: number) => {
+        setCurrentCategorias(Categorias);
         setCurrentIndex(index);
     };
 
-    const cleanProduct = () => {
-        setCurrentProduct(null);
+    const cleanCategorias = () => {
+        setCurrentCategorias(null);
         setCurrentIndex(-1);
     };
     */
@@ -76,7 +76,7 @@ const Categorias: React.FC = () => {
                                 Search
                                 </button> 
                             <Link
-                                to={"/products/new"}
+                                to={"/categorias/new"}
                                 className="ml-2 btn btn-primary"
                             >
                                 New
