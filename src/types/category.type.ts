@@ -1,9 +1,7 @@
-export default interface IProduct {
+export default interface ICategory {
   id?: number | null,
-  productName: string,
+  categoryName: string,
   code: string,
   stock: number,
   companyId: number,
-  
-
 }
