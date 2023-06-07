@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import * as AuthService from "./services/auth.service";
-import IUser from './types/user.type';
+import IUser from "./types/user.type";
 
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -16,8 +16,14 @@ import TutorialsList from "./components/TutorialsList";
 import Company from "./components/Company";
 
 import EventBus from "./common/EventBus";
-import Products from './components/Products';
-import ProductForm from './components/ProductForm';
+import Categories from "./components/Categories";
+import CategoryForm from "./components/CategoryForm";
+import Products from "./components/Products";
+import ProductForm from "./components/ProductForm";
+import Clientes from "./components/Clientes";
+import ClienteForm from "./components/ClienteForm";
+import DailyList from "./components/DailyList";
+import ClientDailyLists from "./components/ClientDailyListForm";
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -65,8 +71,23 @@ const App: React.FC = () => {
             </Link>
           </li>
           <li className="nav-item">
+            <Link to={"/categories"} className="nav-link">
+              Categories
+            </Link>
+          </li>
+          <li className="nav-item">
             <Link to={"/products"} className="nav-link">
               Products
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to={"/clientes"} className="nav-link">
+              Clientes
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to={"/dailyList"} className="nav-link">
+              DailyList
             </Link>
           </li>
 
@@ -116,12 +137,20 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/tutorials" element={<TutorialsList/>} />
-          <Route path="/company" element={<Company/>} />
-          <Route path="/products" element={<Products/>} />
-          <Route path="/products/new" element={<ProductForm/>} />
-          <Route path="/products/:id" element={<ProductForm/>} />
-          <Route path="/tutorials/:id" element={<Tutorial/>} />
+          <Route path="/tutorials" element={<TutorialsList />} />
+          <Route path="/company" element={<Company />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/categories/new" element={<CategoryForm />} />
+          <Route path="/categories/:id" element={<CategoryForm />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/new" element={<ProductForm />} />
+          <Route path="/products/:id" element={<ProductForm />} />
+          <Route path="/clientes" element={<Clientes />} />
+          <Route path="/clientes/new" element={<ClienteForm />} />
+          <Route path="/clientes/:id" element={<ClienteForm />} />
+          <Route path="/tutorials/:id" element={<Tutorial />} />
+          <Route path="/dailyList" element={<DailyList />} />
+          <Route path="/clientDailyList" element={<ClientDailyLists />} />
         </Routes>
       </div>
     </div>
