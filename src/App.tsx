@@ -16,10 +16,12 @@ import TutorialsList from "./components/TutorialsList";
 import Company from "./components/Company";
 
 import EventBus from "./common/EventBus";
+import Categories from './components/Categories';
+import CategoryForm from './components/CategoryForm';
 import Products from './components/Products';
-import Categorias from './components/Categorias';
 import ProductForm from './components/ProductForm';
-import CategoriaForm from './components/CategoriaForm';
+import Clientes from './components/Clientes';
+import ClienteForm from './components/ClienteForm';
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -67,16 +69,21 @@ const App: React.FC = () => {
             </Link>
           </li>
           <li className="nav-item">
+            <Link to={"/categories"} className="nav-link">
+              Categories
+            </Link>
+          </li>
+          <li className="nav-item">
             <Link to={"/products"} className="nav-link">
               Products
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={"/categorias"} className="nav-link">
-              Categorias
+            <Link to={"/clientes"} className="nav-link">
+              Clientes
             </Link>
           </li>
-
+        
           {currentUser && (
             <li className="nav-item">
               <Link to={"/user"} className="nav-link">
@@ -125,12 +132,15 @@ const App: React.FC = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/tutorials" element={<TutorialsList/>} />
           <Route path="/company" element={<Company/>} />
+          <Route path="/categories" element={<Categories/>} />
+          <Route path="/categories/new" element={<CategoryForm/>} />
+          <Route path="/categories/:id" element={<CategoryForm/>} />
           <Route path="/products" element={<Products/>} />
-          <Route path="/categorias" element={<Categorias/>} />
           <Route path="/products/new" element={<ProductForm/>} />
           <Route path="/products/:id" element={<ProductForm/>} />
-          <Route path="/categorias/new" element={<CategoriaForm/>} />
-          <Route path="/categoria/:id" element={<CategoriaForm/>} />
+          <Route path="/clientes" element={<Clientes/>} />
+          <Route path="/clientes/new" element={<ClienteForm/>} />
+          <Route path="/clientes/:id" element={<ClienteForm/>} />
           <Route path="/tutorials/:id" element={<Tutorial/>} />
         </Routes>
       </div>
@@ -139,3 +149,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+

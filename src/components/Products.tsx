@@ -11,11 +11,12 @@ const Products: React.FC = () => {
     const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null);
     const [currentIndex, setCurrentIndex] = useState<number>(-1);
     const [searchProduct, setSearchProducts] = useState<string>("");
+    const [showConfirm, setShowConfirm] = useState(false);
     
     const productsRef = useRef();
     console.log("process.env");
     // productsRef.current = products;
-    
+
     useEffect(() => {
         retrieveProducts();
     }, []);
@@ -39,13 +40,24 @@ const Products: React.FC = () => {
         setCurrentIndex(index);
     };
 
-    const cleanProduct = () => {
-        setCurrentProduct(null);
-        setCurrentIndex(-1);
+    const cleanProduct = (id: number | null | undefined) => {
+        console.log(id)
+        ProductService.remove(id);
+        retrieveProducts();
     };
-    
 
-
+    const handleDeleteClick = () => {
+      setShowConfirm(true);
+    };
+  
+    const handleConfirm = () => {
+      // Perform deletion logic using itemId
+      setShowConfirm(false);
+    };
+  
+    const handleCancel = () => {
+      setShowConfirm(false);
+    };
 
     return (
         <div>
@@ -116,7 +128,51 @@ const Products: React.FC = () => {
                                                 </Link>
                                                                                     
                                             </td>
-                                            <td className="text-center"><button  className="btn btn-danger">Delete</button></td>
+                                            <td className="text-center">
+                                                <button onClick={() => cleanProduct(row.id)} className="btn btn-danger">Delete</button>
+                                            </td>
+                                            <td>
+                                              <div>
+                                                <button className="btn btn-danger" onClick={handleDeleteClick}>
+                                                  Delete
+                                                </button>
+
+                                                {showConfirm && (
+                                                  <div className="modal" role="dialog">
+                                                    <div className="modal-dialog" role="document">
+                                                      <div className="modal-content">
+                                                        <div className="modal-header">
+                                                          <h5 className="modal-title">Confirm Deletion</h5>
+                                                          <button type="button" className="close" onClick={handleCancel}>
+                                                            <span aria-hidden="true">&times;</span>
+                                                          </button>
+                                                        </div>
+                                                        <div className="modal-body">
+                                                          Are you sure you want to delete?
+                                                        </div>
+                                                        <div className="modal-footer">
+                                                          <button
+                                                            type="button"
+                                                            className="btn btn-secondary"
+                                                            onClick={handleCancel}
+                                                          >
+                                                            Cancel
+                                                          </button>
+                                                          <button
+                                                            type="button"
+                                                            className="btn btn-danger"
+                                                            onClick={handleConfirm}
+                                                          >
+                                                            Delete
+                                                          </button>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                )}
+                                              </div>
+                                            </td>
+                                            
                                         </tr>
                                     )
                                 })

@@ -30,3 +30,16 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+.alert {
+  background-color: #f44336;
+  color: white;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.close {
+  float: right;
+  font-weight: bold;
+  cursor: pointer;
+}
