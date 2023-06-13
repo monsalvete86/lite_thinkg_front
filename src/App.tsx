@@ -150,7 +150,7 @@ const App: React.FC = () => {
           <Route path="/clientes/:id" element={<ClienteForm />} />
           <Route path="/tutorials/:id" element={<Tutorial />} />
           <Route path="/dailyList" element={<DailyList />} />
-          <Route path="/clientDailyList" element={<ClientDailyLists />} />
+          <Route path="/clientDailyList" element={<ClientDailyLists />} />secondary
         </Routes>
       </div>
     </div>

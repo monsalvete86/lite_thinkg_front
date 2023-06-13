@@ -39,9 +39,10 @@ const Clientes: React.FC = () => {
         setCurrentIndex(index);
     };
 
-    const cleanCliente = () => {
-        setCurrentCliente(null);
-        setCurrentIndex(-1);
+    const cleanCliente = (id: number | null | undefined) => {
+        console.log(id)
+        ClienteService.remove(id);
+        retrieveClientes();
     };
     
 
@@ -107,7 +108,7 @@ const Clientes: React.FC = () => {
                                         <tr key={row.id}>
                                             <td>{row.nombre}</td>
                                             <td>{row.apellido}</td>
-                                            <td className="text-right">{row.telefono}</td>
+                                            <td>{row.telefono}</td>
                                             <td>{row.direccion}</td>
                                             <td>{row.ciudad}</td>
                                             <td className="text-center">
@@ -119,7 +120,9 @@ const Clientes: React.FC = () => {
                                                 </Link>
                                                                                     
                                             </td>
-                                            <td className="text-center"><button  className="btn btn-danger">Delete</button></td>
+                                            <td className="text-center">
+                                                <button onClick={() => cleanCliente(row.id)} className="btn btn-danger">Delete</button>
+                                            </td>
                                         </tr>
                                     )
                                 })

@@ -1,35 +1,37 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import * as ProductsService from "../services/product.service";
-import IProduct from "../types/product.type";
+import * as ClientesService from "../services/cliente.service";
+import ICliente from "../types/cliente.type";
 import { getCurrentUser } from "../services/auth.service";
 
 
-const ProductForm: React.FC = () => {
+const ClienteForm: React.FC = () => {
     const currentUser = getCurrentUser();
     const { id }= useParams();
     let navigate = useNavigate();
 
-    const initialProductState = {
+    const initialClienteState = {
         id: null,
-        productName: "",
-        code: "",
-        stock: 0,
-        companyId: -1
+        nombre: "",
+        apellido: "",
+        telefono: 0,
+        direccion: "",
+        ciudad: "",
+
     };
 
-    const [product, setProduct] = useState(initialProductState);
+    const [cliente, setCliente] = useState(initialClienteState);
     const [banEdit, setBanEdit] = useState<number> (0);
     
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        setProduct({ ...product, [name]: value });
+        setCliente({ ...cliente, [name]: value });
     };
     
-    const getProduct = (id: string) => {
-        ProductsService.get(id)
+    const getCliente = (id: string) => {
+        ClientesService.get(id)
         .then((response: any) => {
-            setProduct(response.data);
+            setCliente(response.data);
             console.log(response.data);
         })
         .catch((e: Error) => {
@@ -39,25 +41,26 @@ const ProductForm: React.FC = () => {
     
     useEffect(() => {
         if (id) {
-            ProductsService.get(id)
+            ClientesService.get(id)
             .then((result: any) => {
                 setBanEdit(result.data.id)
-                setProduct(result.data);
+                setCliente(result.data);
             })
         }
     }, []);
     
-    const saveProduct = () => {
+    const saveCliente = () => {
         var data = {
-            productName: product.productName,
-            code: product.code,
-            stock: product.stock,
-            companyId: getCurrentUser().companyId
+            nombre: cliente.nombre,
+            apellido: cliente.apellido,
+            telefono: cliente.telefono,
+            direccion: cliente.direccion,
+            ciudad: cliente.ciudad,
         };
 
-        if(!product?.id || product?.id === null) {
+        if(!cliente?.id || cliente?.id === null) {
 
-            ProductsService.create(data)
+            ClientesService.create(data)
             .then((response: any) => {
                 console.log(response.data);
             })
@@ -65,7 +68,7 @@ const ProductForm: React.FC = () => {
                 console.log(e);
             });
         } else {
-            ProductsService.update(product.id, data)
+            ClientesService.update(cliente.id, data)
             .then((response: any) => {
                 console.log("data ")
                 console.log(response.data);
@@ -75,60 +78,84 @@ const ProductForm: React.FC = () => {
             });
         }
 
-        navigate("/products");
+        navigate("/clientes");
         window.location.reload();
     };
 
     useEffect(() => {
         if (id)
-            getProduct(id);
+            getCliente(id);
     }, [id]);
     
     return (
         <div className="submit-form">
             <div>
                 
-                {product?.id && `Current Product ${product.code} - ${product.productName}`}
-                {!product?.id && 'New Product'}
+                {cliente?.id && `Current Cliente ${cliente.nombre} - ${cliente.apellido} - ${cliente.telefono} - ${cliente.direccion} - ${cliente.ciudad}`}
+                {!cliente?.id && 'New Cliente'}
                 <div className="form-group">
-                    <label htmlFor="code">Code</label>
+                    <label htmlFor="nombre">Nombre</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="code"
+                        id="nombre"
                         required
-                        value={product.code}
+                        value={cliente.nombre}
                         onChange={handleInputChange}
-                        name="code"
+                        name="nombre"
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="productName">Cliente</label>
+                    <label htmlFor="apellido">Apellido</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="productName"
+                        id="apellido"
                         required
-                        value={product.productName}
+                        value={cliente.apellido}
                         onChange={handleInputChange}
-                        name="productName"
+                        name="apellido"
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="stock">Stock</label>
+                    <label htmlFor="telefono">Telefono</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="stock"
+                        id="telefono"
                         required
-                        value={product.stock}
+                        value={cliente.telefono}
                         onChange={handleInputChange}
-                        name="stock"
+                        name="telefono"
                     />
                 </div>
-                <button className="btn btn-success" onClick={saveProduct}>Save</button>
+                <div className="form-group">
+                    <label htmlFor="direccion">Direccion</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="direccion"
+                        required
+                        value={cliente.direccion}
+                        onChange={handleInputChange}
+                        name="direccion"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="ciudad">Ciudad</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="ciudad"
+                        required
+                        value={cliente.ciudad}
+                        onChange={handleInputChange}
+                        name="ciudad"
+                    />
+                </div>
+                <button className="btn btn-success" onClick={saveCliente}>Save</button>
                 <Link
-                    to={"/products" }
+                    to={"/clientes" }
                     className="ml-2 btn btn-secondary"
                 >
                     Cancel
@@ -139,4 +166,4 @@ const ProductForm: React.FC = () => {
     
 }
 
-export default ProductForm;
+export default ClienteForm;
