@@ -24,6 +24,8 @@ import Clientes from "./components/Clientes";
 import ClienteForm from "./components/ClienteForm";
 import DailyList from "./components/DailyList";
 import ClientDailyLists from "./components/ClientDailyListForm";
+import Pagos from "./components/Pagos";
+import PagoForm from "./components/PagoForm";
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -90,6 +92,11 @@ const App: React.FC = () => {
               DailyList
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to={"/pagos"} className="nav-link">
+              Pagos
+            </Link>
+          </li>
 
           {currentUser && (
             <li className="nav-item">
@@ -151,6 +158,9 @@ const App: React.FC = () => {
           <Route path="/tutorials/:id" element={<Tutorial />} />
           <Route path="/dailyList" element={<DailyList />} />
           <Route path="/clientDailyList" element={<ClientDailyLists />} />secondary
+          <Route path="/pagos" element={<Pagos />} />
+          <Route path="/pagos/new" element={<PagoForm />} />
+          <Route path="/pagos/:id" element={<PagoForm />} />
         </Routes>
       </div>
     </div>

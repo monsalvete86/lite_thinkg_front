@@ -1,29 +1,29 @@
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-import * as CategoryService from "../services/category.service";
-import ICategory from '../types/category.type';
+import * as PagoService from "../services/pago.service";
+import IPago from '../types/pago.type';
 import { Link } from "react-router-dom";
 import ReportPDF from "./ReportPDF";
 import { PDFDownloadLink} from "@react-pdf/renderer"
 
-const Categories: React.FC = () => {
+const Pagos: React.FC = () => {
     
-    const [categories, setCategories] = useState<Array<ICategory>>([]);
-    const [currentCategory, setCurrentCategory] = useState<ICategory | null>(null);
+    const [pagos, setPagos] = useState<Array<IPago>>([]);
+    const [currentPago, setCurrentPago] = useState<IPago | null>(null);
     const [currentIndex, setCurrentIndex] = useState<number>(-1);
-    const [searchCategory, setSearchCategories] = useState<string>("");
+    const [searchPago, setSearchPagos] = useState<string>("");
     
-    const categoriesRef = useRef();
+    const pagosRef = useRef();
     console.log("process.env");
-    // categoriesRef.current = categories;
+    // productsRef.current = pagos;
     
     useEffect(() => {
-        retrieveCategories();
+        retrievePagos();
     }, []);
 
-    const retrieveCategories = () => {
-        CategoryService.getAll()
+    const retrievePagos = () => {
+        PagoService.getAll()
         .then((response) => {
-            setCategories(response.data);
+            setPagos(response.data);
         })
         .catch((e) => {
             console.log(e);
@@ -31,26 +31,25 @@ const Categories: React.FC = () => {
     };
 
     const refreshList = () => {
-        retrieveCategories();
+        retrievePagos();
     };
 
-    const setActiveCategory = (category: ICategory, index: number) => {
-        setCurrentCategory(category);
+    const setActivePago = (pago: IPago, index: number) => {
+        setCurrentPago(pago);
         setCurrentIndex(index);
     };
 
-    const cleanCategory = (id: number | null | undefined) => {
+    const cleanPago = (id: number | null | undefined) => {
         console.log(id)
-        CategoryService.remove(id);
-        retrieveCategories();
+        PagoService.remove(id);
+        retrievePagos();
     };
     
-
     return (
         <div>
             <div className="list row">
                 <div className="col-md-12">
-                    <h2>Categories</h2>
+                    <h2>Pagos</h2>
                 </div>
             </div>
             <div className="list row">
@@ -74,12 +73,12 @@ const Categories: React.FC = () => {
                                 Search
                             </button> 
                             <Link
-                                to={"/categories/new"}
+                                to={"/pagos/new"}
                                 className="ml-2 btn btn-primary"
                             >
                                 New
                             </Link>
-                            <PDFDownloadLink document={<ReportPDF categories={categories}/>} fileName="report.pdf">
+                            <PDFDownloadLink document={<ReportPDF pagos={pagos}/>} fileName="report.pdf">
                                 <button className="ml-2 btn btn-danger">
                                     Dowload PDF
                                 </button>
@@ -93,22 +92,25 @@ const Categories: React.FC = () => {
                     >
                         <thead>
                             <tr className="text-center">
-                                <th>Code</th><th>Category</th><th>Stock</th><th colSpan={2}>Actions</th>
+                                <th>Cliente</th><th>Subscripcion</th><th>Valor pago</th><th>Fecha pago</th><th colSpan={2}>Rejistro activo</th><th colSpan={2}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-
-                            
+     
                             {
-                                categories &&
-                                categories.map((row, index) => {
+                                pagos &&
+                                pagos.map((row, index) => {
                                     return (
                                         <tr key={row.id}>
-                                            <td>{row.code}</td><td>{row.categoryName}</td>
-                                            <td className="text-right">{row.stock}</td>
+                                            <td>{row.cliente}</td>
+                                            <td>{row.subscripcion}</td>
+                                            <td>{row.valorPago}</td>
+                                            <td>{row.fechaPago}</td>
+                                            <td className="text-center">{row.rejistroActivo}</td>
+                                            <td className="text-center"><input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"></input></td>
                                             <td className="text-center">
                                                 <Link
-                                                    to={"/categories/" + row?.id}
+                                                    to={"/pagos/" + row?.id}
                                                     className="btn btn-primary"
                                                 >
                                                     Edit
@@ -116,7 +118,7 @@ const Categories: React.FC = () => {
                                                                                     
                                             </td>
                                             <td className="text-center">
-                                                <button onClick={() => cleanCategory(row.id)} className="btn btn-danger">Delete</button></td>
+                                                <button  onClick={() => cleanPago(row.id)} className="btn btn-danger">Delete</button></td>
                                         </tr>
                                     )
                                 })
@@ -129,5 +131,4 @@ const Categories: React.FC = () => {
     );
 }
 
-export default Categories;
-
+export default Pagos;

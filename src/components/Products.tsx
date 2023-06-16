@@ -39,9 +39,10 @@ const Products: React.FC = () => {
         setCurrentIndex(index);
     };
 
-    const cleanProduct = () => {
-        setCurrentProduct(null);
-        setCurrentIndex(-1);
+    const cleanProduct = (id: number | null | undefined) => {
+        console.log(id)
+        ProductService.remove(id);
+        retrieveProducts();
     };
     
 
@@ -116,7 +117,8 @@ const Products: React.FC = () => {
                                                 </Link>
                                                                                     
                                             </td>
-                                            <td className="text-center"><button  className="btn btn-danger">Delete</button></td>
+                                            <td className="text-center">
+                                                <button onClick={() => cleanProduct(row.id)} className="btn btn-danger">Delete</button></td>
                                         </tr>
                                     )
                                 })
