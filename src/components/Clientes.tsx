@@ -3,31 +3,30 @@ import * as ClienteService from "../services/cliente.service";
 import ICliente from '../types/cliente.type';
 import { Link } from "react-router-dom";
 import ReportPDF from "./ReportPDF";
-import { PDFDownloadLink} from "@react-pdf/renderer"
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const Clientes: React.FC = () => {
-    
     const [clientes, setClientes] = useState<Array<ICliente>>([]);
     const [currentCliente, setCurrentCliente] = useState<ICliente | null>(null);
     const [currentIndex, setCurrentIndex] = useState<number>(-1);
     const [searchCliente, setSearchClientes] = useState<string>("");
-    
+
     const clientesRef = useRef();
     console.log("process.env");
     // clientesRef.current = clientes;
-    
+
     useEffect(() => {
         retrieveClientes();
     }, []);
 
     const retrieveClientes = () => {
         ClienteService.getAll()
-        .then((response) => {
-            setClientes(response.data);
-        })
-        .catch((e) => {
-            console.log(e);
-        });
+            .then((response) => {
+                setClientes(response.data);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     };
 
     const refreshList = () => {
@@ -40,13 +39,13 @@ const Clientes: React.FC = () => {
     };
 
     const cleanCliente = (id: number | null | undefined) => {
-        console.log(id)
-        ClienteService.remove(id);
-        retrieveClientes();
+        const confirmation = window.confirm("Are you sure you want to delete this cliente?");
+        if (confirmation) {
+            console.log(id);
+            ClienteService.remove(id);
+            retrieveClientes();
+        }
     };
-    
-
-
 
     return (
         <div>
@@ -56,53 +55,41 @@ const Clientes: React.FC = () => {
                 </div>
             </div>
             <div className="list row">
-                <div className="col-md-8">
-                    
-                </div>
+                <div className="col-md-8"></div>
                 <div className="col-md-8">
                     <div className="input-group mb-3">
                         <input
                             type="text"
                             className="form-control"
                             placeholder="Search by title"
-                            
                         />
                         <div className="input-group-append">
-                            <button
-                                className="btn btn-outline-secondary"
-                                type="button"
-                            
-                            >
+                            <button className="btn btn-outline-secondary" type="button">
                                 Search
-                            </button> 
-                            <Link
-                                to={"/clientes/new"}
-                                className="ml-2 btn btn-primary"
-                            >
+                            </button>
+                            <Link to={"/clientes/new"} className="ml-2 btn btn-primary">
                                 New
                             </Link>
-                            <PDFDownloadLink document={<ReportPDF clientes={clientes}/>} fileName="report.pdf">
-                                <button className="ml-2 btn btn-danger">
-                                    Dowload PDF
-                                </button>
+                            <PDFDownloadLink document={<ReportPDF clientes={clientes} />} fileName="report.pdf">
+                                <button className="ml-2 btn btn-danger">Download PDF</button>
                             </PDFDownloadLink>
                         </div>
                     </div>
                 </div>
                 <div className="col-md-12 list">
-                    <table
-                        className="table table-striped table-bordered"
-                    >
+                    <table className="table table-striped table-bordered">
                         <thead>
                             <tr className="text-center">
-                                <th>Nombre</th><th>Apellido</th><th>Telefono</th><th>Direccion</th><th>Ciudad</th><th colSpan={2}>Actions</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Telefono</th>
+                                <th>Direccion</th>
+                                <th>Ciudad</th>
+                                <th colSpan={2}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-
-                            
-                            {
-                                clientes &&
+                            {clientes &&
                                 clientes.map((row, index) => {
                                     return (
                                         <tr key={row.id}>
@@ -112,28 +99,26 @@ const Clientes: React.FC = () => {
                                             <td>{row.direccion}</td>
                                             <td>{row.ciudad}</td>
                                             <td className="text-center">
-                                                <Link
-                                                    to={"/clientes/" + row?.id}
-                                                    className="btn btn-primary"
-                                                >
+                                                <Link to={"/clientes/" + row?.id} className="btn btn-primary">
                                                     Edit
                                                 </Link>
-                                                                                    
                                             </td>
                                             <td className="text-center">
-                                                <button onClick={() => cleanCliente(row.id)} className="btn btn-danger">Delete</button>
+                                                <button onClick={() => cleanCliente(row.id)} className="btn btn-danger">
+                                                    Delete
+                                                </button>
                                             </td>
                                         </tr>
-                                    )
-                                })
-                            }
+                                    );
+                                })}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default Clientes;
+
 
