@@ -1,6 +1,6 @@
 export default interface IDailyList {
   id?: number | null,
   userId: number,
-  createdAt: string,
+  date: string,
   status: boolean
 }

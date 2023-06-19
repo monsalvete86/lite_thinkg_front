@@ -22,10 +22,12 @@ import Products from "./components/Products";
 import ProductForm from "./components/ProductForm";
 import Clientes from "./components/Clientes";
 import ClienteForm from "./components/ClienteForm";
-import DailyList from "./components/DailyList";
-import ClientDailyLists from "./components/ClientDailyListForm";
 import Pagos from "./components/Pagos";
 import PagoForm from "./components/PagoForm";
+import DailyList from "./components/DailyList/DailyList";
+import ClientDailyLists from "./components/DailyList/ClientDailyListForm";
+import DailyListForm from "./components/DailyList/DailyListForm";
+import SubscriptionForm from "./components/Subscription/SubscriptionForm";
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -89,7 +91,12 @@ const App: React.FC = () => {
           </li>
           <li className="nav-item">
             <Link to={"/dailyList"} className="nav-link">
-              DailyList
+              Listado diario
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to={"/subscription/new"} className="nav-link">
+              Suscripciones
             </Link>
           </li>
           <li className="nav-item">
@@ -161,6 +168,9 @@ const App: React.FC = () => {
           <Route path="/pagos" element={<Pagos />} />
           <Route path="/pagos/new" element={<PagoForm />} />
           <Route path="/pagos/:id" element={<PagoForm />} />
+          <Route path="/dailyList/new" element={<DailyListForm />} />
+          <Route path="/clientDailyList" element={<ClientDailyLists />} />
+          <Route path="/subscription/new" element={<SubscriptionForm />} />
         </Routes>
       </div>
     </div>
@@ -168,3 +178,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+
