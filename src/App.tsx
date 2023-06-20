@@ -14,10 +14,7 @@ import Profile from "./components/Profile";
 import Tutorial from "./components/Tutorial";
 import TutorialsList from "./components/TutorialsList";
 import Company from "./components/Company";
-
 import EventBus from "./common/EventBus";
-import Categories from "./components/Categories";
-import CategoryForm from "./components/CategoryForm";
 import Products from "./components/Products";
 import ProductForm from "./components/ProductForm";
 import Clientes from "./components/Clientes";
@@ -72,11 +69,6 @@ const App: React.FC = () => {
           <li className="nav-item">
             <Link to={"/company"} className="nav-link">
               Company
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={"/categories"} className="nav-link">
-              Categories
             </Link>
           </li>
           <li className="nav-item">
@@ -153,9 +145,6 @@ const App: React.FC = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/tutorials" element={<TutorialsList />} />
           <Route path="/company" element={<Company />} />
-          <Route path="/categories" element={<Categories />} />
-          <Route path="/categories/new" element={<CategoryForm />} />
-          <Route path="/categories/:id" element={<CategoryForm />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/new" element={<ProductForm />} />
           <Route path="/products/:id" element={<ProductForm />} />
