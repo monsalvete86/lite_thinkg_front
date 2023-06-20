@@ -11,11 +11,12 @@ const Products: React.FC = () => {
     const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null);
     const [currentIndex, setCurrentIndex] = useState<number>(-1);
     const [searchProduct, setSearchProducts] = useState<string>("");
+    const [showConfirm, setShowConfirm] = useState(false);
     
     const productsRef = useRef();
     console.log("process.env");
     // productsRef.current = products;
-    
+
     useEffect(() => {
         retrieveProducts();
     }, []);

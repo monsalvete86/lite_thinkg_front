@@ -116,7 +116,8 @@ const Categories: React.FC = () => {
                                                                                     
                                             </td>
                                             <td className="text-center">
-                                                <button onClick={() => cleanCategory(row.id)} className="btn btn-danger">Delete</button></td>
+                                                <button onClick={() => cleanCategory(row.id)} className="btn btn-danger">Delete</button>
+                                            </td>
                                         </tr>
                                     )
                                 })
