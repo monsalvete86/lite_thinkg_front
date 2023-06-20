@@ -13,7 +13,7 @@ const PagoForm: React.FC = () => {
     const initialPagoState = {
         id: null,
         cliente: "",
-        subscripcion: "",
+        subscription: "",
         metodoPago: "",
         importe: "",
         status: "",
@@ -52,7 +52,7 @@ const PagoForm: React.FC = () => {
     const savePago = () => {
         var data = {
             cliente: pago.cliente,
-            subscripcion: pago.subscripcion,
+            subscription: pago.subscription,
             metodoPago: pago.metodoPago,
             importe: pago.importe,
             status: pago.status,
@@ -91,7 +91,7 @@ const PagoForm: React.FC = () => {
     return (
         <div className="submit-form">
             <div>
-                {pago?.id && `Current Pago ${pago.cliente} - ${pago.subscripcion} - ${pago.metodoPago} - ${pago.importe} - ${pago.status} - ${pago.fechaPago}`}
+                {pago?.id && `Current Pago ${pago.cliente} - ${pago.subscription} - ${pago.metodoPago} - ${pago.importe} - ${pago.status} - ${pago.fechaPago}`}
                 {!pago?.id && 'New Pago'}
                 <div className="form-group">
                     <label htmlFor="cliente">Cliente</label>
@@ -106,15 +106,15 @@ const PagoForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="subscripcion">Subscripcion</label>
+                    <label htmlFor="subscription">Suscripcion</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="subscripcion"
+                        id="subscription"
                         required
-                        value={pago.subscripcion}
+                        value={pago.subscription}
                         onChange={handleInputChange}
-                        name="subscripcion"
+                        name="subscription"
                     />
                 </div>
                 <div className="form-group">
