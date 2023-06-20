@@ -40,14 +40,14 @@ const Products: React.FC = () => {
     };
 
     const cleanProduct = (id: number | null | undefined) => {
-        console.log(id)
-        ProductService.remove(id);
-        retrieveProducts();
+        const confirmation = window.confirm("¿Está seguro de que desea eliminar este product?");
+        if (confirmation) {
+            console.log(id);
+            ProductService.remove(id);
+            retrieveProducts();
+        }
     };
     
-
-
-
     return (
         <div>
             <div className="list row">
@@ -90,41 +90,34 @@ const Products: React.FC = () => {
                     </div>
                 </div>
                 <div className="col-md-12 list">
-                    <table
-                        className="table table-striped table-bordered"
-                    >
-                        <thead>
-                            <tr className="text-center">
-                                <th>Code</th><th>Product Name</th><th>Stock</th><th colSpan={2}>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                  <table
+                      className="table table-striped table-bordered">
+                    <thead>
+                      <tr className="text-center">
+                        <th>Code</th><th>Product Name</th><th>Stock</th><th colSpan={2}>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
 
-                            
-                            {
-                                products &&
-                                products.map((row, index) => {
-                                    return (
-                                        <tr key={row.id}>
-                                            <td>{row.code}</td><td>{row.productName}</td>
-                                            <td className="text-right">{row.stock}</td>
-                                            <td className="text-center">
-                                                <Link
-                                                    to={"/products/" + row?.id}
-                                                    className="btn btn-primary"
-                                                >
-                                                    Edit
-                                                </Link>
-                                                                                    
-                                            </td>
-                                            <td className="text-center">
-                                                <button onClick={() => cleanProduct(row.id)} className="btn btn-danger">Delete</button></td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
+                      {
+                        products &&
+                        products.map((row, index) => {
+                          return (
+                            <tr key={row.id}>
+                              <td className="text-center">{row.code}</td><td className="text-center">{row.productName}</td>
+                              <td className="text-center">{row.stock}</td>
+                              <td className="text-center">
+                                <Link to={"/products/" + row?.id} className="btn btn-primary">Edit</Link>                                     
+                              </td>
+                              <td className="text-center">
+                                  <button onClick={() => cleanProduct(row.id)} className="btn btn-danger">Delete</button>
+                              </td>
+                            </tr>
+                          )
+                        })
+                      }
+                    </tbody>
+                  </table>
                 </div>
             </div>
         </div>

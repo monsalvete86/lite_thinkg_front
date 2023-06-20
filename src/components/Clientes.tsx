@@ -39,7 +39,7 @@ const Clientes: React.FC = () => {
     };
 
     const cleanCliente = (id: number | null | undefined) => {
-        const confirmation = window.confirm("Are you sure you want to delete this cliente?");
+        const confirmation = window.confirm("¿Está seguro de que desea eliminar este cliente?");
         if (confirmation) {
             console.log(id);
             ClienteService.remove(id);
@@ -58,15 +58,9 @@ const Clientes: React.FC = () => {
                 <div className="col-md-8"></div>
                 <div className="col-md-8">
                     <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search by title"
-                        />
+                        <input type="text" className="form-control" placeholder="Search by title"/>
                         <div className="input-group-append">
-                            <button className="btn btn-outline-secondary" type="button">
-                                Search
-                            </button>
+                            <button className="btn btn-outline-secondary" type="button">Search</button>
                             <Link to={"/clientes/new"} className="ml-2 btn btn-primary">
                                 New
                             </Link>
@@ -93,20 +87,16 @@ const Clientes: React.FC = () => {
                                 clientes.map((row, index) => {
                                     return (
                                         <tr key={row.id}>
-                                            <td>{row.nombre}</td>
-                                            <td>{row.apellido}</td>
-                                            <td>{row.telefono}</td>
-                                            <td>{row.direccion}</td>
-                                            <td>{row.ciudad}</td>
+                                            <td className="text-center">{row.nombre}</td>
+                                            <td className="text-center">{row.apellido}</td>
+                                            <td className="text-center">{row.telefono}</td>
+                                            <td className="text-center">{row.direccion}</td>
+                                            <td className="text-center">{row.ciudad}</td>
                                             <td className="text-center">
-                                                <Link to={"/clientes/" + row?.id} className="btn btn-primary">
-                                                    Edit
-                                                </Link>
+                                                <Link to={"/clientes/" + row?.id} className="btn btn-primary">Edit</Link>
                                             </td>
                                             <td className="text-center">
-                                                <button onClick={() => cleanCliente(row.id)} className="btn btn-danger">
-                                                    Delete
-                                                </button>
+                                                <button onClick={() => cleanCliente(row.id)} className="btn btn-danger">Delete</button>
                                             </td>
                                         </tr>
                                     );

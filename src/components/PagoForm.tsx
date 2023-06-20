@@ -14,8 +14,9 @@ const PagoForm: React.FC = () => {
         id: null,
         cliente: "",
         subscripcion: "",
-        rejistroActivo: "",
-        valorPago: "",
+        metodoPago: "",
+        importe: "",
+        status: "",
         fechaPago: "",
     };
 
@@ -52,8 +53,9 @@ const PagoForm: React.FC = () => {
         var data = {
             cliente: pago.cliente,
             subscripcion: pago.subscripcion,
-            rejistroActivo: pago.rejistroActivo,
-            valorPago: pago.valorPago,
+            metodoPago: pago.metodoPago,
+            importe: pago.importe,
+            status: pago.status,
             fechaPago: pago.fechaPago,
         };
 
@@ -89,7 +91,7 @@ const PagoForm: React.FC = () => {
     return (
         <div className="submit-form">
             <div>
-                {pago?.id && `Current Pago ${pago.cliente} - ${pago.subscripcion} - ${pago.rejistroActivo} - ${pago.valorPago} - ${pago.fechaPago}`}
+                {pago?.id && `Current Pago ${pago.cliente} - ${pago.subscripcion} - ${pago.metodoPago} - ${pago.importe} - ${pago.status} - ${pago.fechaPago}`}
                 {!pago?.id && 'New Pago'}
                 <div className="form-group">
                     <label htmlFor="cliente">Cliente</label>
@@ -116,27 +118,39 @@ const PagoForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="rejistroActivo">Rejistro activo</label>
+                    <label htmlFor="metodoPago">Metodo pago</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="rejistroActivo"
+                        id="metodoPago"
                         required
-                        value={pago.rejistroActivo}
+                        value={pago.metodoPago}
                         onChange={handleInputChange}
-                        name="rejistroActivo"
+                        name="metodoPago"
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="valorPago">Valor pago</label>
+                    <label htmlFor="importe">Importe</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="valorPago"
+                        id="importe"
                         required
-                        value={pago.valorPago}
+                        value={pago.importe}
                         onChange={handleInputChange}
-                        name="valorPago"
+                        name="importe"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="status">Status</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="status"
+                        required
+                        value={pago.status}
+                        onChange={handleInputChange}
+                        name="status"
                     />
                 </div>
                 <div className="form-group">

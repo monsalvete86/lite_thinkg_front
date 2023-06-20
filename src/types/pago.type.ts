@@ -1,9 +1,9 @@
-export default interface IProduct {
+export default interface IPago {
     id?: number | null,
     cliente: string,
-    subscripcion: string,
-    rejistroActivo: string,
-    valorPago: string,
+    metodoPago: string,
+    suscripcion: string,
+    importe: string,
+    status: string,
     fechaPago: string,
-   
   }

@@ -17,7 +17,6 @@ const ClienteForm: React.FC = () => {
         telefono: 0,
         direccion: "",
         ciudad: "",
-
     };
 
     const [cliente, setCliente] = useState(initialClienteState);
