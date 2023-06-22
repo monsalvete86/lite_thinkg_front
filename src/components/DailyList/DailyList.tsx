@@ -10,10 +10,10 @@ const DailyLists: React.FC = () => {
   const [dailyList, setProducts] = useState<Array<IDailyList>>([]);
 
   useEffect(() => {
-    retrieveProducts();
+    retrieveItems();
   }, []);
 
-  const retrieveProducts = () => {
+  const retrieveItems = () => {
     DailyListService.getAll()
       .then((response) => {
         setProducts(response.data);
@@ -22,6 +22,11 @@ const DailyLists: React.FC = () => {
         console.log(e);
       });
   };
+
+  const removeItem = (id: number | null | undefined) => {
+    DailyListService.remove(id);
+    retrieveItems();
+};
 
   return (
     <div>
@@ -73,14 +78,15 @@ const DailyLists: React.FC = () => {
                       <td>{row.date}</td>
                       <td className="text-center">
                         <Link
-                          to={"/clientDailyList"}
+                          to={"/clientDailyList/new"}
+                          state={{'dailyListId':row.id}}
                           className="btn btn-primary"
                         >
-                          Añadir
+                          Editar
                         </Link>
                       </td>
                       <td className="text-center">
-                        <button className="btn btn-danger">Delete</button>
+                        <button className="btn btn-danger" onClick={() => removeItem(row.id)}>Eliminar</button>
                       </td>
                     </tr>
                   );

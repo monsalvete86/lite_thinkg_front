@@ -1,5 +1,5 @@
 export default interface ICliente {
-  id?: number | null,
+  id?: number ,
   nombre: string,
   apellido: string,
   telefono: number,

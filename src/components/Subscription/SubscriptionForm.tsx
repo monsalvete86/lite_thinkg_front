@@ -1,8 +1,11 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import ISubscription from "../../types/subscription.type";
 import *  as SubscriptionService from "../../services/subscription.service"
 
 const SubscriptionForm: React.FC = () => {
+    const { id } = useParams();
+
     const initialState = {
         id: null,
         migratoryProcess: "",
@@ -30,10 +33,31 @@ const SubscriptionForm: React.FC = () => {
         processorId: 1,
         clientListId: 2
     }
+
+    useEffect(() => {
+        if (id) {
+            SubscriptionService.get(id)
+                .then((result: any) => {
+                    setSubscription(result.data)
+                })
+        }
+    }, []);
+
+    const saveSubscription = () => {
+        console.log(subscription)
+        SubscriptionService.update(subscription.id, subscription)
+            .then((response: any) => {
+                console.log("data ")
+                console.log(response.data);
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            });
+    }
+
     const [subscription, setSubscription] = useState<ISubscription>(initialState);
 
-
-    const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleNameChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
         setSubscription({ ...subscription, [name]: value });
     };
@@ -97,7 +121,7 @@ const SubscriptionForm: React.FC = () => {
             <div className="form-group">
                 <input
                     className="form-control"
-                    placeholder="Ocupación"
+                    placeholder="jointTaxes"
                     id="jointTaxes"
                     name="jointTaxes"
                     value={subscription?.jointTaxes}
@@ -127,7 +151,7 @@ const SubscriptionForm: React.FC = () => {
             <div className="form-group">
                 <input
                     className="form-control"
-                    placeholder="Ocupación"
+                    placeholder="monthlyPremium"
                     id="monthlyPremium"
                     name="monthlyPremium"
                     value={subscription?.monthlyPremium}
@@ -242,6 +266,13 @@ const SubscriptionForm: React.FC = () => {
                 />
             </div>
             <div className="form-group">
+                <select className="custom-select" name="state" id="state" onChange={handleNameChange}>
+                    <option value="REJECTED" >Rechazado </option>
+                    <option value="ACEPTED">Aceptado </option>
+                    <option value="CANCELED">Cancelado </option>
+                </select>
+            </div>
+            <div className="form-group">
                 <input
                     className="form-control"
                     placeholder="Inicio de cobertura"
@@ -264,7 +295,7 @@ const SubscriptionForm: React.FC = () => {
                 />
             </div>
             <div className="form-group">
-                <button className="btn btn-success" title="Crear Producto" onClick={createSubscription}>Crear Listado</button>
+                <button className="btn btn-success" title="Crear Producto" onClick={saveSubscription}>Crear Listado</button>
 
             </div>
         </div>
