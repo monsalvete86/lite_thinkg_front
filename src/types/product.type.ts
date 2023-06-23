@@ -4,6 +4,4 @@ export default interface IProduct {
   code: string,
   stock: number,
   companyId: number,
-  
-
 }
