@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import * as ClientDailyListService from "../../services/client-daily-list.service";
 import * as ClienteService from "../../services/cliente.service";
 import ICliente from '../../types/cliente.type';
 import IClientDailyList from "../../types/client-daily-list.type";
-
-import Select from 'react-select';
 import { useLocation } from "react-router-dom";
 
 type Props =
@@ -17,14 +15,21 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
   const [selectedOption, setSelectedOptions] = useState<string>();
   const [clientes, setClientes] = useState<Array<ICliente>>([]);
   const [dataList, setDataList] = useState<Array<IClientDailyList>>([]);
+  const [filterClient, setFilterClient] = useState('');
+
 
   useEffect(() => {
-    retrieveClientes(); 
+    // retrieveClientes();
     retrieveItems();
   }, []);
 
+  useEffect(() => {
+    retrieveClientes();
+  }, [filterClient]);
+
 
   const retrieveItems = () => {
+
     ClientDailyListService.getAllByDailyList(state.dailyListId)
       .then((response) => {
         setDataList(response.data);
@@ -44,21 +49,17 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
       let items = {
         clientId: Number(data.id),
         operatorId: 1,
-        dailyListId: Number(state.dailyListId)
+        dailyListId: Number(state.dailyListId),
+        cliente : {
+          nombre: data.nombre,
+          apellido: data.apellido
+        }
       }
+      console.log(items)
+
       setDataList(newData => [...newData, items])
       setSelectedOptions(undefined);
     }
-  };
-
-  const retrieveClientes = () => {
-    ClienteService.getAll()
-      .then((response) => {
-        setClientes(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
   };
 
   const sendOperator = (index: number, value: string) => {
@@ -70,15 +71,29 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
   }
 
   const createDailyList = () => {
-    console.log(dataList)
     ClientDailyListService.createBulk(dataList)
       .then((response) => {
-        // set(response.data);c
+        // set(response.data);
         console.log(response)
       })
       .catch((e) => {
         console.log(e);
       });
+  }
+
+  const retrieveClientes = async () => {
+    try {
+      const response = await ClienteService.getAll(filterClient);
+      const data = await response;
+      setClientes(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const searchClient = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setFilterClient(value);
   }
 
   const deleteClient = () => { }
@@ -93,10 +108,10 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
       <div className="list row">
         <div className="col-md-10">
           <div className="input-group mb-3">
-            {/* <Select options={clientes} value={selectedOption} name="selectedOptions" onChange={handleSelectChange} className="w-100"
-            /> */}
-
-            <select value={selectedOption} className="custom-select w-100" id="selectedOption" name="selectedOption" onChange={handleSelectChange} >
+            <input type="text" className="form-control" value={filterClient} placeholder="Buscar cliente" onInput={searchClient} />
+          </div>
+          <div className="input-group mb-3">
+            <select value={selectedOption} size={5} className="custom-select w-100" id="selectedOption" name="selectedOption" onChange={handleSelectChange} >
               {clientes.map((item, index) => (
                 <option value={JSON.stringify(item)} key={item.id} >{item.nombre} {item.apellido}</option>
               ))}
@@ -121,7 +136,7 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
             <tbody>
               {dataList.map((item, index) => (
                 <tr key={index}>
-                  <td  >  </td>
+                  <td  > {item.cliente?.nombre}  {item.cliente?.apellido} </td>
                   <td>
                     <select className="custom-select" name="operatorId" id="operatorId" onChange={(e) => sendOperator(index, e.target.value)}>
                       <option value="1" >Cristhiam Monsalve </option>

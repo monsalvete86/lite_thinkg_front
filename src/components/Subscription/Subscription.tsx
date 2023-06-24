@@ -43,7 +43,6 @@ const Subscriptions: React.FC = () => {
     const cleanSubscription = (id: number | null | undefined) => {
         const confirmation = window.confirm("¿Está seguro de que desea eliminar este subscription?");
         if (confirmation) {
-            console.log(id);
             SubscriptionService.remove(id);
             retrieveSubscriptions();
         }
@@ -105,7 +104,7 @@ const Subscriptions: React.FC = () => {
                                     return (
                                         <tr key={row.id}>
                                             <td className="text-center">{row.id}</td>
-                                            <td className="text-center">{row.clientId}</td>
+                                            <td className="text-center">{row.cliente?.nombre} {row.cliente?.apellido}</td>
                                             <td className="text-center">{row.dailyListId}</td>
                                             <td className="text-center">
                                                 <Link to={"/subscription/" + row?.id} className="btn btn-primary">Edit</Link>
