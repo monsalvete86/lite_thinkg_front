@@ -89,11 +89,6 @@ const App: React.FC = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={"/subscription/new"} className="nav-link">
-              Suscripciones form
-            </Link>
-          </li>
-          <li className="nav-item">
             <Link to={"/subscriptions"} className="nav-link">
               Suscripciones
             </Link>
