@@ -22,9 +22,11 @@ import ClienteForm from "./components/ClienteForm";
 import Pagos from "./components/Pagos";
 import PagoForm from "./components/PagoForm";
 import DailyList from "./components/DailyList/DailyList";
-import ClientDailyLists from "./components/DailyList/ClientDailyListForm";
+import ClientDailyLists from "./components/DailyList/ClientDailyList";
+import ClientDailyListForm from "./components/DailyList/ClientDailyListForm";
 import DailyListForm from "./components/DailyList/DailyListForm";
 import SubscriptionForm from "./components/Subscription/SubscriptionForm";
+import Subscriptions from "./components/Subscription/Subscription";
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -87,7 +89,7 @@ const App: React.FC = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={"/subscription/new"} className="nav-link">
+            <Link to={"/subscriptions"} className="nav-link">
               Suscripciones
             </Link>
           </li>
@@ -153,13 +155,15 @@ const App: React.FC = () => {
           <Route path="/clientes/:id" element={<ClienteForm />} />
           <Route path="/tutorials/:id" element={<Tutorial />} />
           <Route path="/dailyList" element={<DailyList />} />
-          <Route path="/clientDailyList" element={<ClientDailyLists />} />secondary
           <Route path="/pagos" element={<Pagos />} />
           <Route path="/pagos/new" element={<PagoForm />} />
           <Route path="/pagos/:id" element={<PagoForm />} />
           <Route path="/dailyList/new" element={<DailyListForm />} />
           <Route path="/clientDailyList" element={<ClientDailyLists />} />
+          <Route path="/clientDailyList/new" element={<ClientDailyListForm/>}   />
+          <Route path="/subscriptions" element={<Subscriptions/>}   />
           <Route path="/subscription/new" element={<SubscriptionForm />} />
+          <Route path="/subscription/:id" element={<SubscriptionForm />} />
         </Routes>
       </div>
     </div>

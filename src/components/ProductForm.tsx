@@ -67,7 +67,6 @@ const ProductForm: React.FC = () => {
         } else {
             ProductsService.update(product.id, data)
             .then((response: any) => {
-                console.log("data ")
                 console.log(response.data);
             })
             .catch((e: Error) => {
