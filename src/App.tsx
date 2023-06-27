@@ -27,6 +27,8 @@ import ClientDailyListForm from "./components/DailyList/ClientDailyListForm";
 import DailyListForm from "./components/DailyList/DailyListForm";
 import SubscriptionForm from "./components/Subscription/SubscriptionForm";
 import Subscriptions from "./components/Subscription/Subscription";
+import ProcessorForm from "./components/Processor/ProcessorForm";
+import Processors from "./components/Processor/ProcessorList";
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -91,6 +93,11 @@ const App: React.FC = () => {
           <li className="nav-item">
             <Link to={"/subscriptions"} className="nav-link">
               Suscripciones
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to={"/processors"} className="nav-link">
+              Procesadoras
             </Link>
           </li>
           <li className="nav-item">
@@ -164,6 +171,9 @@ const App: React.FC = () => {
           <Route path="/subscriptions" element={<Subscriptions/>}   />
           <Route path="/subscription/new" element={<SubscriptionForm />} />
           <Route path="/subscription/:id" element={<SubscriptionForm />} />
+          <Route path="/processors" element={<Processors/>}   />
+          <Route path="/processor/new" element={<ProcessorForm />} />
+          <Route path="/processor/:id" element={<ProcessorForm />} />
         </Routes>
       </div>
     </div>

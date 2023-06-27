@@ -13,6 +13,9 @@ export const get = ((id: any) => {
   return axios.get<IUser>(API_URL + `${id}`, { headers: authHeader() });
 });*/
 
+export const getAll = () => {
+  return axios.get(`${API_URL}`, { headers: authHeader() });
+};
 
 export const getUserById = (id: any) => {
   const data = { id: id};

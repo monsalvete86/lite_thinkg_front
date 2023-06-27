@@ -3,7 +3,8 @@ export default interface IClientDailyList {
     operatorId: number,
     clientId: number,
     dailyListId: number,
-    cliente?: Cliente
+    cliente?: Cliente,
+    [key: string]: any;
 }
 
 interface Cliente {

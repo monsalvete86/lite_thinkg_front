@@ -5,9 +5,9 @@ import authHeader from "./auth-header";
 // const API_URL = "https://w2j8ebzbl7.execute-api.us-east-1.amazonaws.com/api/clientes";
 const API_URL = "http://localhost:8080/api/clientes";
 
-export const getAll = (query?:string) => {
+export const getAll = () => {
   //return axios.get<Array<ITutorialData>>(API_URL + "/", { headers: authHeader() });
-  return axios.get(`${API_URL}/?client=${query}`, { headers: authHeader() });
+  return axios.get(`${API_URL}/`, { headers: authHeader() });
 };
 
 export const get = (id: any): Promise<ICliente> => {
@@ -25,3 +25,10 @@ export const update = (id: any, data: any) => {
 export const remove = (id: any) => {
   return axios.delete<any>(API_URL + `/${id}`, { headers: authHeader() });
 };
+
+
+export const getAllByQuery = (query?:string) => {
+  //return axios.get<Array<ITutorialData>>(API_URL + "/", { headers: authHeader() });
+  return axios.get(`${API_URL}-by/?client=${query}`, { headers: authHeader() });
+};
+

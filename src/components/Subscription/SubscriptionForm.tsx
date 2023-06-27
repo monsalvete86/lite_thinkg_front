@@ -44,7 +44,6 @@ const SubscriptionForm: React.FC = () => {
     }, []);
 
     const saveSubscription = () => {
-        console.log(subscription)
         SubscriptionService.update(subscription.id, subscription)
             .then((response: any) => {
                 console.log("data ")
@@ -79,6 +78,7 @@ const SubscriptionForm: React.FC = () => {
         <div className="form form-row">
             <div className="col-12 col-md-6 border">
                 <div className="form-group">
+                    <label htmlFor="migratoryProcess">Proceso migratorio</label>
                     <input
                         className="form-control"
                         placeholder="Proceso migratorio"
@@ -89,6 +89,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="annualIncome">Ingresos anuales</label>
                     <input
                         className="form-control"
                         placeholder="Ingresos anuales"
@@ -100,6 +101,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="mainContributor">Principal contribuidor</label>
                     <input
                         className="form-control"
                         placeholder="Principal contribuidor"
@@ -110,6 +112,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="jobType">Tipo de trabajo</label>
                     <input
                         className="form-control"
                         placeholder="Tipo de trabajo"
@@ -120,9 +123,10 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="jointTaxes">¿Llenan los taxes en conjunto o por separado?<small className="help">(Solo, en conjunto)</small></label>
                     <input
                         className="form-control"
-                        placeholder="jointTaxes"
+                        placeholder="Llenan los taxes en conjunto o por separado"
                         id="jointTaxes"
                         name="jointTaxes"
                         value={subscription?.jointTaxes}
@@ -130,9 +134,10 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="whoClaimsTemplates">¿Quién reclama la plantilla?</label>
                     <input
                         className="form-control"
-                        placeholder="Ocupación"
+                        placeholder="Quién reclama la plantilla"
                         id="whoClaimsTemplates"
                         name="whoClaimsTemplates"
                         value={subscription?.whoClaimsTemplates}
@@ -140,9 +145,10 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="insurance">Aseguranza seleccionada</label>
                     <input
                         className="form-control"
-                        placeholder="Quién reclama la plantilla"
+                        placeholder="Aseguranza seleccionada"
                         id="insurance"
                         name="insurance"
                         value={subscription?.insurance}
@@ -150,9 +156,10 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="monthlyPremium">Prima mensual</label>
                     <input
                         className="form-control"
-                        placeholder="monthlyPremium"
+                        placeholder="Prima mensual"
                         id="monthlyPremium"
                         name="monthlyPremium"
                         value={subscription?.monthlyPremium}
@@ -161,6 +168,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="maximumSpend">Gastos máximos</label>
                     <input
                         className="form-control"
                         placeholder="Gastos máximos"
@@ -172,6 +180,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="annualDeductible">Deducible anual</label>
                     <input
                         className="form-control"
                         placeholder="Deducible anual"
@@ -184,6 +193,7 @@ const SubscriptionForm: React.FC = () => {
                 </div>
 
                 <div className="form-group">
+                    <label htmlFor="genericDrug">Medicamentos genericos</label>
                     <input
                         className="form-control"
                         placeholder="Medicamentos genericos"
@@ -194,9 +204,10 @@ const SubscriptionForm: React.FC = () => {
                         onChange={handleNameChange}
                     />
                 </div>
-                </div>
+            </div>
             <div className="col-12 col-md-6 border">
                 <div className="form-group">
+                    <label htmlFor="primaryDoctor">Medico principal</label>
                     <input
                         className="form-control"
                         placeholder="Medico principal"
@@ -207,8 +218,9 @@ const SubscriptionForm: React.FC = () => {
                         onChange={handleNameChange}
                     />
                 </div>
-           
+
                 <div className="form-group">
+                    <label htmlFor="medicalSpecialist">Medico especialista</label>
                     <input
                         className="form-control"
                         placeholder="Medico especialista"
@@ -220,6 +232,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="emergencyRoom">Sala de emergencias</label>
                     <input
                         className="form-control"
                         placeholder="Sala de emergencias"
@@ -231,6 +244,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="subsidy">Subsidio</label>
                     <input
                         className="form-control"
                         placeholder="Subsidio"
@@ -241,6 +255,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="clientAnnotations">Anotaciones del cliente</label>
                     <input
                         className="form-control"
                         placeholder="Anotaciones del cliente"
@@ -251,6 +266,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="callcenterAnnotations">Anotaciones del CallCenter</label>
                     <input
                         className="form-control"
                         placeholder="Anotaciones del CallCenter"
@@ -261,6 +277,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="audio">audio</label>
                     <input
                         className="form-control"
                         placeholder="audio"
@@ -272,12 +289,14 @@ const SubscriptionForm: React.FC = () => {
                 </div>
                 <div className="form-group">
                     <select className="custom-select" name="state" id="state" onChange={handleNameChange}>
-                        <option value="REJECTED" >Rechazado </option>
+                        <option value="GENERATED" defaultChecked >Generado </option>
                         <option value="ACEPTED">Aceptado </option>
+                        <option value="REJECTED" >Rechazado </option>
                         <option value="CANCELED">Cancelado </option>
                     </select>
                 </div>
                 <div className="form-group">
+                    <label htmlFor="startCoverage">Inicio de cobertura</label>
                     <input
                         className="form-control"
                         placeholder="Inicio de cobertura"
@@ -289,6 +308,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="endCoverage">Fin de cobertura</label>
                     <input
                         className="form-control"
                         placeholder="Fin de cobertura"
@@ -300,7 +320,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <button className="btn btn-success" title="Crear Producto" onClick={saveSubscription}>Crear Listado</button>
+                    <button className="btn btn-success" title="Crear Producto" onClick={saveSubscription}>Guardar</button>
 
                 </div>
             </div>

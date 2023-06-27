@@ -1,12 +1,21 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import * as ClientDailyListService from "../../services/client-daily-list.service";
+import * as UserService from "../../services/user.service";
 import * as ClienteService from "../../services/cliente.service";
 import ICliente from '../../types/cliente.type';
 import IClientDailyList from "../../types/client-daily-list.type";
 import { useLocation } from "react-router-dom";
+import IUser from "../../types/user.type";
 
-type Props =
-  { dailyListId?: null }
+type Props = {
+    dailyListId?: null,
+    date?: string | null
+  }
+
+type List = {
+  clientId: number | string,
+  operatorId: number | string
+}
 
 const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
@@ -14,12 +23,15 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
   const [selectedOption, setSelectedOptions] = useState<string>();
   const [clientes, setClientes] = useState<Array<ICliente>>([]);
+  const [users, setUsers] = useState<Array<IUser>>([]);
+  const [selectionList, setSelectionList] = useState<Array<List>>()
   const [dataList, setDataList] = useState<Array<IClientDailyList>>([]);
   const [filterClient, setFilterClient] = useState('');
 
 
   useEffect(() => {
     // retrieveClientes();
+    retrieveUsers()
     retrieveItems();
   }, []);
 
@@ -43,6 +55,11 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
     setSelectedOptions(e.target.value);
   };
 
+  const handleSelectedOperator = (e: ChangeEvent<HTMLSelectElement>) => {
+    console.log(e)
+    console.log(selectionList)
+  }
+
   const addClient = () => {
     if (selectedOption) {
       let data = JSON.parse(selectedOption)
@@ -50,7 +67,7 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
         clientId: Number(data.id),
         operatorId: 1,
         dailyListId: Number(state.dailyListId),
-        cliente : {
+        cliente: {
           nombre: data.nombre,
           apellido: data.apellido
         }
@@ -83,9 +100,19 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
   const retrieveClientes = async () => {
     try {
-      const response = await ClienteService.getAll(filterClient);
+      const response = await ClienteService.getAllByQuery(filterClient);
       const data = await response;
       setClientes(data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const retrieveUsers = async () => {
+    try {
+      const response = await UserService.getAll();
+      const data = await response;
+      setUsers(data.data);
     } catch (error) {
       console.error(error);
     }
@@ -98,31 +125,63 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
   const deleteClient = () => { }
 
+  const handleAddData = (clients: any, users: any) => {
+    let user = JSON.parse(users.value)
+
+    let items = {
+      clientId: Number(clients.id),
+      operatorId: user.id,
+      dailyListId: Number(state.dailyListId),
+      cliente: {
+        nombre: clients.nombre,
+        apellido: clients.apellido
+      },
+      username: user.username
+    }
+    setDataList([...dataList, items]);
+  };
+
   return (
     <div>
       <div className="list row">
         <div className="col-md-12">
-          <h2>Crear listado diario {state.dailyListId}</h2>
+          <h2>Crear listado diario {state.date}</h2>
         </div>
       </div>
       <div className="list row">
-        <div className="col-md-10">
+        <div className="col-md-12">
           <div className="input-group mb-3">
             <input type="text" className="form-control" value={filterClient} placeholder="Buscar cliente" onInput={searchClient} />
           </div>
-          <div className="input-group mb-3">
-            <select value={selectedOption} size={5} className="custom-select w-100" id="selectedOption" name="selectedOption" onChange={handleSelectChange} >
-              {clientes.map((item, index) => (
-                <option value={JSON.stringify(item)} key={item.id} >{item.nombre} {item.apellido}</option>
-              ))}
-            </select>
-          </div>
-        </div>
+          <div className="w-100 table-responsive">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Operador</th>
+                  <th>Añadir</th>
+                </tr>
+              </thead>
+              <tbody>
+                {clientes.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.nombre} {item.apellido}</td>
+                    <td>
+                      <select size={3} className="custom-select w-100" id={"selectOperator" + index} name={"selectOperator" + index}  >
+                        {users.map((user) => (
+                          <option value={JSON.stringify(user)} key={user.id} >{user.username}</option>
+                        ))}
+                      </select>
+                    </td>
+                    <td>
+                      <button onClick={() => handleAddData((item), (document.getElementById('selectOperator' + index)))} className="btn btn-success">Añadir</button>
+                    </td>
 
-        <div className="col-md-2">
-          <button className="btn btn-outline-primary btn-block" type="button" onClick={addClient}>
-            Añadir
-          </button>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
         <div className="col-md-12 list">
           <table className="table table-striped table-bordered">
@@ -136,12 +195,9 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
             <tbody>
               {dataList.map((item, index) => (
                 <tr key={index}>
-                  <td  > {item.cliente?.nombre}  {item.cliente?.apellido} </td>
+                  <td> {item.clientId} - {item.cliente?.nombre}  {item.cliente?.apellido} </td>
                   <td>
-                    <select className="custom-select" name="operatorId" id="operatorId" onChange={(e) => sendOperator(index, e.target.value)}>
-                      <option value="1" >Cristhiam Monsalve </option>
-                      <option value="2">Pepito Monsalve </option>
-                    </select>
+                    {item.operatorId} - {item.username}
                   </td>
                   <td>
                     <button className="btn btn-danger">Remover</button>

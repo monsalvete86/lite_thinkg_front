@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, MouseEventHandler } from "react";
 import * as DailyListService from "../../services/daily-list.service";
 import IDailyList from "../../types/dailyList.type";
 import { Link } from "react-router-dom";
@@ -7,7 +7,13 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const DailyLists: React.FC = () => {
 
+  const today = () => {
+    return new Date().toLocaleString('en-us', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2')
+  }
+
   const [dailyList, setProducts] = useState<Array<IDailyList>>([]);
+  const [searchFrom, setSearchFrom] = useState(today());
+  const [searchTo, setSearchTo] = useState(today());
 
   useEffect(() => {
     retrieveItems();
@@ -26,7 +32,16 @@ const DailyLists: React.FC = () => {
   const removeItem = (id: number | null | undefined) => {
     DailyListService.remove(id);
     retrieveItems();
-};
+  };
+
+  const handleFromChange = (text: ChangeEvent<HTMLInputElement>) => {
+    console.log(text)
+    setSearchFrom(text.target.value);
+  };
+  const handleToChange = (text: ChangeEvent<HTMLInputElement>) => {
+    console.log(text)
+    setSearchTo(text.target.value);
+  };
 
   return (
     <div>
@@ -35,31 +50,40 @@ const DailyLists: React.FC = () => {
           <h2>Listado diario</h2>
         </div>
       </div>
-      <div className="list row">
-        <div className="col-md-8"></div>
-        <div className="col-md-8">
-          <div className="input-group mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search by title"
-            />
-            <div className="input-group-append">
-              <button className="btn btn-outline-secondary" type="button">
-                Search
-              </button>
-              <Link to={"/dailyList/new"} className="ml-2 btn btn-primary">
-                New
-              </Link>
-              <PDFDownloadLink
-                document={<ReportPDF dailyList={dailyList} />}
-                fileName="report.pdf"
-              >
-                <button className="ml-2 btn btn-danger">Dowload PDF</button>
-              </PDFDownloadLink>
-            </div>
+      <div className="page_search my-2  w-100">
+        <div className="form-row w-100">
+          <div className="form-group col-md-5">
+            <label >Desde</label>
+            <input type="date" value={searchFrom} className="form-control" id="search_from" onChange={handleFromChange} />
+          </div>
+          <div className="form-group col-md-5">
+            <label >Hasta</label>
+            <input type="date" value={searchTo} className="form-control" id="search_to" onChange={handleToChange} />
+          </div>
+          <div className="form-group col-md-2 d-flex align-items-end">
+            <button
+              className="btn btn-block btn-outline-secondary"
+              type="button"
+            >
+              Buscar
+            </button>
           </div>
         </div>
+        <div className="w-100 justify-content-end d-flex">
+          <div className="input-group-append">
+            <Link to={"/dailyList/new"} className="ml-2 btn btn-primary">
+              New
+            </Link>
+            <PDFDownloadLink
+              document={<ReportPDF dailyList={dailyList} />}
+              fileName="report.pdf"
+            >
+              <button className="ml-2 btn btn-danger">Dowload PDF</button>
+            </PDFDownloadLink>
+          </div>
+        </div>
+      </div>
+      <div className="list row">
         <div className="col-md-12 list">
           <table className="table table-striped table-bordered">
             <thead>
@@ -79,7 +103,7 @@ const DailyLists: React.FC = () => {
                       <td className="text-center">
                         <Link
                           to={"/clientDailyList/new"}
-                          state={{'dailyListId':row.id}}
+                          state={{ 'dailyListId': row.id , 'date':row.date}}
                           className="btn btn-primary"
                         >
                           Editar

@@ -1,50 +1,34 @@
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-import * as SubscriptionService from "../../services/subscription.service";
-import ISubscription from '../../types/subscription.type';
+import * as ProcessorService from "../../services/processor.service";
+import IProcessor from '../../types/processor.type';
 import { Link } from "react-router-dom";
-import { PDFDownloadLink } from "@react-pdf/renderer"
-import IClientDailyList from "../../types/client-daily-list.type";
 
-const Subscriptions: React.FC = () => {
+const Processor: React.FC = () => {
 
-    const [subscriptions, setSubscriptions] = useState<Array<IClientDailyList>>([]);
-    const [currentSubscription, setCurrentSubscription] = useState<ISubscription | null>(null);
-    const [currentIndex, setCurrentIndex] = useState<number>(-1);
-    const [searchSubscription, setSearchSubscriptions] = useState<string>("");
-    const [showConfirm, setShowConfirm] = useState(false);
-
-    const subscriptionsRef = useRef();
-    console.log("process.env");
-    // subscriptionsRef.current = subscriptions;
+    const [processors, setProcessors] = useState<Array<IProcessor>>([]);
 
     useEffect(() => {
-        retrieveSubscriptions();
+        retrieveProcessors();
     }, []);
 
-    const retrieveSubscriptions = () => {
-        SubscriptionService.getAll()
+    const retrieveProcessors = () => {
+        ProcessorService.getAll()
             .then((response) => {
-                setSubscriptions(response.data);
+                setProcessors(response.data);
             })
             .catch((e) => {
                 console.log(e);
             });
     };
 
-    const refreshList = () => {
-        retrieveSubscriptions();
-    };
 
-    const setActiveSubscription = (subscription: ISubscription, index: number) => {
-        setCurrentSubscription(subscription);
-        setCurrentIndex(index);
-    };
 
-    const cleanSubscription = (id: number | null | undefined) => {
-        const confirmation = window.confirm("¿Está seguro de que desea eliminar este subscription?");
+    const cleanProcessor = (id: number | null | undefined) => {
+        const confirmation = window.confirm("¿Está seguro de que desea eliminar este processor?");
         if (confirmation) {
-            SubscriptionService.remove(id);
-            retrieveSubscriptions();
+            console.log(id);
+            ProcessorService.remove(id);
+            retrieveProcessors();
         }
     };
 
@@ -52,7 +36,7 @@ const Subscriptions: React.FC = () => {
         <div>
             <div className="list row">
                 <div className="col-md-12">
-                    <h2>Subscriptions Stock</h2>
+                    <h2>Procesadoras</h2>
                 </div>
             </div>
             <div className="list row">
@@ -76,7 +60,7 @@ const Subscriptions: React.FC = () => {
                                 Search
                             </button>
                             <Link
-                                to={"/subscriptions/new"}
+                                to={"/processors/new"}
                                 className="ml-2 btn btn-primary"
                             >
                                 New
@@ -91,28 +75,24 @@ const Subscriptions: React.FC = () => {
                         <thead>
                             <tr className="text-center">
                                 <th>Code</th>
-                                <th>Cliente</th>
-                                <th>Estado</th>
-                                <th>Lista diaria</th>
+                                <th>Processor </th>
                                 <th colSpan={2}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             {
-                                subscriptions &&
-                                subscriptions.map((row, index) => {
+                                processors &&
+                                processors.map((row, index) => {
                                     return (
                                         <tr key={row.id}>
                                             <td className="text-center">{row.id}</td>
-                                            <td className="text-center">{row.cliente?.nombre} {row.cliente?.apellido}</td>
-                                            <td>{row.state ?? "GENERATED"}</td>
-                                            <td className="text-center">{row.dailyListId}</td>
+                                            <td className="text-center">{row.processorName}</td>
                                             <td className="text-center">
-                                                <Link to={"/subscription/" + row?.id} className="btn btn-primary">Edit</Link>
+                                                <Link to={"/processors/" + row?.id} className="btn btn-primary">Edit</Link>
                                             </td>
                                             <td className="text-center">
-                                                <button onClick={() => cleanSubscription(row.id)} className="btn btn-danger">Delete</button>
+                                                <button onClick={() => cleanProcessor(row.id)} className="btn btn-danger">Delete</button>
                                             </td>
                                         </tr>
                                     )
@@ -126,5 +106,5 @@ const Subscriptions: React.FC = () => {
     );
 }
 
-export default Subscriptions;
+export default Processor;
 

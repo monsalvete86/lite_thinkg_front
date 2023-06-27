@@ -23,5 +23,6 @@ export default interface ISubscription {
     startCoverage: string,
     endCoverage: string,
     processorId?: number,
+    [key: string]: any
     // clientListId?: number,
 }
