@@ -12,15 +12,21 @@ const DailyLists: React.FC = () => {
   }
 
   const [dailyList, setProducts] = useState<Array<IDailyList>>([]);
-  const [searchFrom, setSearchFrom] = useState(today());
-  const [searchTo, setSearchTo] = useState(today());
+  const [searchFrom, setSearchFrom] = useState<string>(today());
+  const [searchTo, setSearchTo] = useState<string>(today());
 
   useEffect(() => {
     retrieveItems();
   }, []);
 
   const retrieveItems = () => {
-    DailyListService.getAll()
+
+    let params = {
+      from: searchFrom,
+      to: searchTo
+    }
+
+    DailyListService.getAll(params)
       .then((response) => {
         setProducts(response.data);
       })
@@ -64,6 +70,7 @@ const DailyLists: React.FC = () => {
             <button
               className="btn btn-block btn-outline-secondary"
               type="button"
+              onClick={retrieveItems}
             >
               Buscar
             </button>
@@ -74,12 +81,12 @@ const DailyLists: React.FC = () => {
             <Link to={"/dailyList/new"} className="ml-2 btn btn-primary">
               New
             </Link>
-            <PDFDownloadLink
+            {/* <PDFDownloadLink
               document={<ReportPDF dailyList={dailyList} />}
               fileName="report.pdf"
             >
               <button className="ml-2 btn btn-danger">Dowload PDF</button>
-            </PDFDownloadLink>
+            </PDFDownloadLink> */}
           </div>
         </div>
       </div>
@@ -102,8 +109,8 @@ const DailyLists: React.FC = () => {
                       <td>{row.date}</td>
                       <td className="text-center">
                         <Link
-                          to={"/clientDailyList/new"}
-                          state={{ 'dailyListId': row.id , 'date':row.date}}
+                          to={`/clientDailyList/${row.id}`}
+                          state={{ 'dailyListId': row.id, 'date': row.date }}
                           className="btn btn-primary"
                         >
                           Editar

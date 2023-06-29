@@ -6,11 +6,12 @@ import ICliente from '../../types/cliente.type';
 import IClientDailyList from "../../types/client-daily-list.type";
 import { useLocation } from "react-router-dom";
 import IUser from "../../types/user.type";
+import { Link } from "react-router-dom";
 
 type Props = {
-    dailyListId?: null,
-    date?: string | null
-  }
+  dailyListId?: null,
+  date?: string | null
+}
 
 type List = {
   clientId: number | string,
@@ -41,7 +42,6 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
 
   const retrieveItems = () => {
-
     ClientDailyListService.getAllByDailyList(state.dailyListId)
       .then((response) => {
         setDataList(response.data);
@@ -126,8 +126,15 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
   const deleteClient = () => { }
 
   const handleAddData = (clients: any, users: any) => {
-    let user = JSON.parse(users.value)
 
+    if (!users.value) {
+      users.className += (' is-invalid');
+      return false;
+    } else {
+      users.classList.remove("is-invalid")
+    };
+
+    let user = JSON.parse(users.value)
     let items = {
       clientId: Number(clients.id),
       operatorId: user.id,
@@ -136,7 +143,9 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
         nombre: clients.nombre,
         apellido: clients.apellido
       },
-      username: user.username
+      user:{
+        username:user.username
+      }
     }
     setDataList([...dataList, items]);
   };
@@ -145,7 +154,7 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
     <div>
       <div className="list row">
         <div className="col-md-12">
-          <h2>Crear listado diario {state.date}</h2>
+          <h2>Listado diario {state.date}</h2>
         </div>
       </div>
       <div className="list row">
@@ -167,7 +176,8 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
                   <tr key={index}>
                     <td>{item.nombre} {item.apellido}</td>
                     <td>
-                      <select size={3} className="custom-select w-100" id={"selectOperator" + index} name={"selectOperator" + index}  >
+                      <select required defaultValue="" className="custom-select w-100" id={"selectOperator" + index} name={"selectOperator" + index}  >
+                        <option value="">--Seleccionar--</option>
                         {users.map((user) => (
                           <option value={JSON.stringify(user)} key={user.id} >{user.username}</option>
                         ))}
@@ -189,6 +199,7 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
               <tr className="text-center">
                 <th>Cliente</th>
                 <th>Operador</th>
+                <th>Estado</th>
                 <th colSpan={2}>Acciones</th>
               </tr>
             </thead>
@@ -197,10 +208,11 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
                 <tr key={index}>
                   <td> {item.clientId} - {item.cliente?.nombre}  {item.cliente?.apellido} </td>
                   <td>
-                    {item.operatorId} - {item.username}
+                    {item.operatorId} - {item.user.username}
                   </td>
+                  <td>{item.state ?? 'GENERATED'}</td>
                   <td>
-                    <button className="btn btn-danger">Remover</button>
+                    <button disabled={item.state != 'GENERATED'} className="btn btn-danger">Remover</button>
                   </td>
                 </tr>
               ))}
@@ -208,9 +220,21 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
             </tbody>
           </table>
 
-          <button className="btn btn-outline-primary btn-block" type="button" onClick={createDailyList}>
-            Crear lista
-          </button>
+          <div className="row">
+            <div className="col-6">
+              <Link
+                to={"/dailyList"}
+                className="btn btn-outline-secondary btn-block"
+              >
+                Cancelar
+              </Link>
+            </div>
+            <div className="col-6">
+              <button className="btn btn-outline-primary btn-block" type="button" onClick={createDailyList}>
+                Guardar lista
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

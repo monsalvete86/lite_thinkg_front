@@ -5,8 +5,8 @@ import IDailyList from "../types/dailyList.type";
 // const API_URL = "https://w2j8ebzbl7.execute-api.us-east-1.amazonaws.com/api/products";
 const API_URL = "http://localhost:8080/api/daily-lists";
 
-export const getAll = () => {
-  return axios.get(API_URL + "/", { headers: authHeader() });
+export const getAll = (params?: object) => {
+  return axios.get(API_URL + "/", { headers: authHeader(), params: params });
 };
 
 export const get = (id: any): Promise<IDailyList> => {
