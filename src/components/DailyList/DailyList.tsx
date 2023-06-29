@@ -81,12 +81,6 @@ const DailyLists: React.FC = () => {
             <Link to={"/dailyList/new"} className="ml-2 btn btn-primary">
               New
             </Link>
-            {/* <PDFDownloadLink
-              document={<ReportPDF dailyList={dailyList} />}
-              fileName="report.pdf"
-            >
-              <button className="ml-2 btn btn-danger">Dowload PDF</button>
-            </PDFDownloadLink> */}
           </div>
         </div>
       </div>
@@ -108,13 +102,13 @@ const DailyLists: React.FC = () => {
                       <td>{row.userId}</td>
                       <td>{row.date}</td>
                       <td className="text-center">
-                        <Link
+                        {row.date === today() && <Link
                           to={`/clientDailyList/${row.id}`}
                           state={{ 'dailyListId': row.id, 'date': row.date }}
                           className="btn btn-primary"
                         >
                           Editar
-                        </Link>
+                        </Link>}
                       </td>
                       <td className="text-center">
                         <button className="btn btn-danger" onClick={() => removeItem(row.id)}>Eliminar</button>

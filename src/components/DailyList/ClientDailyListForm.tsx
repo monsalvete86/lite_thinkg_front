@@ -2,6 +2,7 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import * as ClientDailyListService from "../../services/client-daily-list.service";
 import * as UserService from "../../services/user.service";
 import * as ClienteService from "../../services/cliente.service";
+import * as SubscriptionService from "../../services/subscription.service";
 import ICliente from '../../types/cliente.type';
 import IClientDailyList from "../../types/client-daily-list.type";
 import { useLocation } from "react-router-dom";
@@ -25,7 +26,7 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
   const [selectedOption, setSelectedOptions] = useState<string>();
   const [clientes, setClientes] = useState<Array<ICliente>>([]);
   const [users, setUsers] = useState<Array<IUser>>([]);
-  const [selectionList, setSelectionList] = useState<Array<List>>()
+  const [errorMessage, setErrorMessage] = useState(false)
   const [dataList, setDataList] = useState<Array<IClientDailyList>>([]);
   const [filterClient, setFilterClient] = useState('');
 
@@ -57,7 +58,6 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
   const handleSelectedOperator = (e: ChangeEvent<HTMLSelectElement>) => {
     console.log(e)
-    console.log(selectionList)
   }
 
   const addClient = () => {
@@ -123,9 +123,18 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
     setFilterClient(value);
   }
 
-  const deleteClient = () => { }
+  const removeSubscription = (id:number) => { 
+    const confirmation = window.confirm("¿Está seguro de que desea eliminar este product?");
+    if (confirmation) {
+        console.log(id);
+        SubscriptionService.remove(id);
+        retrieveItems();
+    }
+  }
 
   const handleAddData = (clients: any, users: any) => {
+
+    setErrorMessage(false)
 
     if (!users.value) {
       users.className += (' is-invalid');
@@ -135,6 +144,16 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
     };
 
     let user = JSON.parse(users.value)
+
+    let exists = dataList.filter(value => {
+      if (value.clientId === clients.id && value.operatorId === user.id) {
+        setErrorMessage(true)
+        return value;
+      }
+    })
+
+    if (exists.length) return false
+
     let items = {
       clientId: Number(clients.id),
       operatorId: user.id,
@@ -143,8 +162,8 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
         nombre: clients.nombre,
         apellido: clients.apellido
       },
-      user:{
-        username:user.username
+      user: {
+        username: user.username
       }
     }
     setDataList([...dataList, items]);
@@ -152,6 +171,9 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
   return (
     <div>
+      {errorMessage && <div className="alert alert-secondary" role="alert">
+        Ya se ha creado un registro similar previamente, seleccione otra opción
+        </div>}
       <div className="list row">
         <div className="col-md-12">
           <h2>Listado diario {state.date}</h2>
@@ -210,9 +232,11 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
                   <td>
                     {item.operatorId} - {item.user.username}
                   </td>
-                  <td>{item.state ?? 'GENERATED'}</td>
+                  <td>{item.state}</td>
                   <td>
-                    <button disabled={item.state != 'GENERATED'} className="btn btn-danger">Remover</button>
+                    {(item.state === 'GENERATED' && item.id) &&
+                      <button disabled={item.state !== 'GENERATED'} className="btn btn-danger" onClick={() => removeSubscription(Number(item.id))}>Remover</button>}
+
                   </td>
                 </tr>
               ))}
