@@ -21,8 +21,6 @@ const Processor: React.FC = () => {
             });
     };
 
-
-
     const cleanProcessor = (id: number | null | undefined) => {
         const confirmation = window.confirm("¿Está seguro de que desea eliminar este processor?");
         if (confirmation) {
@@ -89,7 +87,7 @@ const Processor: React.FC = () => {
                                             <td className="text-center">{row.id}</td>
                                             <td className="text-center">{row.processorName}</td>
                                             <td className="text-center">
-                                                <Link to={"/processors/" + row?.id} className="btn btn-primary">Edit</Link>
+                                                <Link to={"/processor/" + row?.id} className="btn btn-primary">Edit</Link>
                                             </td>
                                             <td className="text-center">
                                                 <button onClick={() => cleanProcessor(row.id)} className="btn btn-danger">Delete</button>

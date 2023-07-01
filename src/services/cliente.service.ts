@@ -6,7 +6,6 @@ import authHeader from "./auth-header";
 const API_URL = "http://localhost:8080/api/clientes";
 
 export const getAll = () => {
-  //return axios.get<Array<ITutorialData>>(API_URL + "/", { headers: authHeader() });
   return axios.get(`${API_URL}/`, { headers: authHeader() });
 };
 
@@ -26,9 +25,6 @@ export const remove = (id: any) => {
   return axios.delete<any>(API_URL + `/${id}`, { headers: authHeader() });
 };
 
-
-export const getAllByQuery = (query?:string) => {
-  //return axios.get<Array<ITutorialData>>(API_URL + "/", { headers: authHeader() });
-  return axios.get(`${API_URL}-by/?client=${query}`, { headers: authHeader() });
+export const getAllByQuery = (query?: string, filter?: object) => {
+  return axios.post(`${API_URL}-by/?client=${query}`, filter, { headers: authHeader() });
 };
-

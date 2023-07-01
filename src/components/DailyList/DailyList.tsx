@@ -99,7 +99,7 @@ const DailyLists: React.FC = () => {
                 dailyList.map((row, index) => {
                   return (
                     <tr key={row.id}>
-                      <td>{row.userId}</td>
+                      <td>{row.user.username}</td>
                       <td>{row.date}</td>
                       <td className="text-center">
                         {row.date === today() && <Link

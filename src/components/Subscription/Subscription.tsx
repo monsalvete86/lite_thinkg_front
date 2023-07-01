@@ -8,14 +8,6 @@ import IClientDailyList from "../../types/client-daily-list.type";
 const Subscriptions: React.FC = () => {
 
     const [subscriptions, setSubscriptions] = useState<Array<IClientDailyList>>([]);
-    const [currentSubscription, setCurrentSubscription] = useState<ISubscription | null>(null);
-    const [currentIndex, setCurrentIndex] = useState<number>(-1);
-    const [searchSubscription, setSearchSubscriptions] = useState<string>("");
-    const [showConfirm, setShowConfirm] = useState(false);
-
-    const subscriptionsRef = useRef();
-    console.log("process.env");
-    // subscriptionsRef.current = subscriptions;
 
     useEffect(() => {
         retrieveSubscriptions();
@@ -31,15 +23,6 @@ const Subscriptions: React.FC = () => {
             });
     };
 
-    const refreshList = () => {
-        retrieveSubscriptions();
-    };
-
-    const setActiveSubscription = (subscription: ISubscription, index: number) => {
-        setCurrentSubscription(subscription);
-        setCurrentIndex(index);
-    };
-
     const cleanSubscription = (id: number | null | undefined) => {
         const confirmation = window.confirm("¿Está seguro de que desea eliminar este subscription?");
         if (confirmation) {
@@ -52,7 +35,7 @@ const Subscriptions: React.FC = () => {
         <div>
             <div className="list row">
                 <div className="col-md-12">
-                    <h2>Subscriptions Stock</h2>
+                    <h2>Suscripciones</h2>
                 </div>
             </div>
             <div className="list row">
@@ -98,7 +81,6 @@ const Subscriptions: React.FC = () => {
                             </tr>
                         </thead>
                         <tbody>
-
                             {
                                 subscriptions &&
                                 subscriptions.map((row, index) => {

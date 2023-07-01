@@ -32,7 +32,6 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
 
   useEffect(() => {
-    // retrieveClientes();
     retrieveUsers()
     retrieveItems();
   }, []);
@@ -40,6 +39,10 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     retrieveClientes();
   }, [filterClient]);
+
+  useEffect(() => {
+    retrieveClientes()
+  }, [dataList]);
 
 
   const retrieveItems = () => {
@@ -52,46 +55,11 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
       });
   };
 
-  const handleSelectChange = (e: any) => {
-    setSelectedOptions(e.target.value);
-  };
-
-  const handleSelectedOperator = (e: ChangeEvent<HTMLSelectElement>) => {
-    console.log(e)
-  }
-
-  const addClient = () => {
-    if (selectedOption) {
-      let data = JSON.parse(selectedOption)
-      let items = {
-        clientId: Number(data.id),
-        operatorId: 1,
-        dailyListId: Number(state.dailyListId),
-        cliente: {
-          nombre: data.nombre,
-          apellido: data.apellido
-        }
-      }
-      console.log(items)
-
-      setDataList(newData => [...newData, items])
-      setSelectedOptions(undefined);
-    }
-  };
-
-  const sendOperator = (index: number, value: string) => {
-    setDataList((prevProducts) => {
-      const updatedProducts = [...prevProducts];
-      updatedProducts[index]['operatorId'] = Number(value);
-      return updatedProducts;
-    });
-  }
-
   const createDailyList = () => {
     ClientDailyListService.createBulk(dataList)
       .then((response) => {
-        // set(response.data);
         console.log(response)
+        retrieveItems()
       })
       .catch((e) => {
         console.log(e);
@@ -100,7 +68,8 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
   const retrieveClientes = async () => {
     try {
-      const response = await ClienteService.getAllByQuery(filterClient);
+      const listClient = dataList.map(item => item.clientId);
+      const response = await ClienteService.getAllByQuery(filterClient, { list: listClient });
       const data = await response;
       setClientes(data.data);
     } catch (error) {
@@ -123,17 +92,15 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
     setFilterClient(value);
   }
 
-  const removeSubscription = (id:number) => { 
+  const removeSubscription = (id: number) => {
     const confirmation = window.confirm("¿Está seguro de que desea eliminar este product?");
     if (confirmation) {
-        console.log(id);
-        SubscriptionService.remove(id);
-        retrieveItems();
+      SubscriptionService.remove(id);
+      retrieveItems();
     }
   }
 
   const handleAddData = (clients: any, users: any) => {
-
     setErrorMessage(false)
 
     if (!users.value) {
@@ -153,7 +120,6 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
     })
 
     if (exists.length) return false
-
     let items = {
       clientId: Number(clients.id),
       operatorId: user.id,
@@ -167,13 +133,14 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
       }
     }
     setDataList([...dataList, items]);
+    window.alert('Lista guardada correctamente')
   };
 
   return (
     <div>
       {errorMessage && <div className="alert alert-secondary" role="alert">
         Ya se ha creado un registro similar previamente, seleccione otra opción
-        </div>}
+      </div>}
       <div className="list row">
         <div className="col-md-12">
           <h2>Listado diario {state.date}</h2>
@@ -234,8 +201,8 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
                   </td>
                   <td>{item.state}</td>
                   <td>
-                    {(item.state === 'GENERATED' && item.id) &&
-                      <button disabled={item.state !== 'GENERATED'} className="btn btn-danger" onClick={() => removeSubscription(Number(item.id))}>Remover</button>}
+                    {((item.state === 'GENERATED' || item.state === null) && item.id) &&
+                      <button disabled={item.state !== 'GENERATED' && item.state !== null} className="btn btn-danger" onClick={() => removeSubscription(Number(item.id))}>Remover</button>}
 
                   </td>
                 </tr>

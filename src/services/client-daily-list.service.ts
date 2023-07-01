@@ -21,7 +21,7 @@ export const create = (data: IClientDailyList) => {
 };
 
 export const createBulk = (data: IClientDailyList[]) => {
-  return axios.post<IClientDailyList>(API_URL + "/bulk-create", data, { headers: authHeader() });
+  return axios.post<IClientDailyList[]>(API_URL + "/bulk-create", data, { headers: authHeader() });
 };
 
 export const update = (id: any, data: any) => {

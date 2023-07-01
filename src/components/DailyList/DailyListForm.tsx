@@ -45,6 +45,7 @@ const DailyListForm: React.FC = () => {
     return (
         <form className="form" action="">
             <div className="form-group">
+                <label htmlFor="date">Fecha de la lista</label>
                 <input
                     type="date"
                     className="form-control"

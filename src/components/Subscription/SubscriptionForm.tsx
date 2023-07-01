@@ -1,5 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import * as ProcessorService from "../../services/processor.service";
+import IProcessor from '../../types/processor.type';
 import ISubscription from "../../types/subscription.type";
 import *  as SubscriptionService from "../../services/subscription.service"
 
@@ -61,17 +63,20 @@ const SubscriptionForm: React.FC = () => {
         setSubscription({ ...subscription, [name]: value });
     };
 
-    const createSubscription = () => {
-        // Aquí puedes realizar alguna acción con los datos del producto
-        console.log('Nombre:', subscription?.migratoryProcess);
-        SubscriptionService.create(subscription)
-            .then((response: any) => {
-                console.log(response.data);
+    const [processors, setProcessors] = useState<Array<IProcessor>>([]);
+
+    useEffect(() => {
+        retrieveProcessors();
+    }, []);
+
+    const retrieveProcessors = () => {
+        ProcessorService.getAll()
+            .then((response) => {
+                setProcessors(response.data);
             })
-            .catch((e: Error) => {
+            .catch((e) => {
                 console.log(e);
             });
-        // Resto de la lógica...
     };
 
     return (
@@ -293,6 +298,15 @@ const SubscriptionForm: React.FC = () => {
                         <option value="ACEPTED">Aceptado </option>
                         <option value="REJECTED" >Rechazado </option>
                         <option value="CANCELED">Cancelado </option>
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="processorId">Procesadora</label>
+                    <select required defaultValue="" className="custom-select w-100" id="processorId" name="processorId"  onChange={handleNameChange}>
+                        <option value="">--Seleccionar--</option>
+                        {processors.map((processor) => (
+                            <option value={JSON.stringify(processor)} key={processor.id} >{processor.processorName}</option>
+                        ))}
                     </select>
                 </div>
                 <div className="form-group">

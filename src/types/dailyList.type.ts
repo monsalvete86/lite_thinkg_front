@@ -2,5 +2,6 @@ export default interface IDailyList {
   id?: number | null,
   userId: number,
   date: string,
-  status: boolean
+  status: boolean,
+  [key: string]: any
 }
