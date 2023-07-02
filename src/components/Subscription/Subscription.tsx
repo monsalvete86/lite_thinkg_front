@@ -1,8 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
 import * as SubscriptionService from "../../services/subscription.service";
-import ISubscription from '../../types/subscription.type';
 import { Link } from "react-router-dom";
-import { PDFDownloadLink } from "@react-pdf/renderer"
 import IClientDailyList from "../../types/client-daily-list.type";
 
 const Subscriptions: React.FC = () => {

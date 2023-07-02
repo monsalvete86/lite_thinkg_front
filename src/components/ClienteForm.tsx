@@ -4,10 +4,14 @@ import * as ClientesService from "../services/cliente.service";
 import ICliente from "../types/cliente.type";
 import { getCurrentUser } from "../services/auth.service";
 
+type MyProps = {
+    id?: number,
+    hiddeComponent?: (hide: boolean) => void
+}
 
-const ClienteForm: React.FC = () => {
+const ClienteForm: React.FC<MyProps> = (props) => {
     const currentUser = getCurrentUser();
-    const { id }= useParams();
+    const id = props.id;
     let navigate = useNavigate();
 
     const initialClienteState = {
@@ -20,35 +24,37 @@ const ClienteForm: React.FC = () => {
     };
 
     const [cliente, setCliente] = useState(initialClienteState);
-    const [banEdit, setBanEdit] = useState<number> (0);
-    
+    const [isLoading, setIsLoading] = useState(false)
+    const [banEdit, setBanEdit] = useState<number>(0);
+
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setCliente({ ...cliente, [name]: value });
     };
-    
-    const getCliente = (id: string) => {
+
+    const getCliente = (id: number) => {
         ClientesService.get(id)
-        .then((response: any) => {
-            setCliente(response.data);
-            console.log(response.data);
-        })
-        .catch((e: Error) => {
-            console.log(e);
-        });
+            .then((response: any) => {
+                setCliente(response.data);
+                console.log(response.data);
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            });
     };
-    
+
     useEffect(() => {
         if (id) {
             ClientesService.get(id)
-            .then((result: any) => {
-                setBanEdit(result.data.id)
-                setCliente(result.data);
-            })
+                .then((result: any) => {
+                    setBanEdit(result.data.id)
+                    setCliente(result.data);
+                })
         }
     }, []);
-    
+
     const saveCliente = () => {
+        setIsLoading(true)
         var data = {
             nombre: cliente.nombre,
             apellido: cliente.apellido,
@@ -57,39 +63,49 @@ const ClienteForm: React.FC = () => {
             ciudad: cliente.ciudad,
         };
 
-        if(!cliente?.id || cliente?.id === null) {
+        if (!cliente?.id || cliente?.id === null) {
 
             ClientesService.create(data)
-            .then((response: any) => {
-                console.log(response.data);
-            })
-            .catch((e: Error) => {
-                console.log(e);
-            });
+                .then((response: any) => {
+                    console.log(response.data);
+                    window.alert('Cliente guardado correctamente')
+                    if (props.hiddeComponent) {
+                        props.hiddeComponent(false)
+                    }
+                    setIsLoading(false)
+                })
+                .catch((e: Error) => {
+                    console.log(e);
+                    setIsLoading(false)
+                });
         } else {
             ClientesService.update(cliente.id, data)
-            .then((response: any) => {
-                console.log("data ")
-                console.log(response.data);
-            })
-            .catch((e: Error) => {
-                console.log(e);
-            });
+                .then((response: any) => {
+                    setIsLoading(false)
+                    console.log(response.data);
+                })
+                .catch((e: Error) => {
+                    setIsLoading(false)
+                    console.log(e);
+                });
         }
-
-        navigate("/clientes");
-        window.location.reload();
     };
+
+    const hiddeModal = () => {
+        if (props.hiddeComponent) {
+            props.hiddeComponent(false)
+        }
+    }
 
     useEffect(() => {
         if (id)
             getCliente(id);
     }, [id]);
-    
+
     return (
         <div className="submit-form">
             <div>
-                
+
                 {cliente?.id && `Current Cliente ${cliente.nombre} - ${cliente.apellido} - ${cliente.telefono} - ${cliente.direccion} - ${cliente.ciudad}`}
                 {!cliente?.id && 'New Cliente'}
                 <div className="form-group">
@@ -152,17 +168,33 @@ const ClienteForm: React.FC = () => {
                         name="ciudad"
                     />
                 </div>
-                <button className="btn btn-success" onClick={saveCliente}>Save</button>
-                <Link
-                    to={"/clientes" }
-                    className="ml-2 btn btn-secondary"
-                >
-                    Cancel
-                </Link>
+                {!isLoading && (<div className="modal-footer">
+                    <button className="btn btn-success" onClick={saveCliente}>Guardar</button>
+                    {!props.hiddeComponent && <Link
+                        data-dismiss="modal"
+                        to={"/clientes"}
+                        className="ml-2 btn btn-secondary"
+                    >
+                        Cancelar
+                    </Link>
+                    }
+                    {props.hiddeComponent && <button className="btn btn-secondary" onClick={hiddeModal}>Cancelar</button>
+                    }
+                </div>)}
+                {isLoading && (
+                    <div className="d-flex justify-content-center">
+                        <div className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </div>
+                        <h5>Guardando</h5>
+                    </div>
+                )
+
+                }
             </div>
         </div>
     );
-    
+
 }
 
 export default ClienteForm;

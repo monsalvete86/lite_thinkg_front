@@ -8,6 +8,7 @@ import IClientDailyList from "../../types/client-daily-list.type";
 import { useLocation } from "react-router-dom";
 import IUser from "../../types/user.type";
 import { Link } from "react-router-dom";
+import ClienteForm from "../ClienteForm";
 
 type Props = {
   dailyListId?: null,
@@ -23,13 +24,12 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
   let { state } = useLocation();
 
-  const [selectedOption, setSelectedOptions] = useState<string>();
   const [clientes, setClientes] = useState<Array<ICliente>>([]);
   const [users, setUsers] = useState<Array<IUser>>([]);
   const [errorMessage, setErrorMessage] = useState(false)
   const [dataList, setDataList] = useState<Array<IClientDailyList>>([]);
   const [filterClient, setFilterClient] = useState('');
-
+  const [hideClientForm, setHideClientForm] = useState(false);
 
   useEffect(() => {
     retrieveUsers()
@@ -43,6 +43,11 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     retrieveClientes()
   }, [dataList]);
+
+  useEffect(() => {
+    hiddeModalClientForm()
+    console.log(hideClientForm)
+  }, [hideClientForm]);
 
 
   const retrieveItems = () => {
@@ -136,53 +141,84 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
     window.alert('Lista guardada correctamente')
   };
 
+  const hiddeModalClientForm = () => {
+    if (!hideClientForm) {
+      retrieveClientes();
+    }
+  }
+  const openModal = () => {
+    setHideClientForm(true)
+  }
+
   return (
     <div>
       {errorMessage && <div className="alert alert-secondary" role="alert">
         Ya se ha creado un registro similar previamente, seleccione otra opción
       </div>}
+      {/* Modal para crear clientes */}
+
+      {hideClientForm &&
+        <div className="modal modal-dialog-scrollable d-block" id="modalClientForm" style={{'background':"#6c757d8c", 'minHeight':'100%'}} tabIndex={-1} role="dialog" >
+          <div className="modal-dialog modal-lg" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="modalClientFormLabel">Modal title</h5>
+
+              </div>
+              <div className="modal-body">
+                <ClienteForm hiddeComponent={setHideClientForm}></ClienteForm>
+              </div>
+            </div>
+          </div>
+        </div>}
       <div className="list row">
         <div className="col-md-12">
           <h2>Listado diario {state.date}</h2>
         </div>
       </div>
-      <div className="list row">
-        <div className="col-md-12">
-          <div className="input-group mb-3">
-            <input type="text" className="form-control" value={filterClient} placeholder="Buscar cliente" onInput={searchClient} />
-          </div>
-          <div className="w-100 table-responsive">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Cliente</th>
-                  <th>Operador</th>
-                  <th>Añadir</th>
-                </tr>
-              </thead>
-              <tbody>
-                {clientes.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.nombre} {item.apellido}</td>
-                    <td>
-                      <select required defaultValue="" className="custom-select w-100" id={"selectOperator" + index} name={"selectOperator" + index}  >
-                        <option value="">--Seleccionar--</option>
-                        {users.map((user) => (
-                          <option value={JSON.stringify(user)} key={user.id} >{user.username}</option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      <button onClick={() => handleAddData((item), (document.getElementById('selectOperator' + index)))} className="btn btn-success">Añadir</button>
-                    </td>
 
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+      <div className="row">
+        <div className="form-group col-8">
+          <input type="text" className="form-control" value={filterClient} placeholder="Buscar cliente" onInput={searchClient} />
         </div>
-        <div className="col-md-12 list">
+        <div className="form-group col-4">
+          <button type="button" className="btn btn-primary btn-block" onClick={openModal} >
+            Crear cliente
+          </button>
+        </div>
+      </div>
+      <div className="container">
+        <div className="w-100 table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Operador</th>
+                <th>Añadir</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clientes.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.nombre} {item.apellido}</td>
+                  <td>
+                    <select required defaultValue="" className="custom-select w-100" id={"selectOperator" + index} name={"selectOperator" + index}  >
+                      <option value="">--Seleccionar--</option>
+                      {users.map((user) => (
+                        <option value={JSON.stringify(user)} key={user.id} >{user.username}</option>
+                      ))}
+                    </select>
+                  </td>
+                  <td>
+                    <button onClick={() => handleAddData((item), (document.getElementById('selectOperator' + index)))} className="btn btn-success">Añadir</button>
+                  </td>
+
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="w-100">
           <table className="table table-striped table-bordered">
             <thead>
               <tr className="text-center">
@@ -203,14 +239,12 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
                   <td>
                     {((item.state === 'GENERATED' || item.state === null) && item.id) &&
                       <button disabled={item.state !== 'GENERATED' && item.state !== null} className="btn btn-danger" onClick={() => removeSubscription(Number(item.id))}>Remover</button>}
-
                   </td>
                 </tr>
               ))}
 
             </tbody>
           </table>
-
           <div className="row">
             <div className="col-6">
               <Link
