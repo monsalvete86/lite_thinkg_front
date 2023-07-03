@@ -1,18 +1,16 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import {  Link, useNavigate, useParams } from 'react-router-dom';
 import * as ClientesService from "../services/cliente.service";
 import ICliente from "../types/cliente.type";
-import { getCurrentUser } from "../services/auth.service";
 
 type MyProps = {
-    id?: number,
+    id?: number | string,
     hiddeComponent?: (hide: boolean) => void
 }
 
 const ClienteForm: React.FC<MyProps> = (props) => {
-    const currentUser = getCurrentUser();
-    const id = props.id;
-    let navigate = useNavigate();
+    // const { idParam }= useParams()
+    const { id } = useParams() ?? props.id;
 
     const initialClienteState = {
         id: null,
@@ -26,13 +24,15 @@ const ClienteForm: React.FC<MyProps> = (props) => {
     const [cliente, setCliente] = useState(initialClienteState);
     const [isLoading, setIsLoading] = useState(false)
     const [banEdit, setBanEdit] = useState<number>(0);
+    let navigate = useNavigate();
+
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setCliente({ ...cliente, [name]: value });
     };
 
-    const getCliente = (id: number) => {
+    const getCliente = (id: number | string) => {
         ClientesService.get(id)
             .then((response: any) => {
                 setCliente(response.data);
@@ -69,10 +69,10 @@ const ClienteForm: React.FC<MyProps> = (props) => {
                 .then((response: any) => {
                     console.log(response.data);
                     window.alert('Cliente guardado correctamente')
+                    setIsLoading(false)
                     if (props.hiddeComponent) {
                         props.hiddeComponent(false)
                     }
-                    setIsLoading(false)
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -88,6 +88,10 @@ const ClienteForm: React.FC<MyProps> = (props) => {
                     setIsLoading(false)
                     console.log(e);
                 });
+        }
+        if(!props.hiddeComponent) {
+            navigate("/clientes");
+            window.location.reload();
         }
     };
 
