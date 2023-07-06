@@ -58,7 +58,7 @@ const Processor: React.FC = () => {
                                 Search
                             </button>
                             <Link
-                                to={"/processors/new"}
+                                to={"/processor/new"}
                                 className="ml-2 btn btn-primary"
                             >
                                 New

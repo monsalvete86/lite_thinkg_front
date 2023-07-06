@@ -2,17 +2,23 @@ import React, { useState, useEffect, ChangeEvent, useRef } from "react";
 import * as SubscriptionService from "../../services/subscription.service";
 import { Link } from "react-router-dom";
 import IClientDailyList from "../../types/client-daily-list.type";
+import states from "../../common/state-subscription";
 
 const Subscriptions: React.FC = () => {
 
     const [subscriptions, setSubscriptions] = useState<Array<IClientDailyList>>([]);
+    const [searchState, setSearchState] = useState("");
+
 
     useEffect(() => {
         retrieveSubscriptions();
     }, []);
 
     const retrieveSubscriptions = () => {
-        SubscriptionService.getAll()
+        let data = {
+            state: searchState
+        }
+        SubscriptionService.getAll(data)
             .then((response) => {
                 setSubscriptions(response.data);
             })
@@ -29,6 +35,11 @@ const Subscriptions: React.FC = () => {
         }
     };
 
+    const handleStateChange = (text: ChangeEvent<HTMLSelectElement>) => {
+        console.log(text)
+        setSearchState(text.target.value);
+      };
+
     return (
         <div>
             <div className="list row">
@@ -42,27 +53,30 @@ const Subscriptions: React.FC = () => {
                 </div>
                 <div className="col-md-8">
                     <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search by title"
+                        <select name="state" id="state" className="custom-select" onChange={handleStateChange}>
+                            <option value="ACEPTED">--Seleccionar -- </option>
+                            {states.map((state) => (
+                                <option value={state.value} key={state.value} >{state.label}</option>
+                            ))}
+                        </select>
 
-                        />
+                        <div className="input-group-append">
+                            <button
+                                className="btn btn-outline-secondary"
+                                type="button"
+                                onClick={retrieveSubscriptions}
+                            >
+                                Buscar
+                            </button>
+                        </div>
                         <div className="input-group-append">
                             <button
                                 className="btn btn-outline-secondary"
                                 type="button"
 
                             >
-                                Search
+                                Próximas a vencer
                             </button>
-                            <Link
-                                to={"/subscriptions/new"}
-                                className="ml-2 btn btn-primary"
-                            >
-                                New
-                            </Link>
-
                         </div>
                     </div>
                 </div>

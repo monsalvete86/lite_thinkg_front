@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import * as AuthService from "./services/auth.service";
@@ -24,7 +23,6 @@ import PagoForm from "./components/PagoForm";
 import DailyList from "./components/DailyList/DailyList";
 import ClientDailyLists from "./components/DailyList/ClientDailyList";
 import ClientDailyListForm from "./components/DailyList/ClientDailyListForm";
-import DailyListForm from "./components/DailyList/DailyListForm";
 import SubscriptionForm from "./components/Subscription/SubscriptionForm";
 import Subscriptions from "./components/Subscription/Subscription";
 import ProcessorForm from "./components/Processor/ProcessorForm";
@@ -165,7 +163,6 @@ const App: React.FC = () => {
           <Route path="/pagos" element={<Pagos />} />
           <Route path="/pagos/new" element={<PagoForm />} />
           <Route path="/pagos/:id" element={<PagoForm />} />
-          <Route path="/dailyList/new" element={<DailyListForm />} />
           <Route path="/clientDailyList" element={<ClientDailyLists />} />
           <Route path="/clientDailyList/:id" element={<ClientDailyListForm/>}   />
           <Route path="/subscriptions" element={<Subscriptions/>}   />

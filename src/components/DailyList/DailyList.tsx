@@ -4,6 +4,7 @@ import IDailyList from "../../types/dailyList.type";
 import { Link } from "react-router-dom";
 import ReportPDF from "../ReportPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import DailyListForm from "./DailyListForm";
 
 const DailyLists: React.FC = () => {
 
@@ -77,11 +78,12 @@ const DailyLists: React.FC = () => {
           </div>
         </div>
         <div className="w-100 justify-content-end d-flex">
-          <div className="input-group-append">
-            <Link to={"/dailyList/new"} className="ml-2 btn btn-primary">
-              New
-            </Link>
-          </div>
+         
+          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalCreateDailyList">
+            Nuevo
+          </button>
+          <DailyListForm reloadList={retrieveItems}></DailyListForm>
+
         </div>
       </div>
       <div className="list row">

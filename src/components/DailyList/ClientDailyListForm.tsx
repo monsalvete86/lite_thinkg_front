@@ -65,6 +65,7 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
       .then((response) => {
         console.log(response)
         retrieveItems()
+        window.alert('Lista guardada correctamente')
       })
       .catch((e) => {
         console.log(e);
@@ -138,7 +139,7 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
       }
     }
     setDataList([...dataList, items]);
-    window.alert('Lista guardada correctamente')
+    
   };
 
   const hiddeModalClientForm = () => {

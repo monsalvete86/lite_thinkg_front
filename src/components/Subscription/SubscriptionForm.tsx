@@ -9,7 +9,7 @@ const SubscriptionForm: React.FC = () => {
     const { id } = useParams();
 
     const initialState = {
-        id: null,
+        id: 0,
         migratoryProcess: "",
         annualIncome: 0,
         mainContributor: "",
@@ -32,8 +32,8 @@ const SubscriptionForm: React.FC = () => {
         state: "",
         startCoverage: "",
         endCoverage: "",
-        processorId: 1,
-        clientListId: 2
+        processorId: 0,
+        // clientListId: 2
     }
 
     useEffect(() => {
@@ -81,7 +81,8 @@ const SubscriptionForm: React.FC = () => {
 
     return (
         <div className="form form-row">
-            <div className="col-12 col-md-6 border">
+            <h5 className="w-100 text-center text-primary"> Completar suscripción</h5>
+            <div className="col-12 col-md-6  border-right ">
                 <div className="form-group">
                     <label htmlFor="migratoryProcess">Proceso migratorio</label>
                     <input
@@ -210,7 +211,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
             </div>
-            <div className="col-12 col-md-6 border">
+            <div className="col-12 col-md-6 ">
                 <div className="form-group">
                     <label htmlFor="primaryDoctor">Medico principal</label>
                     <input
@@ -293,9 +294,11 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                <label htmlFor="processorId">Estado</label>
+
                     <select className="custom-select" name="state" id="state" onChange={handleNameChange}>
                         <option value="GENERATED" defaultChecked >Generado </option>
-                        <option value="ACEPTED">Aceptado </option>
+                        <option value="ACCEPTED">Aceptado </option>
                         <option value="REJECTED" >Rechazado </option>
                         <option value="CANCELED">Cancelado </option>
                     </select>
@@ -305,7 +308,7 @@ const SubscriptionForm: React.FC = () => {
                     <select required defaultValue="" className="custom-select w-100" id="processorId" name="processorId"  onChange={handleNameChange}>
                         <option value="">--Seleccionar--</option>
                         {processors.map((processor) => (
-                            <option value={JSON.stringify(processor)} key={processor.id} >{processor.processorName}</option>
+                            <option value={processor.id} key={processor.id} >{processor.processorName}</option>
                         ))}
                     </select>
                 </div>
@@ -333,11 +336,12 @@ const SubscriptionForm: React.FC = () => {
                         onChange={handleNameChange}
                     />
                 </div>
-                <div className="form-group">
-                    <button className="btn btn-success" title="Crear Producto" onClick={saveSubscription}>Guardar</button>
+               
+            </div>
+            <div className="form-group text-right w-100 mt-2">
+                    <button className="btn btn-success col-3" title="Crear Producto" onClick={saveSubscription}>Guardar</button>
 
                 </div>
-            </div>
         </div>
     );
 };
