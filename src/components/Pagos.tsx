@@ -88,7 +88,7 @@ const Pagos: React.FC = () => {
                 <th>Suscripción</th>
                 <th>Método de Pago</th>
                 <th>Importe</th>
-                <th>Status</th>
+                <th>Estado</th>
                 <th>Fecha Pago</th>
                 <th colSpan={2}>Actions</th>
               </tr>
@@ -101,7 +101,7 @@ const Pagos: React.FC = () => {
                     <td className="text-center">{row.subscription}</td>
                     <td className="text-center">{row.metodoPago}</td>
                     <td className="text-center">{row.importe}</td>
-                    <td className="text-center">{row.status}</td>
+                    <td className="text-center">{row.state}</td>
                     <td className="text-center">{row.fechaPago}</td>
                     <td className="text-center">
                       <Link to={"/pagos/" + row?.id} className="btn btn-primary">Edit</Link>

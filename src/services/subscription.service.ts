@@ -9,6 +9,14 @@ export const getAll = (params?: object) => {
   return axios.get(API_URL + "/", { headers: authHeader(), params: params });
 };
 
+export const getAllByDailyList = (dailyListId: any) => {
+  return axios.get(API_URL + `/daily-list/${dailyListId}`, { headers: authHeader() });
+};
+
+export const getAllPayments = (params: any) => {
+  return axios.get(API_URL + `/pagos`, { headers: authHeader(), params: params });
+};
+
 export const get = (id: any): Promise<ISubscription> => {
   return axios.get(API_URL + `/${id}`, { headers: authHeader() });
 };

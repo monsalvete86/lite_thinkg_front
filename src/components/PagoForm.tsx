@@ -16,7 +16,7 @@ const PagoForm: React.FC = () => {
         subscription: "",
         metodoPago: "",
         importe: "",
-        status: "",
+        state: "",
         fechaPago: "",
     };
 
@@ -55,7 +55,7 @@ const PagoForm: React.FC = () => {
             subscription: pago.subscription,
             metodoPago: pago.metodoPago,
             importe: pago.importe,
-            status: pago.status,
+            state: pago.state,
             fechaPago: pago.fechaPago,
         };
 
@@ -91,7 +91,7 @@ const PagoForm: React.FC = () => {
     return (
         <div className="submit-form">
             <div>
-                {pago?.id && `Current Pago ${pago.cliente} - ${pago.subscription} - ${pago.metodoPago} - ${pago.importe} - ${pago.status} - ${pago.fechaPago}`}
+                {pago?.id && `Current Pago ${pago.cliente} - ${pago.subscription} - ${pago.metodoPago} - ${pago.importe} - ${pago.state} - ${pago.fechaPago}`}
                 {!pago?.id && 'New Pago'}
                 <div className="form-group">
                     <label htmlFor="cliente">Cliente</label>
@@ -148,7 +148,7 @@ const PagoForm: React.FC = () => {
                         className="form-control"
                         id="status"
                         required
-                        value={pago.status}
+                        value={pago.state}
                         onChange={handleInputChange}
                         name="status"
                     />

@@ -27,6 +27,7 @@ import SubscriptionForm from "./components/Subscription/SubscriptionForm";
 import Subscriptions from "./components/Subscription/Subscription";
 import ProcessorForm from "./components/Processor/ProcessorForm";
 import Processors from "./components/Processor/ProcessorList";
+import Users from "./components/User/UserList";
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -161,6 +162,7 @@ const App: React.FC = () => {
           <Route path="/tutorials/:id" element={<Tutorial />} />
           <Route path="/dailyList" element={<DailyList />} />
           <Route path="/pagos" element={<Pagos />} />
+          <Route path="/users" element={<Users />} />
           <Route path="/pagos/new" element={<PagoForm />} />
           <Route path="/pagos/:id" element={<PagoForm />} />
           <Route path="/clientDailyList" element={<ClientDailyLists />} />
