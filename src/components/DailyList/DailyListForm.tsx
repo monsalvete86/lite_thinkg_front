@@ -3,10 +3,11 @@ import IDailyList from "../../types/dailyList.type";
 import { getCurrentUser } from "../../services/auth.service";
 import { useParams } from "react-router";
 import * as DailyListService from "../../services/daily-list.service"
-import $ from 'jquery';
 
 type Props = {
-    reloadList: () => void
+    reloadList: () => void,
+    isOpenModal?: (hide:boolean) => void
+
 }
 const DailyListForm: React.FC<Props> = (props) => {
 
@@ -43,14 +44,16 @@ const DailyListForm: React.FC<Props> = (props) => {
                 console.log(e.response.data.message);
                 setErrorMessage(e.response.data.message)
             });
-        const $element = $('#modalCreateDailyList') as any;
-        $element.modal('hide');
         props.reloadList()
+    }
+
+    const closeModal =() =>{
+        props.isOpenModal?.(false)
     }
 
     return (
         <div>
-            <div className="modal fade" id="modalCreateDailyList" tabIndex={-1} aria-labelledby="modalCreateDailyListLabel" aria-hidden="true">
+            <div className="modal" id="modalCreateDailyList" tabIndex={-1} aria-labelledby="modalCreateDailyListLabel" style={{ display: 'block', backgroundColor: "#00000078" }}>
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -83,7 +86,7 @@ const DailyListForm: React.FC<Props> = (props) => {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="button" className="btn btn-secondary" onClick={closeModal}>Cerrar</button>
                             <button type="button" className="btn btn-success" title="Crear Producto" onClick={saveDailyList}>Crear Listado</button>
                         </div>
                     </div>
