@@ -15,6 +15,7 @@ const DailyLists: React.FC = () => {
   const [dailyList, setProducts] = useState<Array<IDailyList>>([]);
   const [searchFrom, setSearchFrom] = useState<string>(today());
   const [searchTo, setSearchTo] = useState<string>(today());
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     retrieveItems();
@@ -30,10 +31,12 @@ const DailyLists: React.FC = () => {
     DailyListService.getAll(params)
       .then((response) => {
         setProducts(response.data);
+        setShowModal(false)
       })
       .catch((e) => {
         console.log(e);
       });
+
   };
 
   const removeItem = (id: number | null | undefined) => {
@@ -49,6 +52,10 @@ const DailyLists: React.FC = () => {
     console.log(text)
     setSearchTo(text.target.value);
   };
+
+  const isActiveModal = (isShow: boolean = false) => {
+    setShowModal(isShow)
+  }
 
   return (
     <div>
@@ -78,11 +85,11 @@ const DailyLists: React.FC = () => {
           </div>
         </div>
         <div className="w-100 justify-content-end d-flex">
-         
-          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalCreateDailyList">
+
+          <button type="button" className="btn btn-primary" data-target="#modalCreateDailyList" onClick={() => isActiveModal(true)}>
             Nuevo
           </button>
-          <DailyListForm reloadList={retrieveItems}></DailyListForm>
+          {showModal && <DailyListForm reloadList={retrieveItems} isOpenModal={(hide)=>isActiveModal(hide)} ></DailyListForm>}
 
         </div>
       </div>
