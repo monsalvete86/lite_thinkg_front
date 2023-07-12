@@ -47,7 +47,7 @@ const PagoForm: React.FC = () => {
                 setPago(result.data);
             })
         }
-    }, []);
+    }, [id]);
     
     const savePago = () => {
         var data = {
@@ -86,7 +86,7 @@ const PagoForm: React.FC = () => {
     useEffect(() => {
         if (id)
             getPago(id);
-    }, [id]);
+    }, []);
     
     return (
         <div className="submit-form">
