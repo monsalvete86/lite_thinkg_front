@@ -38,13 +38,13 @@ const DailyListForm: React.FC<Props> = (props) => {
             .then((response: any) => {
                 console.log(response.data);
                 setErrorMessage("")
+                props.reloadList()
             })
             .catch((e) => {
                 console.log(e.response);
                 console.log(e.response.data.message);
                 setErrorMessage(e.response.data.message)
             });
-        props.reloadList()
     }
 
     const closeModal =() =>{

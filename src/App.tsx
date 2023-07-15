@@ -28,6 +28,7 @@ import Subscriptions from "./components/Subscription/Subscription";
 import ProcessorForm from "./components/Processor/ProcessorForm";
 import Processors from "./components/Processor/ProcessorList";
 import Users from "./components/User/UserList";
+import UserForm from "./components/User/UserForm";
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -108,7 +109,7 @@ const App: React.FC = () => {
           {currentUser && (
             <li className="nav-item">
               <Link to={"/users"} className="nav-link">
-                User
+                Usuarios
               </Link>
             </li>
           )}
@@ -135,11 +136,11 @@ const App: React.FC = () => {
               </Link>
             </li>
 
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to={"/register"} className="nav-link">
                 Sign Up
               </Link>
-            </li>
+            </li> */}
           </div>
         )}
       </nav>
@@ -163,6 +164,8 @@ const App: React.FC = () => {
           <Route path="/dailyList" element={<DailyList />} />
           <Route path="/pagos" element={<Pagos />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<UserForm />} />
+          <Route path="/users/new" element={<UserForm />} />
           <Route path="/pagos/new" element={<PagoForm />} />
           <Route path="/pagos/:id" element={<PagoForm />} />
           <Route path="/clientDailyList" element={<ClientDailyLists />} />

@@ -47,14 +47,11 @@ const Users: React.FC = () => {
         <div>
             <div className="list row">
                 <div className="col-md-12">
-                    <h2>Users Stock</h2>
+                    <h2 className="text-primary">Lista de usuarios</h2>
                 </div>
             </div>
             <div className="list row">
-                <div className="col-md-8">
-
-                </div>
-                <div className="col-md-8">
+                <div className="col-md-12">
                     <div className="input-group mb-3">
                         <input
                             type="text"
@@ -70,13 +67,13 @@ const Users: React.FC = () => {
                             >
                                 Search
                             </button>
-                            {/* <Link
+                            <Link
                                 to={"/users/new"}
                                 className="ml-2 btn btn-primary"
                             >
-                                New
+                                Nuevo
                             </Link>
-                            <PDFDownloadLink document={<ReportPDF users={users}/>} fileName="report.pdf">
+                            {/* <PDFDownloadLink document={<ReportPDF users={users}/>} fileName="report.pdf">
                                 <button className="ml-2 btn btn-danger">
                                     Dowload PDF
                                 </button>
