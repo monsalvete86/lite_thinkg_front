@@ -3,7 +3,7 @@ import authHeader from "./auth-header";
 import IUser from "../types/user.type"
 
 // const API_URL = "https://w2j8ebzbl7.execute-api.us-east-1.amazonaws.com/api/user/";
-  const API_URL = "http://localhost:8080/api/user/";
+const API_URL = "http://localhost:8080/api/user";
 
 export const getPublicContent = () => {
   return axios.get(API_URL + "all");
@@ -18,9 +18,9 @@ export const getAll = () => {
 };
 
 export const getUserById = (id: any) => {
-  const data = { id: id};
+  const data = { id: id };
   return axios
-    .post(API_URL +`` + id,data , { headers: authHeader() })
+    .post(`${API_URL}/${id}`, data, { headers: authHeader() })
     .then((response) => {
       if (response.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(response.data));
@@ -30,7 +30,7 @@ export const getUserById = (id: any) => {
 };
 
 export const update = (id: any, data: any) => {
-  return axios.put<any>(API_URL + `/${id}`, data, { headers: authHeader() });
+  return axios.put<any>(`${API_URL}/${id}`, data, { headers: authHeader() });
 };
 
 export const updateCompany = (idUser: number, idCompany: number) => {
@@ -39,6 +39,10 @@ export const updateCompany = (idUser: number, idCompany: number) => {
     idUser
   }
   return axios.post<any>(API_URL + `update_company`, data, { headers: authHeader() });
+};
+
+export const create = (data: IUser) => {
+  return axios.post<IUser>(`${API_URL}/`, data, { headers: authHeader() });
 };
 
 //export const getCompany = (idUser: number)
