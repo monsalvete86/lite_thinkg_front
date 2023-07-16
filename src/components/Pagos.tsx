@@ -97,8 +97,8 @@ const Pagos: React.FC = () => {
               {pagos &&
                 pagos.map((row, index) => (
                   <tr key={row.id}>
-                    <td className="text-center">{row.cliente}</td>
-                    <td className="text-center">{row.subscription}</td>
+                    <td className="text-center">{row.clientId}</td>
+                    <td className="text-center">{row.subscriptionId}</td>
                     <td className="text-center">{row.metodoPago}</td>
                     <td className="text-center">{row.importe}</td>
                     <td className="text-center">{row.state}</td>

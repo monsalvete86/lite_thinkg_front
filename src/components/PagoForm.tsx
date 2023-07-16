@@ -12,8 +12,8 @@ const PagoForm: React.FC = () => {
 
     const initialPagoState = {
         id: null,
-        cliente: "",
-        subscription: "",
+        clientId: "",
+        subscriptionId: "",
         metodoPago: "",
         importe: "",
         state: "",
@@ -51,8 +51,8 @@ const PagoForm: React.FC = () => {
     
     const savePago = () => {
         var data = {
-            cliente: pago.cliente,
-            subscription: pago.subscription,
+            clientId: pago.clientId,
+            subscriptionId: pago.subscriptionId,
             metodoPago: pago.metodoPago,
             importe: pago.importe,
             state: pago.state,
@@ -86,35 +86,35 @@ const PagoForm: React.FC = () => {
     useEffect(() => {
         if (id)
             getPago(id);
-    }, []);
+    }, [id]);
     
     return (
         <div className="submit-form">
             <div>
-                {pago?.id && `Current Pago ${pago.cliente} - ${pago.subscription} - ${pago.metodoPago} - ${pago.importe} - ${pago.state} - ${pago.fechaPago}`}
+                {pago?.id && `Current Pago ${pago.clientId} - ${pago.subscriptionId} - ${pago.metodoPago} - ${pago.importe} - ${pago.state} - ${pago.fechaPago}`}
                 {!pago?.id && 'New Pago'}
                 <div className="form-group">
-                    <label htmlFor="cliente">Cliente</label>
+                    <label htmlFor="clientId">Cliente</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="cliente"
+                        id="clientId"
                         required
-                        value={pago.cliente}
+                        value={pago.clientId}
                         onChange={handleInputChange}
-                        name="cliente"
+                        name="clientId"
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="subscription">Suscripcion</label>
+                    <label htmlFor="subscriptionId">Suscripcion</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="subscription"
+                        id="subscriptionId"
                         required
-                        value={pago.subscription}
+                        value={pago.subscriptionId}
                         onChange={handleInputChange}
-                        name="subscription"
+                        name="subscriptionId"
                     />
                 </div>
                 <div className="form-group">

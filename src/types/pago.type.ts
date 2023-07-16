@@ -1,8 +1,8 @@
 export default interface IPago {
-  id?: number | null,
-  cliente: string,
+  id?: number,
+  clientId: string,
+  subscriptionId: string,
   metodoPago: string,
-  subscription: string,
   importe: string,
   state: string,
   fechaPago: string,
