@@ -142,15 +142,15 @@ const PagoForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="status">Status</label>
+                    <label htmlFor="state">Estado</label>
                     <input
                         type="text"
                         className="form-control"
-                        id="status"
+                        id="state"
                         required
                         value={pago.state}
                         onChange={handleInputChange}
-                        name="status"
+                        name="state"
                     />
                 </div>
                 <div className="form-group">
