@@ -1,7 +1,10 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import * as UserService from "../../services/user.service";
+import * as RoleService from "../../services/role.service";
 import IUser from "../../types/user.type";
+import IRole from "../../types/role.type";
+import { string } from "yup";
 
 type MyProps = {
     id?: number | string,
@@ -18,6 +21,7 @@ const UserForm: React.FC<MyProps> = (props) => {
         email: '',
         password: '',
         companyId: 1,
+        roles:[]
     };
 
     const [user, setUser] = useState(initialUserState);
@@ -25,6 +29,26 @@ const UserForm: React.FC<MyProps> = (props) => {
     const [banEdit, setBanEdit] = useState<number>(0);
     let navigate = useNavigate();
 
+    const [roles, setRoles] = useState<Array<IRole>>([]);
+    const [selectedRoles, setSelectedRoles] = useState<Array<IRole>>([]);
+
+    useEffect(() => {
+        RoleService.getAll()
+            .then(response => setRoles(response.data))
+            .catch(error => console.error(error));
+    }, []);
+
+    const handleRoleChange = (event: any) => {
+        const { value, checked } = event.target;
+        if (checked) {
+            setSelectedRoles(prevSelectedRoles => [...prevSelectedRoles, value]);
+        } else {
+            setSelectedRoles(prevSelectedRoles =>
+                prevSelectedRoles.filter(role => role !== value)
+            );
+        }
+        console.log(selectedRoles)
+    };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -44,6 +68,7 @@ const UserForm: React.FC<MyProps> = (props) => {
     const saveUser = () => {
         setIsLoading(true)
         var data = user;
+        data.roles = selectedRoles;
         console.log(user)
 
         if (!user?.id || user?.id === null) {
@@ -53,7 +78,7 @@ const UserForm: React.FC<MyProps> = (props) => {
                     console.log(response.data);
                     setIsLoading(false)
                     navigate("/users");
-                    window.location.reload();
+                    // window.location.reload();
                 })
                 .catch((e: Error) => {
                     console.log(e);
@@ -65,7 +90,7 @@ const UserForm: React.FC<MyProps> = (props) => {
                     setIsLoading(false)
                     console.log(response.data);
                     navigate("/users");
-                    window.location.reload();
+                    // window.location.reload();
                 })
                 .catch((e: Error) => {
                     setIsLoading(false)
@@ -78,7 +103,7 @@ const UserForm: React.FC<MyProps> = (props) => {
     return (
         <div className="submit-form">
             <div>
-              <h5 className="h5 w-100 text-center">  {!user.id ? 'Nuevo usuario' : 'Editar Usuario'}</h5>
+                <h5 className="h5 w-100 text-center">  {!user.id ? 'Nuevo usuario' : 'Editar Usuario'}</h5>
 
                 <div className="form-group">
                     <label htmlFor="username">Username</label>
@@ -139,6 +164,23 @@ const UserForm: React.FC<MyProps> = (props) => {
                         onChange={handleInputChange}
                         name="password"
                     />
+                </div>
+
+                <div className="form-group">
+                    <label>Seleccionar roles:</label>
+                    {roles.map(role => (
+                        <div key={role.id} className="form-check">
+                            <input
+                             className="form-check-input"
+                                type="checkbox"
+                                id={String(role.id)}
+                                value={role.id}
+                                // checked={selectedRoles.includes(role.id as never)}
+                                onChange={e => handleRoleChange(e)}
+                            />
+                            <label className="form-check-label" htmlFor={String(role.id)}>{role.rol}</label>
+                        </div>
+                    ))}
                 </div>
 
                 {!isLoading && (<div className="modal-footer">

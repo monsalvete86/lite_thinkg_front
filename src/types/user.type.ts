@@ -1,3 +1,5 @@
+import IRole from "./role.type";
+
 export default interface IUser {
   id?: number | null,
   name?: string,
@@ -7,5 +9,5 @@ export default interface IUser {
   password: string,
   companyId?: number | null,
   [key: string]: any,
-  roles?: Array<string>
+  roles?: Array<IRole>
 }

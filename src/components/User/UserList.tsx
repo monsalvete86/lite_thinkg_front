@@ -47,7 +47,7 @@ const Users: React.FC = () => {
         <div>
             <div className="list row">
                 <div className="col-md-12">
-                    <h2 className="text-primary">Lista de usuarios</h2>
+                    <h2  className="h2 text-primary font-weight-bold">Lista de usuarios</h2>
                 </div>
             </div>
             <div className="list row">

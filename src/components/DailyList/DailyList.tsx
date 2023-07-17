@@ -61,7 +61,7 @@ const DailyLists: React.FC = () => {
     <div>
       <div className="list row">
         <div className="col-md-12">
-          <h2>Listado diario</h2>
+          <h2  className="h2 text-primary font-weight-bold">Listado diario</h2>
         </div>
       </div>
       <div className="page_search my-2  w-100">

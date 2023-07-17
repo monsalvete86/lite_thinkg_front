@@ -60,7 +60,7 @@ const Subscriptions: React.FC = () => {
         <div>
             <div className="row">
                 <div className="col-md-12">
-                    <h2 className="h2 text-primary">Suscripciones</h2>
+                    <h2  className="h2 text-primary font-weight-bold">Suscripciones</h2>
                 </div>
             </div>
             <div className="row">

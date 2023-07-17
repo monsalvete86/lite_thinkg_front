@@ -145,7 +145,7 @@ const App: React.FC = () => {
         )}
       </nav>
 
-      <div className="container mt-3">
+      <div className="container mt-3 border pt-2">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
