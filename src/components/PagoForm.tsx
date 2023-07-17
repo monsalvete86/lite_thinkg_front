@@ -2,175 +2,195 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import * as PagosService from "../services/pago.service";
 import IPago from "../types/pago.type";
-import { getCurrentUser } from "../services/auth.service";
 
 
-const PagoForm: React.FC = () => {
-    const currentUser = getCurrentUser();
-    const { id }= useParams();
-    let navigate = useNavigate();
 
-    const initialPagoState = {
-        id: null,
-        clientId: "",
-        subscriptionId: "",
-        metodoPago: "",
-        importe: "",
-        state: "",
-        fechaPago: "",
+type Props = {
+  isOpenModal?: (hide:boolean) => void
+}
+
+const PagoForm: React.FC<Props> = (props) => {
+  
+  const { id } = useParams();
+  let navigate = useNavigate();
+
+  const initialPagoState = {
+    id: null,
+    clientId: "",
+    subscriptionId: "",
+    metodoPago: "",
+    importe: "",
+    state: "",
+    fechaPago: "",
+  };
+
+  const [pago, setPago] = useState(initialPagoState);
+  const [banEdit, setBanEdit] = useState<number> (0);
+  
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setPago({ ...pago, [name]: value });
+  };
+  
+  const getPago = (id: string) => {
+    PagosService.get(id)
+    .then((response: any) => {
+      setPago(response.data);
+      console.log(response.data);
+    })
+    .catch((e: Error) => {
+      console.log(e);
+    });
+  };
+  
+  useEffect(() => {
+    if (id) {
+      PagosService.get(id)
+      .then((result: any) => {
+        setBanEdit(result.data.id)
+        setPago(result.data);
+      })
+    }
+  }, [id]);
+  
+  const savePago = () => {
+    var data = {
+      clientId: pago.clientId,
+      subscriptionId: pago.subscriptionId,
+      metodoPago: pago.metodoPago,
+      importe: pago.importe,
+      state: pago.state,
+      fechaPago: pago.fechaPago,
     };
 
-    const [pago, setPago] = useState(initialPagoState);
-    const [banEdit, setBanEdit] = useState<number> (0);
-    
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setPago({ ...pago, [name]: value });
-    };
-    
-    const getPago = (id: string) => {
-        PagosService.get(id)
-        .then((response: any) => {
-            setPago(response.data);
-            console.log(response.data);
-        })
-        .catch((e: Error) => {
-            console.log(e);
-        });
-    };
-    
-    useEffect(() => {
-        if (id) {
-            PagosService.get(id)
-            .then((result: any) => {
-                setBanEdit(result.data.id)
-                setPago(result.data);
-            })
-        }
-    }, [id]);
-    
-    const savePago = () => {
-        var data = {
-            clientId: pago.clientId,
-            subscriptionId: pago.subscriptionId,
-            metodoPago: pago.metodoPago,
-            importe: pago.importe,
-            state: pago.state,
-            fechaPago: pago.fechaPago,
-        };
+    if(!pago?.id || pago?.id === null) {
+      PagosService.create(data)
+      .then((response: any) => {
+          console.log(response.data);
+      })
+      .catch((e: Error) => {
+          console.log(e);
+      });
+    } else {
+      PagosService.update(pago.id, data)
+      .then((response: any) => {
+        console.log("data ")
+        console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+    }
+      navigate("/pagos");
+      window.location.reload();
+  };
 
-        if(!pago?.id || pago?.id === null) {
+  const closeModal =() =>{
+    props.isOpenModal?.(false)
+  }
 
-            PagosService.create(data)
-            .then((response: any) => {
-                console.log(response.data);
-            })
-            .catch((e: Error) => {
-                console.log(e);
-            });
-        } else {
-            PagosService.update(pago.id, data)
-            .then((response: any) => {
-                console.log("data ")
-                console.log(response.data);
-            })
-            .catch((e: Error) => {
-                console.log(e);
-            });
-        }
-
-        navigate("/pagos");
-        window.location.reload();
-    };
-
-    useEffect(() => {
-        if (id)
-            getPago(id);
-    }, [id]);
-    
-    return (
-        <div className="submit-form">
-            <div>
-                {pago?.id && `Current Pago ${pago.clientId} - ${pago.subscriptionId} - ${pago.metodoPago} - ${pago.importe} - ${pago.state} - ${pago.fechaPago}`}
-                {!pago?.id && 'New Pago'}
-                <div className="form-group">
+  useEffect(() => {
+    if (id)
+      getPago(id);
+  }, [id]);
+  
+  return (
+    <div className="modal-dialog modal-dialog-scrollable">
+      <div className="modal" id="modalCreatePago" tabIndex={-6} aria-labelledby="modalCreatePagoLabel" style={{ display: 'block', backgroundColor: "#00000078" }}>
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              {pago?.id && 'Edit Pago'}
+              {!pago?.id && 'New Pago'}
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span>&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+                <form className="form" action="">
+                  <div className="form-group">
                     <label htmlFor="clientId">Cliente</label>
                     <input
-                        type="text"
-                        className="form-control"
-                        id="clientId"
-                        required
-                        value={pago.clientId}
-                        onChange={handleInputChange}
-                        name="clientId"
+                      type="text"
+                      className="form-control"
+                      id="clientId"
+                      required
+                      value={pago.clientId}
+                      onChange={handleInputChange}
+                      name="clientId"
                     />
-                </div>
-                <div className="form-group">
+                  </div>
+                  <div className="form-group">
                     <label htmlFor="subscriptionId">Suscripcion</label>
                     <input
-                        type="text"
-                        className="form-control"
-                        id="subscriptionId"
-                        required
-                        value={pago.subscriptionId}
-                        onChange={handleInputChange}
-                        name="subscriptionId"
+                      type="text"
+                      className="form-control"
+                      id="subscriptionId"
+                      required
+                      value={pago.subscriptionId}
+                      onChange={handleInputChange}
+                      name="subscriptionId"
                     />
-                </div>
-                <div className="form-group">
+                  </div>
+                  <div className="form-group">
                     <label htmlFor="metodoPago">Metodo pago</label>
                     <input
-                        type="text"
-                        className="form-control"
-                        id="metodoPago"
-                        required
-                        value={pago.metodoPago}
-                        onChange={handleInputChange}
-                        name="metodoPago"
+                      type="text"
+                      className="form-control"
+                      id="metodoPago"
+                      required
+                      value={pago.metodoPago}
+                      onChange={handleInputChange}
+                      name="metodoPago"
                     />
-                </div>
-                <div className="form-group">
+                  </div>
+                  <div className="form-group">
                     <label htmlFor="importe">Importe</label>
                     <input
-                        type="text"
-                        className="form-control"
-                        id="importe"
-                        required
-                        value={pago.importe}
-                        onChange={handleInputChange}
-                        name="importe"
+                      type="text"
+                      className="form-control"
+                      id="importe"
+                      required
+                      value={pago.importe}
+                      onChange={handleInputChange}
+                      name="importe"
                     />
-                </div>
-                <div className="form-group">
+                  </div>
+                  <div className="form-group">
                     <label htmlFor="state">Estado</label>
                     <input
-                        type="text"
-                        className="form-control"
-                        id="state"
-                        required
-                        value={pago.state}
-                        onChange={handleInputChange}
-                        name="state"
+                      type="text"
+                      className="form-control"
+                      id="state"
+                      required
+                      value={pago.state}
+                      onChange={handleInputChange}
+                      name="state"
                     />
-                </div>
-                <div className="form-group">
+                  </div>
+                  <div className="form-group">
                     <label htmlFor="fechaPago">Fecha pago</label>
                     <input
-                        type="text"
-                        className="form-control"
-                        id="fechaPago"
-                        required
-                        value={pago.fechaPago}
-                        onChange={handleInputChange}
-                        name="fechaPago"
+                      type="text"
+                      className="form-control"
+                      id="fechaPago"
+                      required
+                      value={pago.fechaPago}
+                      onChange={handleInputChange}
+                      name="fechaPago"
                     />
-                </div>
-                <button className="btn btn-success" onClick={savePago}>Save</button>
-                <Link to={"/pagos"} className="ml-2 btn btn-secondary">Cancel</Link>
+                  </div>
+                </form>
             </div>
+            <div className="modal-footer">
+              <button className="btn btn-success" onClick={savePago}>Save</button>
+              <Link to={"/pagos"} className="ml-2 btn btn-secondary">Cancel</Link>
+            </div>
+          </div>
         </div>
-    );
-    
+      </div>
+    </div>
+  );   
 }
 
 export default PagoForm;

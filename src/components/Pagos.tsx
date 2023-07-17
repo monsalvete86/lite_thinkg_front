@@ -4,12 +4,16 @@ import IPago from '../types/pago.type';
 import { Link } from "react-router-dom";
 import ReportPDF from "./ReportPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import PagoForm from "./PagoForm";
 
 const Pagos: React.FC = () => {
   const [pagos, setPagos] = useState<Array<IPago>>([]);
   const [currentPago, setCurrentPago] = useState<IPago | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const [searchPago, setSearchPagos] = useState<string>("");
+  const [searchFrom, setSearchFrom] = useState<string>();
+  const [searchTo, setSearchTo] = useState<string>();
+  const [showModal, setShowModal] = useState(false);
 
   const pagosRef = useRef();
 
@@ -43,7 +47,20 @@ const Pagos: React.FC = () => {
         PagoService.remove(id);
         retrievePagos();
     }
-};
+  };
+
+  const handleFromChange = (text: ChangeEvent<HTMLInputElement>) => {
+    console.log(text)
+    setSearchFrom(text.target.value);
+  };
+  const handleToChange = (text: ChangeEvent<HTMLInputElement>) => {
+    console.log(text)
+    setSearchTo(text.target.value);
+  };
+
+  const isActiveModal = (isShow: boolean = false) => {
+    setShowModal(isShow)
+  }
 
   return (
     <div>
@@ -68,9 +85,10 @@ const Pagos: React.FC = () => {
               <button className="btn btn-outline-secondary" type="button">
                 Search
               </button>
-              <Link to={"/pagos/new"} className="ml-2 btn btn-primary">
+              <Link to={"/pagos/new"} className="ml-2 btn btn-primary" data-target="#modalCreatePago" onClick={() => isActiveModal(true)}>
                 New
               </Link>
+              {showModal && <PagoForm isOpenModal={(hide)=>isActiveModal(hide)} ></PagoForm>}
               <PDFDownloadLink
                 document={<ReportPDF pagos={pagos} />}
                 fileName="report.pdf"
