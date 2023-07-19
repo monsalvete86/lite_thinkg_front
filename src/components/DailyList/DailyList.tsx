@@ -4,6 +4,7 @@ import IDailyList from "../../types/dailyList.type";
 import { Link } from "react-router-dom";
 import ReportPDF from "../ReportPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import DailyListForm from "./DailyListForm";
 
 const DailyLists: React.FC = () => {
 
@@ -14,6 +15,7 @@ const DailyLists: React.FC = () => {
   const [dailyList, setProducts] = useState<Array<IDailyList>>([]);
   const [searchFrom, setSearchFrom] = useState<string>(today());
   const [searchTo, setSearchTo] = useState<string>(today());
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     retrieveItems();
@@ -29,10 +31,12 @@ const DailyLists: React.FC = () => {
     DailyListService.getAll(params)
       .then((response) => {
         setProducts(response.data);
+        setShowModal(false)
       })
       .catch((e) => {
         console.log(e);
       });
+
   };
 
   const removeItem = (id: number | null | undefined) => {
@@ -49,13 +53,23 @@ const DailyLists: React.FC = () => {
     setSearchTo(text.target.value);
   };
 
+  const isActiveModal = (isShow: boolean = false) => {
+    setShowModal(isShow)
+  }
+
   return (
     <div>
       <div className="list row">
         <div className="col-md-12">
-          <h2>Listado diario</h2>
+          <h2 className="h2 text-primary font-weight-bold">Listado diario</h2>
         </div>
       </div>
+      {/* <div className="d-flex justify-content-center col-md-12 text-primary">
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+        <h5 className="h5 font-weight-bold p-2">Cargando</h5>
+      </div> */}
       <div className="page_search my-2  w-100">
         <div className="form-row w-100">
           <div className="form-group col-md-5">
@@ -77,11 +91,12 @@ const DailyLists: React.FC = () => {
           </div>
         </div>
         <div className="w-100 justify-content-end d-flex">
-          <div className="input-group-append">
-            <Link to={"/dailyList/new"} className="ml-2 btn btn-primary">
-              New
-            </Link>
-          </div>
+
+          <button type="button" className="btn btn-primary" data-target="#modalCreateDailyList" onClick={() => isActiveModal(true)}>
+            Nuevo
+          </button>
+          {showModal && <DailyListForm reloadList={retrieveItems} isOpenModal={(hide) => isActiveModal(hide)} ></DailyListForm>}
+
         </div>
       </div>
       <div className="list row">

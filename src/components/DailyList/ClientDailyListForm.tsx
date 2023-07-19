@@ -64,10 +64,19 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
     ClientDailyListService.createBulk(dataList)
       .then((response) => {
         console.log(response)
+
         retrieveItems()
+        window.alert('Lista guardada correctamente')
+        
       })
       .catch((e) => {
         console.log(e);
+        setTimeout(() => {
+          setErrorMessage(false)
+          console.log(errorMessage)
+        }, 3000)
+        setErrorMessage(true)
+
       });
   }
 
@@ -119,7 +128,13 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
     let exists = dataList.filter(value => {
       if (value.clientId === clients.id && value.operatorId === user.id) {
+
+        setTimeout(() => {
+          setErrorMessage(false)
+          console.log(errorMessage)
+        }, 3000)
         setErrorMessage(true)
+
         return value;
       }
     })
@@ -138,7 +153,7 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
       }
     }
     setDataList([...dataList, items]);
-    window.alert('Lista guardada correctamente')
+
   };
 
   const hiddeModalClientForm = () => {
@@ -152,13 +167,13 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
   return (
     <div>
-      {errorMessage && <div className="alert alert-secondary" role="alert">
-        Ya se ha creado un registro similar previamente, seleccione otra opción
+      {errorMessage && <div className="alert alert-secondary fixed-top" style={{ zIndex: '1' }} role="alert">
+        Hubo un error al guardar los datos
       </div>}
       {/* Modal para crear clientes */}
 
       {hideClientForm &&
-        <div className="modal modal-dialog-scrollable d-block" id="modalClientForm" style={{'background':"#6c757d8c", 'minHeight':'100%'}} tabIndex={-1} role="dialog" >
+        <div className="modal modal-dialog-scrollable d-block" id="modalClientForm" style={{ 'background': "#6c757d8c", 'minHeight': '100%' }} tabIndex={-1} role="dialog" >
           <div className="modal-dialog modal-lg" role="document">
             <div className="modal-content">
               <div className="modal-header">
@@ -225,7 +240,7 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
                 <th>Cliente</th>
                 <th>Operador</th>
                 <th>Estado</th>
-                <th colSpan={2}>Acciones</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -236,9 +251,14 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
                     {item.operatorId} - {item.user.username}
                   </td>
                   <td>{item.state}</td>
-                  <td>
-                    {((item.state === 'GENERATED' || item.state === null) && item.id) &&
-                      <button disabled={item.state !== 'GENERATED' && item.state !== null} className="btn btn-danger" onClick={() => removeSubscription(Number(item.id))}>Remover</button>}
+                  <td className="text-center">
+                    {
+                      ((item.state === 'GENERATED' || item.state === null) && item.id) &&
+                      (<>
+                        <button disabled={item.state !== 'GENERATED' && item.state !== null} className="btn btn-danger mr-2" onClick={() => removeSubscription(Number(item.id))}>Remover</button>
+                        <Link to={"/subscription/" + item.id} className="btn btn-primary">Editar</Link>
+                      </>
+                      )}
                   </td>
                 </tr>
               ))}

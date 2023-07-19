@@ -34,7 +34,7 @@ const Processor: React.FC = () => {
         <div>
             <div className="list row">
                 <div className="col-md-12">
-                    <h2>Procesadoras</h2>
+                    <h2 className="h2 text-primary font-weight-bold">Procesadoras</h2>
                 </div>
             </div>
             <div className="list row">
@@ -58,7 +58,7 @@ const Processor: React.FC = () => {
                                 Search
                             </button>
                             <Link
-                                to={"/processors/new"}
+                                to={"/processor/new"}
                                 className="ml-2 btn btn-primary"
                             >
                                 New

@@ -5,8 +5,16 @@ import ISubscription from "../types/subscription.type";
 // const API_URL = "https://w2j8ebzbl7.execute-api.us-east-1.amazonaws.com/api/products";
 const API_URL = "http://localhost:8080/api/subscriptions";
 
-export const getAll = () => {
-  return axios.get(API_URL + "/", { headers: authHeader() });
+export const getAll = (params?: object) => {
+  return axios.get(API_URL + "/", { headers: authHeader(), params: params });
+};
+
+export const getAllByDailyList = (dailyListId: any) => {
+  return axios.get(API_URL + `/daily-list/${dailyListId}`, { headers: authHeader() });
+};
+
+export const getAllPayments = (params: any) => {
+  return axios.get(API_URL + `/pagos`, { headers: authHeader(), params: params });
 };
 
 export const get = (id: any): Promise<ISubscription> => {

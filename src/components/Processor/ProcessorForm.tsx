@@ -7,7 +7,7 @@ const ProcessorForm: React.FC = () => {
     const { id } = useParams();
 
     const initialValues = {
-        id: null,
+        id: 0,
         processorName: ""
     }
     const [processorProperties, setProcessorProperties] = useState<IProcessor>(initialValues)

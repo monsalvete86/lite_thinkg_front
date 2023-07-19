@@ -2,17 +2,36 @@ import React, { useState, useEffect, ChangeEvent, useRef } from "react";
 import * as SubscriptionService from "../../services/subscription.service";
 import { Link } from "react-router-dom";
 import IClientDailyList from "../../types/client-daily-list.type";
+import states from "../../common/state-subscription";
 
 const Subscriptions: React.FC = () => {
 
     const [subscriptions, setSubscriptions] = useState<Array<IClientDailyList>>([]);
+    const [searchStateSubscription, setSearchStateSubscription] = useState("");
+    const [searchStatePayment, setSearchStatePayment] = useState("");
 
     useEffect(() => {
         retrieveSubscriptions();
     }, []);
 
     const retrieveSubscriptions = () => {
-        SubscriptionService.getAll()
+        let data = {
+            state: searchStateSubscription
+        }
+        SubscriptionService.getAll(data)
+            .then((response) => {
+                setSubscriptions(response.data);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    };
+
+    const retrievePaymentSubscriptions = () => {
+        let data = {
+            state: searchStatePayment
+        }
+        SubscriptionService.getAllPayments(data)
             .then((response) => {
                 setSubscriptions(response.data);
             })
@@ -29,78 +48,95 @@ const Subscriptions: React.FC = () => {
         }
     };
 
+    const handleStateSubscriptionChange = (text: ChangeEvent<HTMLSelectElement>) => {
+        setSearchStateSubscription(text.target.value);
+    };
+
+    const handleStatePaymentChange = (text: ChangeEvent<HTMLSelectElement>) => {
+        setSearchStatePayment(text.target.value);
+    };
+
     return (
         <div>
-            <div className="list row">
+            <div className="row">
                 <div className="col-md-12">
-                    <h2>Suscripciones</h2>
+                    <h2  className="h2 text-primary font-weight-bold">Suscripciones</h2>
                 </div>
             </div>
-            <div className="list row">
-                <div className="col-md-8">
-
-                </div>
-                <div className="col-md-8">
+            <div className="row">
+                <div className="col-md-12">
+                    <label htmlFor="stateSubscription">Estado de suscripción</label>
                     <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search by title"
-
-                        />
+                        <select name="stateSubscription" id="stateSubscription" className="custom-select" onChange={handleStateSubscriptionChange}>
+                            <option value="">--Seleccionar -- </option>
+                            {states.map((state) => (
+                                <option value={state.value} key={state.value} >{state.label}</option>
+                            ))}
+                        </select>
                         <div className="input-group-append">
                             <button
-                                className="btn btn-outline-secondary"
+                                className="btn btn-outline-success"
                                 type="button"
-
+                                onClick={retrieveSubscriptions}
                             >
-                                Search
+                                Buscar
                             </button>
-                            <Link
-                                to={"/subscriptions/new"}
-                                className="ml-2 btn btn-primary"
-                            >
-                                New
-                            </Link>
-
                         </div>
                     </div>
                 </div>
-                <div className="col-md-12 list">
-                    <table
-                        className="table table-striped table-bordered">
-                        <thead>
-                            <tr className="text-center">
-                                <th>Code</th>
-                                <th>Cliente</th>
-                                <th>Estado</th>
-                                <th>Lista diaria</th>
-                                <th colSpan={2}>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                subscriptions &&
-                                subscriptions.map((row, index) => {
-                                    return (
-                                        <tr key={row.id}>
-                                            <td className="text-center">{row.id}</td>
-                                            <td className="text-center">{row.cliente?.nombre} {row.cliente?.apellido}</td>
-                                            <td>{row.state ?? "GENERATED"}</td>
-                                            <td className="text-center">{row.dailyListId}</td>
-                                            <td className="text-center">
-                                                <Link to={"/subscription/" + row?.id} className="btn btn-primary">Edit</Link>
-                                            </td>
-                                            <td className="text-center">
-                                                <button onClick={() => cleanSubscription(row.id)} className="btn btn-danger">Delete</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
+                <div className="col-md-12">
+                    <label htmlFor="stateSubscription">Estado de pagos</label>
+                    <div className="input-group-append">
+                        <select name="statePayment" id="statePayment" className="custom-select" onChange={handleStatePaymentChange}>
+                            <option value="PAGADO">--Seleccionar -- </option>
+                            <option value="PAGADO">Pagados  </option>
+                            <option value="CANCELADO">Cancelados  </option>
+                            <option value="PORVENCER">Proximos a vencer  </option>
+                        </select>
+                        <button
+                            className="btn btn-outline-success"
+                            type="button"
+                            onClick={retrievePaymentSubscriptions}
+                        >
+                            Buscar
+                        </button>
+                    </div>
                 </div>
+            </div>
+            <div className="w-100 list mt-5">
+                <table
+                    className="table table-striped table-bordered">
+                    <thead>
+                        <tr className="text-center">
+                            <th>Code</th>
+                            <th>Cliente</th>
+                            <th>Estado</th>
+                            <th>Lista diaria</th>
+                            <th colSpan={2}>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            subscriptions &&
+                            subscriptions.map((row, index) => {
+                                return (
+                                    <tr key={row.id}>
+                                        <td className="text-center">{row.id}</td>
+                                        <td className="text-center">{row.cliente?.nombre} {row.cliente?.apellido}</td>
+                                        <td>{row.state ?? "GENERATED"}</td>
+                                        <td className="text-center">{row.dailyListId}</td>
+                                        <td className="text-center">
+                                            <Link to={"/subscription/" + row?.id} className="btn btn-primary">Editar</Link>
+                                        </td>
+                                        <td className="text-center">
+                                            <button onClick={() => cleanSubscription(row.id)} className="btn btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     );

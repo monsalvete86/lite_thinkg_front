@@ -1,4 +1,4 @@
 export default interface IProcessor {
-    id?: number | null,
+    id?: number,
     processorName: string
   }

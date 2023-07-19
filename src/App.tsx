@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import * as AuthService from "./services/auth.service";
@@ -24,11 +23,12 @@ import PagoForm from "./components/PagoForm";
 import DailyList from "./components/DailyList/DailyList";
 import ClientDailyLists from "./components/DailyList/ClientDailyList";
 import ClientDailyListForm from "./components/DailyList/ClientDailyListForm";
-import DailyListForm from "./components/DailyList/DailyListForm";
 import SubscriptionForm from "./components/Subscription/SubscriptionForm";
 import Subscriptions from "./components/Subscription/Subscription";
 import ProcessorForm from "./components/Processor/ProcessorForm";
 import Processors from "./components/Processor/ProcessorList";
+import Users from "./components/User/UserList";
+import UserForm from "./components/User/UserForm";
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -108,8 +108,8 @@ const App: React.FC = () => {
 
           {currentUser && (
             <li className="nav-item">
-              <Link to={"/user"} className="nav-link">
-                User
+              <Link to={"/users"} className="nav-link">
+                Usuarios
               </Link>
             </li>
           )}
@@ -136,16 +136,16 @@ const App: React.FC = () => {
               </Link>
             </li>
 
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to={"/register"} className="nav-link">
                 Sign Up
               </Link>
-            </li>
+            </li> */}
           </div>
         )}
       </nav>
 
-      <div className="container mt-3">
+      <div className="container mt-3 border pt-2">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -163,9 +163,11 @@ const App: React.FC = () => {
           <Route path="/tutorials/:id" element={<Tutorial />} />
           <Route path="/dailyList" element={<DailyList />} />
           <Route path="/pagos" element={<Pagos />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<UserForm />} />
+          <Route path="/users/new" element={<UserForm />} />
           <Route path="/pagos/new" element={<PagoForm />} />
           <Route path="/pagos/:id" element={<PagoForm />} />
-          <Route path="/dailyList/new" element={<DailyListForm />} />
           <Route path="/clientDailyList" element={<ClientDailyLists />} />
           <Route path="/clientDailyList/:id" element={<ClientDailyListForm/>}   />
           <Route path="/subscriptions" element={<Subscriptions/>}   />

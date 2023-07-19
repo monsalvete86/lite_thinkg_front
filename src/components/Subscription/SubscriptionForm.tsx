@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import * as ProcessorService from "../../services/processor.service";
 import IProcessor from '../../types/processor.type';
 import ISubscription from "../../types/subscription.type";
@@ -8,8 +8,8 @@ import *  as SubscriptionService from "../../services/subscription.service"
 const SubscriptionForm: React.FC = () => {
     const { id } = useParams();
 
-    const initialState = {
-        id: null,
+    const initialState: ISubscription = {
+        id: 0,
         migratoryProcess: "",
         annualIncome: 0,
         mainContributor: "",
@@ -32,8 +32,8 @@ const SubscriptionForm: React.FC = () => {
         state: "",
         startCoverage: "",
         endCoverage: "",
-        processorId: 1,
-        clientListId: 2
+        processorId: 0,
+        monthlyPayment: 0
     }
 
     useEffect(() => {
@@ -81,7 +81,20 @@ const SubscriptionForm: React.FC = () => {
 
     return (
         <div className="form form-row">
-            <div className="col-12 col-md-6 border">
+            <h5 className="w-100 text-center text-primary"> Completar suscripción</h5>
+            <div className="form-group">
+                <label htmlFor="monthlyPayment">Pago Mensual</label>
+                <input
+                    className="form-control"
+                    placeholder="Pago mensual"
+                    id="monthlyPayment"
+                    name="monthlyPayment"
+                    value={subscription?.monthlyPayment}
+                    type="number"
+                    onChange={handleNameChange}
+                />
+            </div>
+            <div className="col-12 col-md-6  border-right ">
                 <div className="form-group">
                     <label htmlFor="migratoryProcess">Proceso migratorio</label>
                     <input
@@ -210,7 +223,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
             </div>
-            <div className="col-12 col-md-6 border">
+            <div className="col-12 col-md-6 ">
                 <div className="form-group">
                     <label htmlFor="primaryDoctor">Medico principal</label>
                     <input
@@ -293,19 +306,21 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
+                    <label htmlFor="processorId">Estado</label>
+
                     <select className="custom-select" name="state" id="state" onChange={handleNameChange}>
                         <option value="GENERATED" defaultChecked >Generado </option>
-                        <option value="ACEPTED">Aceptado </option>
+                        <option value="ACCEPTED">Aceptado </option>
                         <option value="REJECTED" >Rechazado </option>
                         <option value="CANCELED">Cancelado </option>
                     </select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="processorId">Procesadora</label>
-                    <select required defaultValue="" className="custom-select w-100" id="processorId" name="processorId"  onChange={handleNameChange}>
+                    <select required defaultValue="" className="custom-select w-100" id="processorId" name="processorId" onChange={handleNameChange}>
                         <option value="">--Seleccionar--</option>
                         {processors.map((processor) => (
-                            <option value={JSON.stringify(processor)} key={processor.id} >{processor.processorName}</option>
+                            <option value={processor.id} key={processor.id} >{processor.processorName}</option>
                         ))}
                     </select>
                 </div>
@@ -333,10 +348,11 @@ const SubscriptionForm: React.FC = () => {
                         onChange={handleNameChange}
                     />
                 </div>
-                <div className="form-group">
-                    <button className="btn btn-success" title="Crear Producto" onClick={saveSubscription}>Guardar</button>
 
-                </div>
+            </div>
+            <div className="form-group text-right w-100 mt-2">
+                <button className="btn btn-success col-3" title="Crear Producto" onClick={saveSubscription}>Guardar</button>
+
             </div>
         </div>
     );
