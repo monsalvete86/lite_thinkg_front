@@ -1,7 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import * as PagosService from "../services/pago.service";
-import IPago from "../types/pago.type";
 
 type Props = {
   isOpenModal?: (hide:boolean) => void
@@ -95,71 +94,11 @@ const PagoForm: React.FC<Props> = (props) => {
           <div className="modal-content">
             <div className="modal-header">
               {pago?.id && 'Edit Pago'}
-              {!pago?.id && 'New Pago'}
+              {!pago?.id && 'Pagar'}
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
                 <form className="form" action="">
-                  <div className="form-group">
-                    <label htmlFor="clientId">Cliente</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="clientId"
-                      required
-                      value={pago.clientId}
-                      onChange={handleInputChange}
-                      name="clientId"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="subscriptionId">Suscripcion</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="subscriptionId"
-                      required
-                      value={pago.subscriptionId}
-                      onChange={handleInputChange}
-                      name="subscriptionId"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="metodoPago">Metodo pago</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="metodoPago"
-                      required
-                      value={pago.metodoPago}
-                      onChange={handleInputChange}
-                      name="metodoPago"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="importe">Importe</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="importe"
-                      required
-                      value={pago.importe}
-                      onChange={handleInputChange}
-                      name="importe"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="state">Estado</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="state"
-                      required
-                      value={pago.state}
-                      onChange={handleInputChange}
-                      name="state"
-                    />
-                  </div>
                   <div className="form-group">
                     <label htmlFor="fechaPago">Fecha pago</label>
                     <input

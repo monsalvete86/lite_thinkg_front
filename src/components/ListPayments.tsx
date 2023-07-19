@@ -7,7 +7,7 @@ import PagoForm from "./PagoForm";
 const ListPayments: React.FC = () => {
   const [listpayments, setListPayments] = useState<Array<IListPayments>>([]);
   const [showModal, setShowModal] = useState(false);
-
+ 
   const { subscriptionId } = useParams() ;
 
   useEffect(() => {
