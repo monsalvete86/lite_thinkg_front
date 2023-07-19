@@ -1,5 +1,6 @@
 export default interface ISubscription {
     id?: number | null,
+    monthlyPayment: number,
     migratoryProcess?: string,
     annualIncome?: number,
     mainContributor?: string,
