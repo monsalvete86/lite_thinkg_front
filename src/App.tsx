@@ -20,6 +20,7 @@ import Clientes from "./components/Clientes";
 import ClienteForm from "./components/ClienteForm";
 import Pagos from "./components/Pagos";
 import PagoForm from "./components/PagoForm";
+import ListPayments from "./components/ListPayments";
 import DailyList from "./components/DailyList/DailyList";
 import ClientDailyLists from "./components/DailyList/ClientDailyList";
 import ClientDailyListForm from "./components/DailyList/ClientDailyListForm";
@@ -105,7 +106,7 @@ const App: React.FC = () => {
               Pagos
             </Link>
           </li>
-
+          
           {currentUser && (
             <li className="nav-item">
               <Link to={"/users"} className="nav-link">
@@ -168,7 +169,8 @@ const App: React.FC = () => {
           <Route path="/users/new" element={<UserForm />} />
           <Route path="/pagos/new" element={<PagoForm />} />
           <Route path="/pagos/:id" element={<PagoForm />} />
-          <Route path="/clientDailyList" element={<ClientDailyLists />} />
+          <Route path="/listpayments/:subscriptionId" element={<ListPayments/>} />
+          <Route path="/clientDailyList" element={<ClientDailyLists/>} />
           <Route path="/clientDailyList/:id" element={<ClientDailyListForm/>}   />
           <Route path="/subscriptions" element={<Subscriptions/>}   />
           <Route path="/subscription/new" element={<SubscriptionForm />} />

@@ -14,7 +14,7 @@ export const getAllByDailyList = (dailyListId: any) => {
 };
 
 export const getAllPayments = (params: any) => {
-  return axios.get(API_URL + `/pagos`, { headers: authHeader(), params: params });
+  return axios.get(API_URL + `-pagos`, { headers: authHeader(), params: params });
 };
 
 export const get = (id: any): Promise<ISubscription> => {

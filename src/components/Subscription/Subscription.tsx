@@ -84,7 +84,7 @@ const Subscriptions: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-12">
+                {/* <div className="col-md-12">
                     <label htmlFor="stateSubscription">Estado de pagos</label>
                     <div className="input-group-append">
                         <select name="statePayment" id="statePayment" className="custom-select" onChange={handleStatePaymentChange}>
@@ -101,7 +101,7 @@ const Subscriptions: React.FC = () => {
                             Buscar
                         </button>
                     </div>
-                </div>
+                </div> */}
             </div>
             <div className="w-100 list mt-5">
                 <table
@@ -110,6 +110,8 @@ const Subscriptions: React.FC = () => {
                         <tr className="text-center">
                             <th>Code</th>
                             <th>Cliente</th>
+                            <th>Pago Mensual</th>
+                            <th>Fecha próximo pago</th>
                             <th>Estado</th>
                             <th>Lista diaria</th>
                             <th colSpan={2}>Actions</th>
@@ -123,6 +125,8 @@ const Subscriptions: React.FC = () => {
                                     <tr key={row.id}>
                                         <td className="text-center">{row.id}</td>
                                         <td className="text-center">{row.cliente?.nombre} {row.cliente?.apellido}</td>
+                                        <td className="text-center">{row.monthlyPayment}</td>
+                                        <td className="text-center">{row.nextPaymentDate}</td>
                                         <td>{row.state ?? "GENERATED"}</td>
                                         <td className="text-center">{row.dailyListId}</td>
                                         <td className="text-center">
