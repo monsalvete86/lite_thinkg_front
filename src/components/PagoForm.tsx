@@ -3,14 +3,12 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import * as PagosService from "../services/pago.service";
 import IPago from "../types/pago.type";
 
-
-
 type Props = {
   isOpenModal?: (hide:boolean) => void
 }
 
 const PagoForm: React.FC<Props> = (props) => {
-  
+
   const { id } = useParams();
   let navigate = useNavigate();
 
@@ -26,12 +24,12 @@ const PagoForm: React.FC<Props> = (props) => {
 
   const [pago, setPago] = useState(initialPagoState);
   const [banEdit, setBanEdit] = useState<number> (0);
-  
+
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setPago({ ...pago, [name]: value });
   };
-  
+
   const getPago = (id: string) => {
     PagosService.get(id)
     .then((response: any) => {
@@ -42,7 +40,7 @@ const PagoForm: React.FC<Props> = (props) => {
       console.log(e);
     });
   };
-  
+
   useEffect(() => {
     if (id) {
       PagosService.get(id)
@@ -52,7 +50,7 @@ const PagoForm: React.FC<Props> = (props) => {
       })
     }
   }, [id]);
-  
+
   const savePago = () => {
     var data = {
       clientId: pago.clientId,
@@ -85,15 +83,11 @@ const PagoForm: React.FC<Props> = (props) => {
       window.location.reload();
   };
 
-  const closeModal =() =>{
-    props.isOpenModal?.(false)
-  }
-
   useEffect(() => {
     if (id)
       getPago(id);
   }, [id]);
-  
+
   return (
     <div className="modal-dialog modal-dialog-scrollable">
       <div className="modal" id="modalCreatePago" tabIndex={-6} aria-labelledby="modalCreatePagoLabel" style={{ display: 'block', backgroundColor: "#00000078" }}>
@@ -102,9 +96,7 @@ const PagoForm: React.FC<Props> = (props) => {
             <div className="modal-header">
               {pago?.id && 'Edit Pago'}
               {!pago?.id && 'New Pago'}
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span>&times;</span>
-              </button>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
                 <form className="form" action="">
@@ -190,7 +182,7 @@ const PagoForm: React.FC<Props> = (props) => {
         </div>
       </div>
     </div>
-  );   
+  );
 }
 
 export default PagoForm;

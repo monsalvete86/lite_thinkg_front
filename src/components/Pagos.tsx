@@ -15,7 +15,6 @@ const Pagos: React.FC = () => {
     retrievePayment();
   }, []);
 
- 
   const retrievePayment = () => {
     let data = {
       state: searchStatePayment
@@ -28,16 +27,6 @@ const Pagos: React.FC = () => {
             console.log(e);
         });
 };
-  
-
-  const cleanPago = (id: number | null | undefined) => {
-    const confirmation = window.confirm("¿Está seguro de que desea eliminar este pago?");
-    if (confirmation) {
-      console.log(id);
-      PagoService.remove(id);
-      retrievePayment();
-    }
-  };
 
   const isActiveModal = (isShow: boolean = false) => {
     setShowModal(isShow)
@@ -62,6 +51,7 @@ const Pagos: React.FC = () => {
                   <option value="PAGADO">--Seleccionar -- </option>
                   <option value="PAGADO">Pagados  </option>
                   <option value="PORVENCER">Proximos a vencer  </option>
+                  <option value="VENCIDO">Vencida  </option>
                 </select>
                 <button className="btn btn-outline-success"
                   type="button"
@@ -82,10 +72,10 @@ const Pagos: React.FC = () => {
                 <th>Cliente</th>
                 <th>N° Suscripción</th>
                 <th>Operadora</th>
-                <th>Cuota Mensual</th>
+                <th>Pago Mensual</th>
                 <th>Estado</th>
                 <th>Fecha Pago</th>
-                <th colSpan={2}>Actions</th>
+                <th colSpan={1}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -99,10 +89,7 @@ const Pagos: React.FC = () => {
                     <td className="text-center">{row.state}</td>
                     <td className="text-center">{row.fechaPago}</td>
                     <td className="text-center">
-                      <Link to={"/listpayments/" + row?.subscriptionId} className="btn btn-primary">list Payments</Link>
-                    </td>
-                    <td className="text-center">
-                      <button onClick={() => cleanPago(row.id)} className="btn btn-danger">Delete</button>
+                      <Link to={"/listpayments/" + row?.subscriptionId} className="btn btn-primary">Pagos</Link>
                     </td>
                   </tr>
                 ))}
