@@ -61,9 +61,15 @@ const DailyLists: React.FC = () => {
     <div>
       <div className="list row">
         <div className="col-md-12">
-          <h2  className="h2 text-primary font-weight-bold">Listado diario</h2>
+          <h2 className="h2 text-primary font-weight-bold">Listado diario</h2>
         </div>
       </div>
+      {/* <div className="d-flex justify-content-center col-md-12 text-primary">
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+        <h5 className="h5 font-weight-bold p-2">Cargando</h5>
+      </div> */}
       <div className="page_search my-2  w-100">
         <div className="form-row w-100">
           <div className="form-group col-md-5">
@@ -89,7 +95,7 @@ const DailyLists: React.FC = () => {
           <button type="button" className="btn btn-primary" data-target="#modalCreateDailyList" onClick={() => isActiveModal(true)}>
             Nuevo
           </button>
-          {showModal && <DailyListForm reloadList={retrieveItems} isOpenModal={(hide)=>isActiveModal(hide)} ></DailyListForm>}
+          {showModal && <DailyListForm reloadList={retrieveItems} isOpenModal={(hide) => isActiveModal(hide)} ></DailyListForm>}
 
         </div>
       </div>

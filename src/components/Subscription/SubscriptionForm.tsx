@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import * as ProcessorService from "../../services/processor.service";
 import IProcessor from '../../types/processor.type';
 import ISubscription from "../../types/subscription.type";
@@ -8,7 +8,7 @@ import *  as SubscriptionService from "../../services/subscription.service"
 const SubscriptionForm: React.FC = () => {
     const { id } = useParams();
 
-    const initialState = {
+    const initialState: ISubscription = {
         id: 0,
         migratoryProcess: "",
         annualIncome: 0,
@@ -33,7 +33,7 @@ const SubscriptionForm: React.FC = () => {
         startCoverage: "",
         endCoverage: "",
         processorId: 0,
-        // clientListId: 2
+        monthlyPayment: 0
     }
 
     useEffect(() => {
@@ -82,6 +82,18 @@ const SubscriptionForm: React.FC = () => {
     return (
         <div className="form form-row">
             <h5 className="w-100 text-center text-primary"> Completar suscripción</h5>
+            <div className="form-group">
+                <label htmlFor="monthlyPayment">Pago Mensual</label>
+                <input
+                    className="form-control"
+                    placeholder="Pago mensual"
+                    id="monthlyPayment"
+                    name="monthlyPayment"
+                    value={subscription?.monthlyPayment}
+                    type="number"
+                    onChange={handleNameChange}
+                />
+            </div>
             <div className="col-12 col-md-6  border-right ">
                 <div className="form-group">
                     <label htmlFor="migratoryProcess">Proceso migratorio</label>
@@ -294,7 +306,7 @@ const SubscriptionForm: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
-                <label htmlFor="processorId">Estado</label>
+                    <label htmlFor="processorId">Estado</label>
 
                     <select className="custom-select" name="state" id="state" onChange={handleNameChange}>
                         <option value="GENERATED" defaultChecked >Generado </option>
@@ -305,7 +317,7 @@ const SubscriptionForm: React.FC = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="processorId">Procesadora</label>
-                    <select required defaultValue="" className="custom-select w-100" id="processorId" name="processorId"  onChange={handleNameChange}>
+                    <select required defaultValue="" className="custom-select w-100" id="processorId" name="processorId" onChange={handleNameChange}>
                         <option value="">--Seleccionar--</option>
                         {processors.map((processor) => (
                             <option value={processor.id} key={processor.id} >{processor.processorName}</option>
@@ -336,12 +348,12 @@ const SubscriptionForm: React.FC = () => {
                         onChange={handleNameChange}
                     />
                 </div>
-               
+
             </div>
             <div className="form-group text-right w-100 mt-2">
-                    <button className="btn btn-success col-3" title="Crear Producto" onClick={saveSubscription}>Guardar</button>
+                <button className="btn btn-success col-3" title="Crear Producto" onClick={saveSubscription}>Guardar</button>
 
-                </div>
+            </div>
         </div>
     );
 };

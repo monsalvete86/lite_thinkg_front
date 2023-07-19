@@ -6,7 +6,7 @@ import * as DailyListService from "../../services/daily-list.service"
 
 type Props = {
     reloadList: () => void,
-    isOpenModal?: (hide:boolean) => void
+    isOpenModal?: (hide: boolean) => void
 
 }
 const DailyListForm: React.FC<Props> = (props) => {
@@ -46,7 +46,7 @@ const DailyListForm: React.FC<Props> = (props) => {
             });
     }
 
-    const closeModal =() =>{
+    const closeModal = () => {
         props.isOpenModal?.(false)
     }
 
@@ -57,9 +57,6 @@ const DailyListForm: React.FC<Props> = (props) => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="modalCreateDailyListLabel">Crear listado diario</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span>&times;</span>
-                            </button>
                         </div>
                         <div className="modal-body">
                             <form className="form" action="">
@@ -74,7 +71,6 @@ const DailyListForm: React.FC<Props> = (props) => {
                                         value={dailyListProperties.date}
                                         onChange={handleInputChange}
                                     />
-
                                 </div>
                                 <span className="text-danger">
                                     {errorMessage}

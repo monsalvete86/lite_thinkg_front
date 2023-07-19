@@ -64,11 +64,19 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
     ClientDailyListService.createBulk(dataList)
       .then((response) => {
         console.log(response)
+
         retrieveItems()
         window.alert('Lista guardada correctamente')
+        
       })
       .catch((e) => {
         console.log(e);
+        setTimeout(() => {
+          setErrorMessage(false)
+          console.log(errorMessage)
+        }, 3000)
+        setErrorMessage(true)
+
       });
   }
 
@@ -120,7 +128,13 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
     let exists = dataList.filter(value => {
       if (value.clientId === clients.id && value.operatorId === user.id) {
+
+        setTimeout(() => {
+          setErrorMessage(false)
+          console.log(errorMessage)
+        }, 3000)
         setErrorMessage(true)
+
         return value;
       }
     })
@@ -153,8 +167,8 @@ const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
   return (
     <div>
-      {errorMessage && <div className="alert alert-secondary" role="alert">
-        Ya se ha creado un registro similar previamente, seleccione otra opción
+      {errorMessage && <div className="alert alert-secondary fixed-top" style={{ zIndex: '1' }} role="alert">
+        Hubo un error al guardar los datos
       </div>}
       {/* Modal para crear clientes */}
 
