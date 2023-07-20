@@ -40,7 +40,7 @@ export const updateCompany = (idUser: number, idCompany: number) => {
     idCompany,
     idUser
   }
-  return axios.post<any>(API_URL + `update_company`, data, { headers: authHeader() });
+  return axios.post<any>(API_URL + `/update_company`, data, { headers: authHeader() });
 };
 
 export const create = (data: IUser) => {

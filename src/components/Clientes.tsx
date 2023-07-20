@@ -25,15 +25,6 @@ const Clientes: React.FC = () => {
       });
   };
 
-  const refreshList = () => {
-    retrieveClientes();
-  };
-
-  const setActiveCliente = (cliente: ICliente, index: number) => {
-    setCurrentCliente(cliente);
-    setCurrentIndex(index);
-  };
-
   const cleanCliente = (id: number | null | undefined) => {
     const confirmation = window.confirm("¿Está seguro de que desea eliminar este cliente?");
     if (confirmation) {
@@ -48,12 +39,12 @@ const Clientes: React.FC = () => {
     setSearchClientes(searchValue);
   };
 
-  const filteredClientes = clientes.filter((cliente) => {
+  const filteredClientes = clientes.length > 0 ? clientes.filter((cliente) => {
     return (
       cliente.nombre.toLowerCase().includes(searchCliente.toLowerCase()) ||
       cliente.apellido.toLowerCase().includes(searchCliente.toLowerCase())
     );
-  });
+  }) : [];
 
   return (
     <div>
@@ -70,9 +61,6 @@ const Clientes: React.FC = () => {
             <div className="input-group-append">
               <button className="btn btn-outline-secondary" type="button">Search</button>
               <Link to={"/clientes/new"} className="ml-2 btn btn-primary">New</Link>
-              <PDFDownloadLink document={<ReportPDF clientes={filteredClientes} />} fileName="report.pdf">
-                <button className="ml-2 btn btn-danger">Download PDF</button>
-              </PDFDownloadLink>
             </div>
           </div>
         </div>
