@@ -1,40 +1,50 @@
 import React, { useState, useEffect, ChangeEvent} from "react";
 import * as PagoService from "../services/pago.service";
-import IPago from '../types/pago.type';
 import { Link } from "react-router-dom";
 import ReportPDF from "./ReportPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import PagoForm from "./PagoForm";
+
 
 const Pagos: React.FC = () => {
-  const [pagos, setPagos] = useState<Array<IPago>>([]);
-  const [showModal, setShowModal] = useState(false);
-  const [searchStatePayment, setSearchStatePayment] = useState("");
+  const [pagos, setPagos] = useState<Array<any>>();
+  const [searchStatePayment, setSearchStatePayment] = useState(true);
+  const [paymentStateFilter, setPaymentStateFilter] = useState('');
 
   useEffect(() => {
     retrievePayment();
   }, []);
 
-  const retrievePayment = () => {
+  const  retrievePayment = async () => {
     let data = {
+      paymentStateFilter: paymentStateFilter,
       state: searchStatePayment
-  }
-    PagoService.getAll(data)
-        .then((response) => {
-            setPagos(response.data);
-        })
-        .catch((e) => {
-            console.log(e);
-        });
-};
+    }
+    const resPagos = await PagoService.getAll(data);
+    setPagos(resPagos.data)
+  };
 
-  const isActiveModal = (isShow: boolean = false) => {
-    setShowModal(isShow)
-  }
+  useEffect(() => {
+    retrievePayment();
+    console.log('paymentStateFilter')
+      console.log(paymentStateFilter)
+  }, [paymentStateFilter]);
 
   const handleStatePaymentChange = (text: ChangeEvent<HTMLSelectElement>) => {
-    setSearchStatePayment(text.target.value);
-};
+    setPaymentStateFilter(text.target.value);
+  };
+  const stateValidate = (cantPagos: number, diaPago: number) => {
+    const today = new Date();
+    const dayOfMonth = today.getDate();
+
+    if(cantPagos > 0 ) { return 'Pagado'; }
+
+    if(cantPagos === 0 && diaPago > dayOfMonth) { return 'Vencido'; }
+
+    if(cantPagos === 0 && dayOfMonth - diaPago < 6 ) { return 'Por Vencer'; }
+
+    return 'Al día'
+
+  }
 
   return (
     <div>
@@ -47,22 +57,18 @@ const Pagos: React.FC = () => {
         <div className="col-md-8">
           <label htmlFor="stateSubscription">Estado de pagos</label>
           <div className="input-group mb-3">
-                <select name="statePayment" id="statePayment" className="custom-select" onChange={handleStatePaymentChange}>
-                  <option value="PAGADO">--Seleccionar -- </option>
-                  <option value="PAGADO">Pagados  </option>
-                  <option value="PORVENCER">Proximos a vencer  </option>
-                  <option value="VENCIDO">Vencida  </option>
-                </select>
-                <button className="btn btn-outline-success"
-                  type="button"
-                  onClick={retrievePayment}
-                >
-                    Buscar
-                </button>
-              {showModal && <PagoForm isOpenModal={(hide)=>isActiveModal(hide)} ></PagoForm>}
-              <PDFDownloadLink document={<ReportPDF pagos={pagos} />} fileName="report.pdf">
-                <button className="ml-2 btn btn-danger">Download PDF</button>
-              </PDFDownloadLink>
+            <select name="statePayment" id="statePayment" className="custom-select" onChange={handleStatePaymentChange}>
+              <option value="">--Seleccionar -- </option>
+              <option value="PAGADO">Pagados  </option>
+              <option value="PORVENCER">Proximos a vencer  </option>
+              <option value="VENCIDO">Vencida  </option>
+            </select>
+            <button className="btn btn-outline-success" type="button" onClick={retrievePayment}>
+              Buscar
+            </button>
+            <PDFDownloadLink document={<ReportPDF pagos={pagos} />} fileName="report.pdf">
+              <button className="ml-2 btn btn-danger">Download PDF</button>
+            </PDFDownloadLink>
           </div>
         </div>
         <div className="col-md-12 list">
@@ -74,22 +80,22 @@ const Pagos: React.FC = () => {
                 <th>Operadora</th>
                 <th>Pago Mensual</th>
                 <th>Estado</th>
-                <th>Fecha Pago</th>
+                <th>Dia Pago</th>
                 <th colSpan={1}>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {pagos &&
+              {pagos && pagos.length > 0 &&
                 pagos.map((row) => (
                   <tr key={row.id}>
-                    <td className="text-center">{row.cliente.nombre} {row.cliente.apellido}</td>
-                    <td className="text-center">{row.subscriptionId}</td>
-                    <td className="text-center">{row.metodoPago}</td>
-                    <td className="text-center">{row.importe}</td>
-                    <td className="text-center">{row.state}</td>
-                    <td className="text-center">{row.fechaPago}</td>
+                    <td className="text-center">{row?.cliente?.nombre} {row?.cliente?.apellido}</td>
+                    <td className="text-center">{row?.id}</td>
+                    <td className="text-center">{row?.user?.name} {row?.user?.last_name}</td>
+                    <td className="text-center">{row?.monthlyPayment}</td>
+                    <td className="text-center">{stateValidate(row?.pagos.length , row?.startCoverage.split('-')[2])}</td>
+                    <td className="text-center">{row?.startCoverage.split('-')[2]}</td>
                     <td className="text-center">
-                      <Link to={"/listpayments/" + row?.subscriptionId} className="btn btn-primary">Pagos</Link>
+                      <Link to={"/listpayments/" + row?.id} className="btn btn-primary">Pagos</Link>
                     </td>
                   </tr>
                 ))}

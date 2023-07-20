@@ -1,35 +1,39 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as PagosService from "../services/pago.service";
+import { boolean } from "yup";
 
 type Props = {
-  isOpenModal?: (hide:boolean) => void
+  isOpenModal?: (hide:boolean) => void,
+  id: number | undefined
 }
 
 const PagoForm: React.FC<Props> = (props) => {
 
-  const { id } = useParams();
+  const { id } = props;
   let navigate = useNavigate();
 
   const initialPagoState = {
     id: null,
     clientId: "",
     subscriptionId: "",
+    operatorId: "",
     metodoPago: "",
-    importe: "",
-    state: "",
+    monthlyPaymentId: "",
+    importe: undefined ,
+    statePago: boolean,
     fechaPago: "",
   };
 
   const [pago, setPago] = useState(initialPagoState);
-  const [banEdit, setBanEdit] = useState<number> (0);
+  const [, setBanEdit] = useState<number> (0);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setPago({ ...pago, [name]: value });
   };
 
-  const getPago = (id: string) => {
+  const getPago = (id: number) => {
     PagosService.get(id)
     .then((response: any) => {
       setPago(response.data);
@@ -41,22 +45,24 @@ const PagoForm: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    if (id) {
+   /* if (id) {
       PagosService.get(id)
       .then((result: any) => {
         setBanEdit(result.data.id)
         setPago(result.data);
       })
-    }
+    }*/
   }, [id]);
 
   const savePago = () => {
     var data = {
       clientId: pago.clientId,
       subscriptionId: pago.subscriptionId,
+      operatorId: pago.operatorId,
       metodoPago: pago.metodoPago,
       importe: pago.importe,
-      state: pago.state,
+      monthlyPaymentId: pago.monthlyPaymentId,
+      statePago: pago?.statePago() ? true : false,
       fechaPago: pago.fechaPago,
     };
 
@@ -78,14 +84,20 @@ const PagoForm: React.FC<Props> = (props) => {
         console.log(e);
       });
     }
-      navigate("/pagos");
-      window.location.reload();
+      // navigate("/pagos");
+      // window.location.reload();
   };
 
   useEffect(() => {
-    if (id)
-      getPago(id);
+    // if (id)
+      // getPago(id);
   }, [id]);
+
+  const handleCancel = () => {
+    if (props.isOpenModal) {
+      props.isOpenModal(false); // Cierra el modal al hacer clic en el botón "Cancelar"
+    }
+  };
 
   return (
     <div className="modal-dialog modal-dialog-scrollable">
@@ -93,8 +105,8 @@ const PagoForm: React.FC<Props> = (props) => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              {pago?.id && 'Edit Pago'}
-              {!pago?.id && 'Pagar'}
+              {pago?.id && 'Pagar'}
+              {!pago?.id && 'New Pagar'}
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
@@ -115,7 +127,7 @@ const PagoForm: React.FC<Props> = (props) => {
             </div>
             <div className="modal-footer">
               <button className="btn btn-success" onClick={savePago}>Save</button>
-              <Link to={"/pagos"} className="ml-2 btn btn-secondary">Cancel</Link>
+              <button className="btn btn-secondary" onClick={handleCancel}>Cancel</button>
             </div>
           </div>
         </div>
