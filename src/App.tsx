@@ -19,7 +19,6 @@ import ProductForm from "./components/ProductForm";
 import Clientes from "./components/Clientes";
 import ClienteForm from "./components/ClienteForm";
 import Pagos from "./components/Pagos";
-import PagoForm from "./components/PagoForm";
 import ListPayments from "./components/ListPayments";
 import ListPaymentsForm from "./components/ListPayments";
 import DailyList from "./components/DailyList/DailyList";
@@ -107,7 +106,6 @@ const App: React.FC = () => {
               Pagos
             </Link>
           </li>
-          
           {currentUser && (
             <li className="nav-item">
               <Link to={"/users"} className="nav-link">
@@ -164,14 +162,13 @@ const App: React.FC = () => {
           <Route path="/clientes/:id" element={<ClienteForm />} />
           <Route path="/tutorials/:id" element={<Tutorial />} />
           <Route path="/dailyList" element={<DailyList />} />
-          <Route path="/pagos" element={<Pagos />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<UserForm />} />
           <Route path="/users/new" element={<UserForm />} />
-          <Route path="/pagos/new" element={<PagoForm />} />
-          <Route path="/pagos/:id" element={<PagoForm />} />
+          <Route path="/pagos" element={<Pagos />} />
           <Route path="/listpayments/:subscriptionId" element={<ListPayments/>} />
           <Route path="/listpayments/:new" element={<ListPaymentsForm/>} />
+          <Route path="/listpayments/:id" element={<ListPaymentsForm/>} />
           <Route path="/clientDailyList" element={<ClientDailyLists/>} />
           <Route path="/clientDailyList/:id" element={<ClientDailyListForm/>} />
           <Route path="/subscriptions" element={<Subscriptions/>}   />

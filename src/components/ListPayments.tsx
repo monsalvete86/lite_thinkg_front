@@ -1,15 +1,15 @@
 import React, { useState, useEffect} from "react";
 import * as PagoService from "../services/pago.service";
 import IListPayments from '../types/listpayments.type';
-import { Link, useParams } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import PagoForm from "./PagoForm";
 
 const ListPayments: React.FC = () => {
   const [listpayments, setListPayments] = useState<Array<IListPayments>>([]);
   const [showModal, setShowModal] = useState(false);
- 
-  const { subscriptionId } = useParams() ;
 
+  const { subscriptionId } = useParams() ;
+  const auxId = parseInt(subscriptionId ?? '0', 10)
   useEffect(() => {
     retrieveListPayments();
   }, []);
@@ -17,8 +17,9 @@ const ListPayments: React.FC = () => {
   const retrieveListPayments = () => {
     PagoService.getPaymentSubscription(subscriptionId)
       .then((response) => {
+        console.log('response')
         console.log(response)
-        setListPayments(response.data.pagos);
+        setListPayments(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -39,6 +40,8 @@ const ListPayments: React.FC = () => {
       <div className="list row">
         <div className="col-md-8">
           <div className="input-group mb-3">
+            <button onClick={() => window.history.back()} className="btn btn-secondary">Regresar</button>
+            <button onClick={() => isActiveModal(true)} className="btn btn-primary ml-2">Registrar Pago</button>
           </div>
         </div>
         <div className="col-md-12 list">
@@ -58,15 +61,12 @@ const ListPayments: React.FC = () => {
                 listpayments.map((row) => (
                   <tr key={row.id}>
                     <td className="text-center">{row.subscriptionId}</td>
-                    <td className="text-center">{row.metodoPago}</td>
-                    <td className="text-center">{row.importe}</td>
-                    <td className="text-center">{row.state}</td>
+                    <td className="text-center">{row?.user?.name} {row?.user?.last_name}</td>
+                    <td className="text-center">{row.monthlyPaymentId}</td>
+                    <td className="text-center">{row.statePago? 'Activo' : 'Cancelado'}</td>
                     <td className="text-center">{row.fechaPago}</td>
                     <td className="text-center">
-                    <Link to={"/listpayments/:new"} className="ml-2 btn btn-primary" data-target="#modalCreateListPayments" onClick={() => isActiveModal(true)}>
-                      Pagar
-                    </Link>
-                    {showModal && <PagoForm isOpenModal={(hide)=>isActiveModal(hide)} ></PagoForm>}
+                      <button className="btn btn-danger">Cancelar</button>
                     </td>
                   </tr>
                 ))}
@@ -74,6 +74,7 @@ const ListPayments: React.FC = () => {
           </table>
         </div>
       </div>
+      {showModal && <PagoForm id={auxId} isOpenModal={(hide)=>isActiveModal(hide)}></PagoForm>}
     </div>
   );
 };

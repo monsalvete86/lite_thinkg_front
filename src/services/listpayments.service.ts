@@ -6,7 +6,6 @@ import authHeader from "./auth-header";
 const API_URL = "http://localhost:8080/api/listpayments";
 
 export const getAll = () => {
-  //return axios.get<Array<ITutorialData>>(API_URL + "/", { headers: authHeader() });
   return axios.get(API_URL + "/", { headers: authHeader() });
 };
 
