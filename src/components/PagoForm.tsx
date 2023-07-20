@@ -19,7 +19,7 @@ const PagoForm: React.FC<Props> = (props) => {
     subscriptionId: "",
     operatorId: "",
     metodoPago: "",
-    monthlyPaymentId: "",
+    monthlyPayment: "",
     importe: undefined ,
     statePago: boolean,
     fechaPago: "",
@@ -61,7 +61,7 @@ const PagoForm: React.FC<Props> = (props) => {
       operatorId: pago.operatorId,
       metodoPago: pago.metodoPago,
       importe: pago.importe,
-      monthlyPaymentId: pago.monthlyPaymentId,
+      monthlyPayment: pago.monthlyPayment,
       statePago: pago?.statePago() ? true : false,
       fechaPago: pago.fechaPago,
     };
@@ -106,7 +106,7 @@ const PagoForm: React.FC<Props> = (props) => {
           <div className="modal-content">
             <div className="modal-header">
               {pago?.id && 'Pagar'}
-              {!pago?.id && 'New Pagar'}
+              {!pago?.id && 'Registrar Pago'}
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">

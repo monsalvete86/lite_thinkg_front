@@ -5,7 +5,7 @@ export default interface IPago {
   operatorId: string,
   metodoPago?: string,
   importe?: number,
-  monthlyPaymentId: string,
+  monthlyPayment: string,
   statePago?: boolean,
   fechaPago?: string,
   [key: string]: any
