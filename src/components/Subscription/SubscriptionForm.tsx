@@ -4,6 +4,8 @@ import * as ProcessorService from "../../services/processor.service";
 import IProcessor from '../../types/processor.type';
 import ISubscription from "../../types/subscription.type";
 import *  as SubscriptionService from "../../services/subscription.service"
+import AlertError from "../utils/AlertError";
+import AlertSuccess from "../utils/AlertSuccess";
 
 const SubscriptionForm: React.FC = () => {
     const { id } = useParams();
@@ -35,6 +37,11 @@ const SubscriptionForm: React.FC = () => {
         processorId: 0,
         monthlyPayment: 0
     }
+    const [subscription, setSubscription] = useState<ISubscription>(initialState);
+    const [errorResponse, setErrorResponse] = useState(false)
+    const [successResponse, setSuccessResponse] = useState(false)
+    const [loading, setLoading] = useState(false)
+
 
     useEffect(() => {
         if (id) {
@@ -46,17 +53,28 @@ const SubscriptionForm: React.FC = () => {
     }, []);
 
     const saveSubscription = () => {
+        setLoading(true)
         SubscriptionService.update(subscription.id, subscription)
             .then((response: any) => {
-                console.log("data ")
                 console.log(response.data);
+                setTimeout(() => {
+                    setSuccessResponse(false)
+                }, 3000)
+                setSuccessResponse(true)
             })
             .catch((e: Error) => {
                 console.log(e);
+                setTimeout(() => {
+                    setErrorResponse(false)
+                }, 3000)
+                setErrorResponse(true)
+            }).finally(() => {
+                setLoading(false)
             });
+
     }
 
-    const [subscription, setSubscription] = useState<ISubscription>(initialState);
+
 
     const handleNameChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -81,21 +99,23 @@ const SubscriptionForm: React.FC = () => {
 
     return (
         <div className="form form-row">
+            {errorResponse && <AlertError></AlertError>}
+            {successResponse && <AlertSuccess></AlertSuccess>}
             <h5 className="w-100 text-center text-primary"> Completar suscripción</h5>
-           
+
             <div className="col-12 col-md-6  border-right ">
-            <div className="form-group">
-                <label htmlFor="monthlyPayment">Pago Mensual</label>
-                <input
-                    className="form-control"
-                    placeholder="Pago mensual"
-                    id="monthlyPayment"
-                    name="monthlyPayment"
-                    value={subscription?.monthlyPayment}
-                    type="number"
-                    onChange={handleNameChange}
-                />
-            </div>
+                <div className="form-group">
+                    <label htmlFor="monthlyPayment">Pago Mensual</label>
+                    <input
+                        className="form-control"
+                        placeholder="Pago mensual"
+                        id="monthlyPayment"
+                        name="monthlyPayment"
+                        value={subscription?.monthlyPayment}
+                        type="number"
+                        onChange={handleNameChange}
+                    />
+                </div>
                 <div className="form-group">
                     <label htmlFor="migratoryProcess">Proceso migratorio</label>
                     <input
@@ -318,8 +338,7 @@ const SubscriptionForm: React.FC = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="processorId">Procesadora</label>
-                    <select required defaultValue="" className="custom-select w-100" id="processorId" name="processorId" onChange={handleNameChange}>
-                        <option value="">--Seleccionar--</option>
+                    <select required defaultValue="1" className="custom-select w-100" id="processorId" name="processorId" onChange={handleNameChange}>
                         {processors.map((processor) => (
                             <option value={processor.id} key={processor.id} >{processor.processorName}</option>
                         ))}
@@ -352,8 +371,14 @@ const SubscriptionForm: React.FC = () => {
 
             </div>
             <div className="form-group text-right w-100 mt-2">
-                <button className="btn btn-success col-3" title="Crear Producto" onClick={saveSubscription}>Guardar</button>
 
+                {loading && <div className="d-flex justify-content-center col-md-12 text-success">
+                    <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                    <h5 className="h5 font-weight-bold p-2">Guardando</h5>
+                </div>}
+                {!loading && <button className="btn btn-success col-3" title="Crear Producto" onClick={saveSubscription}>Guardar</button>}
             </div>
         </div>
     );

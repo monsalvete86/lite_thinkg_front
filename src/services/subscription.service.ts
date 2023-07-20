@@ -26,7 +26,7 @@ export const create = (data: ISubscription) => {
 };
 
 export const update = (id: any, data: any) => {
-  return axios.put<any>(API_URL + `/${id}`, data, { headers: authHeader() });
+  return axios.put<ISubscription>(API_URL + `/${id}`, data, { headers: authHeader() });
 };
 
 export const remove = (id: any) => {
