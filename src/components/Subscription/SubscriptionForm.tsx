@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import * as ProcessorService from "../../services/processor.service";
 import IProcessor from '../../types/processor.type';
 import ISubscription from "../../types/subscription.type";
@@ -73,8 +73,6 @@ const SubscriptionForm: React.FC = () => {
             });
 
     }
-
-
 
     const handleNameChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -378,7 +376,24 @@ const SubscriptionForm: React.FC = () => {
                     </div>
                     <h5 className="h5 font-weight-bold p-2">Guardando</h5>
                 </div>}
-                {!loading && <button className="btn btn-success col-3" title="Crear Producto" onClick={saveSubscription}>Guardar</button>}
+
+                <div className="row">
+                    <div className="col-6">
+                        <Link
+                            to={"/subscriptions"}
+                            className="btn btn-outline-secondary btn-block"
+                        >
+                            Cancelar
+                        </Link>
+                    </div>
+                    <div className="col-6">
+                        {!loading && <button className="btn btn-success btn-block" title="Crear Producto" onClick={saveSubscription}>Guardar</button>}
+                        {loading && <button className="btn btn-success btn-block" title="Crear Producto" disabled>Guardando  <div className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </div></button>}
+                    </div>
+                </div>
+
             </div>
         </div>
     );
