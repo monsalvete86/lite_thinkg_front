@@ -97,7 +97,7 @@ const ListPayments: React.FC = () => {
                     <td className="text-center">{row.statePago? 'Activo' : 'Cancelado'}</td>
                     <td className="text-center">{row?.startCoverage}</td>
                     <td className="text-center">
-                      <button className="btn btn-danger" onClick={() => handleCancelPayment(row.id)}>
+                      <button className="btn btn-danger" onClick={() => handleCancelPayment(row?.id? row?.id : 0)}>
                           Cancelar
                       </button>
                     </td>
