@@ -1,12 +1,14 @@
 import React, { useState, useEffect} from "react";
 import * as PagoService from "../services/pago.service";
-import IListPayments from '../types/listpayments.type';
+import IPago from '../types/pago.type';
 import {useParams } from "react-router-dom";
 import PagoForm from "./PagoForm";
 
 const ListPayments: React.FC = () => {
-  const [listpayments, setListPayments] = useState<Array<IListPayments>>([]);
+  const [listpayments, setListPayments] = useState<Array<IPago>>([]);
   const [showModal, setShowModal] = useState(false);
+  const [selectedPaymentId, setSelectedPaymentId] = useState<number | null>(null);
+  const [showAlert, setShowAlert] = useState(false);
 
   const { subscriptionId } = useParams() ;
   const auxId = parseInt(subscriptionId ?? '0', 10)
@@ -17,8 +19,6 @@ const ListPayments: React.FC = () => {
   const retrieveListPayments = () => {
     PagoService.getPaymentSubscription(subscriptionId)
       .then((response) => {
-        console.log('response')
-        console.log(response)
         setListPayments(response.data);
       })
       .catch((e) => {
@@ -29,6 +29,37 @@ const ListPayments: React.FC = () => {
   const isActiveModal = (isShow: boolean = false) => {
     setShowModal(isShow)
   }
+
+  const handleCancelPayment = (paymentId: number) => {
+    setSelectedPaymentId(paymentId);
+    setShowAlert(true);
+  };
+
+  const handleConfirmCancel = () => {
+    if (!selectedPaymentId) {
+      // No hay un pago seleccionado para cancelar, no deberíamos llegar aquí, pero por seguridad.
+      console.error("No hay un ID de pago seleccionado para cancelar.");
+      return;
+    }
+  
+    // Llamar a la función remove del servicio con el ID del pago seleccionado
+    PagoService.remove(selectedPaymentId)
+      .then(() => {
+        // Cerrar la alerta y reiniciar el estado del pago seleccionado
+        setShowAlert(false);
+        setSelectedPaymentId(null);
+        // Actualizar la lista de pagos después de la cancelación
+        retrieveListPayments();
+      })
+      .catch((error) => {
+        console.log("Error al cancelar el pago:", error);
+      });
+  };
+
+  const handleCancelAlert = () => {
+    setShowAlert(false);
+    setSelectedPaymentId(null);
+  };
 
   return (
     <div>
@@ -52,7 +83,7 @@ const ListPayments: React.FC = () => {
                 <th>Operadora</th>
                 <th>Pago Mensual</th>
                 <th>Estado</th>
-                <th>Fecha Pago</th>
+                <th>Dia Pago</th>
                 <th colSpan={1}>Actions</th>
               </tr>
             </thead>
@@ -60,13 +91,15 @@ const ListPayments: React.FC = () => {
               {listpayments &&
                 listpayments.map((row) => (
                   <tr key={row.id}>
-                    <td className="text-center">{row.subscriptionId}</td>
+                    <td className="text-center">{row?.id}</td>
                     <td className="text-center">{row?.user?.name} {row?.user?.last_name}</td>
-                    <td className="text-center">{row.monthlyPaymentId}</td>
+                    <td className="text-center">{row?.monthlyPayment}</td>
                     <td className="text-center">{row.statePago? 'Activo' : 'Cancelado'}</td>
-                    <td className="text-center">{row.fechaPago}</td>
+                    <td className="text-center">{row?.startCoverage}</td>
                     <td className="text-center">
-                      <button className="btn btn-danger">Cancelar</button>
+                      <button className="btn btn-danger" onClick={() => handleCancelPayment(row.id)}>
+                          Cancelar
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -75,6 +108,13 @@ const ListPayments: React.FC = () => {
         </div>
       </div>
       {showModal && <PagoForm id={auxId} isOpenModal={(hide)=>isActiveModal(hide)}></PagoForm>}
+      {showAlert && (
+        <div className="alert alert-warning">
+          ¿Estás seguro de que deseas cancelar el pago?
+          <button className="btn btn-danger ml-2" onClick={handleConfirmCancel}>Aceptar</button>
+          <button className="btn btn-secondary ml-2" onClick={handleCancelAlert}>Cancelar</button>
+        </div>
+      )}
     </div>
   );
 };
