@@ -3,7 +3,7 @@ import authHeader from "./auth-header";
 import ISubscription from "../types/subscription.type";
 
 const API_URL = "https://v7bq77felj.execute-api.us-east-2.amazonaws.com/api/subscriptions";
-//const API_URL = "http://localhost:8080/api/subscriptions";
+//const API_URL = "http://localhost:8080/api/subscriptions ";
 
 export const getAll = (params?: object) => {
   return axios.get(API_URL + "/", { headers: authHeader(), params: params });
