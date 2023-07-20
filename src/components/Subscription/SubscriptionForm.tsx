@@ -82,6 +82,8 @@ const SubscriptionForm: React.FC = () => {
     return (
         <div className="form form-row">
             <h5 className="w-100 text-center text-primary"> Completar suscripción</h5>
+           
+            <div className="col-12 col-md-6  border-right ">
             <div className="form-group">
                 <label htmlFor="monthlyPayment">Pago Mensual</label>
                 <input
@@ -94,7 +96,6 @@ const SubscriptionForm: React.FC = () => {
                     onChange={handleNameChange}
                 />
             </div>
-            <div className="col-12 col-md-6  border-right ">
                 <div className="form-group">
                     <label htmlFor="migratoryProcess">Proceso migratorio</label>
                     <input

@@ -5,9 +5,8 @@ import authHeader from "./auth-header";
 // const API_URL = "https://w2j8ebzbl7.execute-api.us-east-1.amazonaws.com/api/pagos";
 const API_URL = "http://localhost:8080/api/pagos";
 
-export const getAll = () => {
-  //return axios.get<Array<ITutorialData>>(API_URL + "/", { headers: authHeader() });
-  return axios.get(API_URL + "/", { headers: authHeader() });
+export const getAll = (params?: object) => {
+  return axios.get(API_URL + "/", { headers: authHeader(), params: params });
 };
 
 export const get = (id: any): Promise<IPago> => {
@@ -24,4 +23,8 @@ export const update = (id: any, data: any) => {
 
 export const remove = (id: any) => {
   return axios.delete<any>(API_URL + `/${id}`, { headers: authHeader() });
+};
+
+export const getPaymentSubscription = (subscriptionId: any): Promise<IPago> => {
+  return axios.get(`${API_URL}-subscription/${subscriptionId}`, { headers: authHeader() });
 };

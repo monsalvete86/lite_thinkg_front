@@ -10,7 +10,6 @@ type Props = {
 
 }
 const DailyListForm: React.FC<Props> = (props) => {
-
     const currentUser = getCurrentUser();
     const { id } = useParams();
 
