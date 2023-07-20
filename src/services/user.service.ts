@@ -17,12 +17,14 @@ export const getAll = () => {
   return axios.get(`${API_URL}`, { headers: authHeader() });
 };
 
-export const getUserById = (id: any) => {
+export const getUserById = async (id: any) => {
   const data = { id: id };
-  return axios
+  return await axios
     .post(`${API_URL}/${id}`, data, { headers: authHeader() })
     .then((response) => {
-      if (response.data.accessToken) {
+      console.log('response desde user.service');
+      console.log(response);
+      if (response?.data?.accessToken) {
         localStorage.setItem("user", JSON.stringify(response.data));
       }
       return response.data;
