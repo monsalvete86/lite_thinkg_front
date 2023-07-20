@@ -2,7 +2,7 @@ import axios from "axios";
 import authHeader from "./auth-header";
 import ISubscription from "../types/subscription.type";
 
-const API_URL = "https://w2j8ebzbl7.execute-api.us-east-1.amazonaws.com/api/products";
+const API_URL = "https://w2j8ebzbl7.execute-api.us-east-1.amazonaws.com/api/subscriptions";
 //const API_URL = "http://localhost:8080/api/subscriptions";
 
 export const getAll = (params?: object) => {
