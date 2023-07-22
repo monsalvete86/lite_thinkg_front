@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import ReportPDF from "../ReportPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import DailyListForm from "./DailyListForm";
+import { response } from "express";
 
 const DailyLists: React.FC = () => {
 
@@ -16,6 +17,9 @@ const DailyLists: React.FC = () => {
   const [searchFrom, setSearchFrom] = useState<string>(today());
   const [searchTo, setSearchTo] = useState<string>(today());
   const [showModal, setShowModal] = useState(false);
+  const [errorResponseMessage, setErrorResponseMessage] = useState("");
+  const [showErrorResponseMessage, setShowErrorResponseMessage] = useState(false);
+
 
   useEffect(() => {
     retrieveItems();
@@ -40,7 +44,16 @@ const DailyLists: React.FC = () => {
   };
 
   const removeItem = (id: number | null | undefined) => {
-    DailyListService.remove(id);
+    DailyListService.remove(id).then((response) => {
+      setTimeout(() => {
+        setShowErrorResponseMessage(false)
+        setErrorResponseMessage(response.data.message)
+      }, 3000)
+      setShowErrorResponseMessage(true)
+      setErrorResponseMessage("")
+    }
+
+    );
     retrieveItems();
   };
 
@@ -70,6 +83,11 @@ const DailyLists: React.FC = () => {
         </div>
         <h5 className="h5 font-weight-bold p-2">Cargando</h5>
       </div> */}
+
+      {showErrorResponseMessage && <div className="alert alert-danger  position-fixed fixed-top" style={{ zIndex: 1 }} role="alert">
+        {errorResponseMessage}
+      </div>}
+
       <div className="page_search my-2  w-100">
         <div className="form-row w-100">
           <div className="form-group col-md-5">
