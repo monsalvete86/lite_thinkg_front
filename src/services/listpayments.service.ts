@@ -2,7 +2,7 @@ import axios from "axios";
 import IListPayments from "../types/listpayments.type"
 import authHeader from "./auth-header";
 
-const API_URL = "https://v7bq77felj.execute-api.us-east-2.amazonaws.com/api/listpayments";
+const API_URL = "https://te5s7n5qkvgqjcregadnydmzka0tzqfu.lambda-url.us-east-2.on.aws/api/listpayments";
 // const API_URL = "http://localhost:8080/api/listpayments";
 
 export const getAll = () => {
