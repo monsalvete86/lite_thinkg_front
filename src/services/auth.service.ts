@@ -12,8 +12,7 @@ export const register = (username: string, email: string, password: string) => {
 };
 
 export const login = (username: string, password: string) => {
-  // console.log('process.env');
-  // console.log(process.env.API_URL);
+
   return axios
     .post(API_URL + "signin", {
       username,
