@@ -4,10 +4,13 @@ import IDailyList from "../types/dailyList.type";
 
 // const API_URL = "https://te5s7n5qkvgqjcregadnydmzka0tzqfu.lambda-url.us-east-2.on.aws/api/daily-list";
 // const API_URL = "http://localhost:8080/api/daily-lists";
-const API_URL = process.env.REACT_APP_API_URL + "api/daily-list";
-
-export const getAll = (params?: object) => {
-  return axios.get(API_URL + "/", { headers: authHeader(), params: params });
+const API_URL = process.env.REACT_APP_API_URL + "api/daily-lists";
+interface Params { 
+  from: string,
+  to: string
+}
+export const getAll = (params?: Params) => {
+  return axios.get(API_URL, { headers: authHeader(), params: params });
 };
 
 export const get = (id: any): Promise<IDailyList> => {
