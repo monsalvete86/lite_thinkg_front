@@ -3,7 +3,7 @@
 ### Set port
 .env
 ```
-PORT=8081
+REACT_APP_PORT=8081
 ```
 
 ## Project setup

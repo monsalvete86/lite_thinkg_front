@@ -1,8 +1,9 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 import IClientDailyList from "../types/client-daily-list.type";
-const API_URL = "https://te5s7n5qkvgqjcregadnydmzka0tzqfu.lambda-url.us-east-2.on.aws/api/subscriptions";
+// const API_URL = "https://te5s7n5qkvgqjcregadnydmzka0tzqfu.lambda-url.us-east-2.on.aws/api/subscriptions";
 // const API_URL = "http://localhost:8080/api/subscriptions";
+const API_URL = process.env.REACT_APP_API_URL + "api/subscriptions"
 
 export const getAll = () => {
   return axios.get(API_URL + "/", { headers: authHeader() });

@@ -79,6 +79,9 @@ const Company: React.FC = () => {
           })
       }
      })
+     .catch((e) => {
+        console.log(e.message)
+     })
   }, []);
 
   return (
