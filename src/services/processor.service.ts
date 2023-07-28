@@ -3,8 +3,7 @@ import authHeader from "./auth-header";
 import ISubscription from "../types/processor.type";
 
 // const API_URL = "https://te5s7n5qkvgqjcregadnydmzka0tzqfu.lambda-url.us-east-2.on.aws/api/processors";
-// const API_URL = "http://localhost:8080/api/processors";
-const API_URL = process.env.REACT_APP_API_URL + "api/processors";
+const API_URL = "http://localhost:8080/api/processors";
 
 export const getAll = () => {
   return axios.get(API_URL + "/", { headers: authHeader() });

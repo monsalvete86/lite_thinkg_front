@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { useNavigate } from 'react-router-dom';
 import * as PagosService from "../services/pago.service";
+import * as SubscriptionService from "../services/subscription.service";
 import { boolean } from "yup";
 
 type Props = {
@@ -13,31 +14,28 @@ const PagoForm: React.FC<Props> = (props) => {
   const { id } = props;
   let navigate = useNavigate();
 
-  const initialPagoState = {
-    id: null,
-    clientId: "",
-    subscriptionId: "",
-    operatorId: "",
-    metodoPago: "",
-    monthlyPayment: "",
-    importe: undefined ,
-    statePago: boolean,
-    fechaPago: "",
-  };
-
-  const [pago, setPago] = useState(initialPagoState);
-  const [, setBanEdit] = useState<number> (0);
+  const [pago, setPago] = useState<any>();
+  const [fechaPago, setFechaPago] = useState<any>();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setPago({ ...pago, [name]: value });
+    setFechaPago(value);
   };
 
   const getPago = (id: number) => {
-    PagosService.get(id)
+    SubscriptionService.get(id)
     .then((response: any) => {
-      setPago(response.data);
-      console.log(response.data);
+      const initialPagoState = {
+        clientId: response.data.clientId,
+        subscriptionId: response.data.id,
+        operatorId: response.data.operatorId,
+        metodoPago: "",
+        monthlyPayment: response.data.monthlyPayment,
+        importe: response.data.monthlyPayment,
+        statePago: true,
+      };
+
+      setPago(initialPagoState);
     })
     .catch((e: Error) => {
       console.log(e);
@@ -45,13 +43,9 @@ const PagoForm: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-   /* if (id) {
-      PagosService.get(id)
-      .then((result: any) => {
-        setBanEdit(result.data.id)
-        setPago(result.data);
-      })
-    }*/
+    if (id) {
+      getPago(id)
+    }
   }, [id]);
 
   const savePago = () => {
@@ -62,8 +56,8 @@ const PagoForm: React.FC<Props> = (props) => {
       metodoPago: pago.metodoPago,
       importe: pago.importe,
       monthlyPayment: pago.monthlyPayment,
-      statePago: pago?.statePago() ? true : false,
-      fechaPago: pago.fechaPago,
+      statePago: pago?.statePago,
+      fechaPago: fechaPago,
     };
 
     if(!pago?.id || pago?.id === null) {
@@ -85,13 +79,9 @@ const PagoForm: React.FC<Props> = (props) => {
       });
     }
       // navigate("/pagos");
-      // window.location.reload();
+      window.location.reload();
   };
 
-  useEffect(() => {
-    // if (id)
-      // getPago(id);
-  }, [id]);
 
   const handleCancel = () => {
     if (props.isOpenModal) {
@@ -114,11 +104,11 @@ const PagoForm: React.FC<Props> = (props) => {
                   <div className="form-group">
                     <label htmlFor="fechaPago">Fecha pago</label>
                     <input
-                      type="text"
+                      type="date"
                       className="form-control"
                       id="fechaPago"
                       required
-                      value={pago.fechaPago}
+                      value={fechaPago || ''}
                       onChange={handleInputChange}
                       name="fechaPago"
                     />

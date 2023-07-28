@@ -1,8 +1,7 @@
 import axios from "axios";
 
 // const API_URL = "https://te5s7n5qkvgqjcregadnydmzka0tzqfu.lambda-url.us-east-2.on.aws/api/auth/";
- // const API_URL = "http://localhost:8080/api/auth/";
- const API_URL = process.env.REACT_APP_API_URL + "api/auth/";
+const API_URL = "http://localhost:8080/api/auth/";
 
 export const register = (username: string, email: string, password: string) => {
   return axios.post(API_URL + "signup", {
