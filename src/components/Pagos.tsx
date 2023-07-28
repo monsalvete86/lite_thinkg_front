@@ -47,10 +47,6 @@ const Pagos: React.FC = () => {
 
   }
 
-  const formatDate = (date: string) => {
-    return new Date(date).toISOString().split('T')[0]
-  }
-
   return (
     <div>
       <div className="list row">
@@ -96,7 +92,7 @@ const Pagos: React.FC = () => {
                     <td className="text-center">{row?.cliente?.nombre} {row?.cliente?.apellido}</td>
                     <td className="text-center">{row?.id}</td>
                     <td className="text-center">{row?.user?.name} {row?.user?.last_name}</td>
-                    <td className="text-center">{formatDate(row?.monthlyPayment)}</td>
+                    <td className="text-center">{row?.monthlyPayment}</td>
                     <td className="text-center">{stateValidate(row?.pagos.length, row?.startCoverage.split('-')[2])}</td>
                     <td className="text-center">{row?.startCoverage.split('-')[2]}</td>
                     <td className="text-center">

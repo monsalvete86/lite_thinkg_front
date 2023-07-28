@@ -55,7 +55,10 @@ const Subscriptions: React.FC = () => {
     const handleStatePaymentChange = (text: ChangeEvent<HTMLSelectElement>) => {
         setSearchStatePayment(text.target.value);
     };
-
+    
+    const formatDate = (date: string) => {
+        return new Date(date).toISOString().split('T')[0]
+      }
     return (
         <div>
             <div className="row">
@@ -126,7 +129,7 @@ const Subscriptions: React.FC = () => {
                                         <td className="text-center">{row.id}</td>
                                         <td className="text-center">{row.cliente?.nombre} {row.cliente?.apellido}</td>
                                         <td className="text-center">{row.monthlyPayment}</td>
-                                        <td className="text-center">{row.nextPaymentDate}</td>
+                                        <td className="text-center">{formatDate(row.nextPaymentDate)}</td>
                                         <td>{row.state ?? "GENERATED"}</td>
                                         <td className="text-center">{row.dailyListId}</td>
                                         <td className="text-center">
