@@ -3,7 +3,8 @@ import authHeader from "./auth-header";
 import IUser from "../types/user.type"
 
 // const API_URL = "https://te5s7n5qkvgqjcregadnydmzka0tzqfu.lambda-url.us-east-2.on.aws/api/user";
-const API_URL = "http://localhost:8080/api/user";
+// const API_URL = "http://localhost:8080/api/user";
+const API_URL = process.env.REACT_APP_API_URL + "api/user";
 
 export const getPublicContent = () => {
   return axios.get(API_URL + "all");
