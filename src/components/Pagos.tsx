@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent} from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import * as PagoService from "../services/pago.service";
 import { Link } from "react-router-dom";
 import ReportPDF from "./ReportPDF";
@@ -14,7 +14,7 @@ const Pagos: React.FC = () => {
     retrievePayment();
   }, []);
 
-  const  retrievePayment = async () => {
+  const retrievePayment = async () => {
     let data = {
       paymentStateFilter: paymentStateFilter,
       state: searchStatePayment
@@ -26,24 +26,29 @@ const Pagos: React.FC = () => {
   useEffect(() => {
     retrievePayment();
     console.log('paymentStateFilter')
-      console.log(paymentStateFilter)
+    console.log(paymentStateFilter)
   }, [paymentStateFilter]);
 
   const handleStatePaymentChange = (text: ChangeEvent<HTMLSelectElement>) => {
     setPaymentStateFilter(text.target.value);
   };
+
   const stateValidate = (cantPagos: number, diaPago: number) => {
     const today = new Date();
     const dayOfMonth = today.getDate();
 
-    if(cantPagos > 0 ) { return 'Pagado'; }
+    if (cantPagos > 0) { return 'Pagado'; }
 
-    if(cantPagos === 0 && diaPago > dayOfMonth) { return 'Vencido'; }
+    if (cantPagos === 0 && diaPago > dayOfMonth) { return 'Vencido'; }
 
-    if(cantPagos === 0 && dayOfMonth - diaPago < 6 ) { return 'Por Vencer'; }
+    if (cantPagos === 0 && dayOfMonth - diaPago < 6) { return 'Por Vencer'; }
 
     return 'Al día'
 
+  }
+
+  const formatDate = (date: string) => {
+    return new Date(date).toISOString().split('T')[0]
   }
 
   return (
@@ -91,8 +96,8 @@ const Pagos: React.FC = () => {
                     <td className="text-center">{row?.cliente?.nombre} {row?.cliente?.apellido}</td>
                     <td className="text-center">{row?.id}</td>
                     <td className="text-center">{row?.user?.name} {row?.user?.last_name}</td>
-                    <td className="text-center">{row?.monthlyPayment}</td>
-                    <td className="text-center">{stateValidate(row?.pagos.length , row?.startCoverage.split('-')[2])}</td>
+                    <td className="text-center">{formatDate(row?.monthlyPayment)}</td>
+                    <td className="text-center">{stateValidate(row?.pagos.length, row?.startCoverage.split('-')[2])}</td>
                     <td className="text-center">{row?.startCoverage.split('-')[2]}</td>
                     <td className="text-center">
                       <Link to={"/listpayments/" + row?.id} className="btn btn-primary">Pagos</Link>
