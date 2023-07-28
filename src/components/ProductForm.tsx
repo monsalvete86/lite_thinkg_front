@@ -46,7 +46,7 @@ const ProductForm: React.FC = () => {
             })
         }
     }, []);
-    
+
     const saveProduct = () => {
         var data = {
             productName: product.productName,
@@ -82,11 +82,10 @@ const ProductForm: React.FC = () => {
         if (id)
             getProduct(id);
     }, [id]);
-    
+
     return (
         <div className="submit-form">
             <div>
-                
                 {product?.id && `Current Product ${product.code} - ${product.productName}`}
                 {!product?.id && 'New Product'}
                 <div className="form-group">
