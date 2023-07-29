@@ -61,59 +61,65 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <Link to={"/"} className="navbar-brand">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <Link to={"/"} className="navbar-brand text-sm-center">
           Cristhiam Monsalve
         </Link>
-        <div className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to={"/home"} className="nav-link">
-              Home
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={"/company"} className="nav-link">
-              Company
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={"/products"} className="nav-link">
-              Products
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={"/clientes"} className="nav-link">
-              Clientes
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={"/dailyList"} className="nav-link">
-              Listado diario
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={"/subscriptions"} className="nav-link">
-              Suscripciones
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={"/processors"} className="nav-link">
-              Procesadoras
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={"/pagos"} className="nav-link">
-              Pagos
-            </Link>
-          </li>
-          {currentUser && (
+
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link to={"/users"} className="nav-link">
-                Usuarios
+              <Link to={"/home"} className="nav-link">
+                Home
               </Link>
             </li>
-          )}
+            <li className="nav-item">
+              <Link to={"/company"} className="nav-link">
+                Company
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/products"} className="nav-link">
+                Products
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/clientes"} className="nav-link">
+                Clientes
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/dailyList"} className="nav-link">
+                Listado diario
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/subscriptions"} className="nav-link">
+                Suscripciones
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/processors"} className="nav-link">
+                Procesadoras
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/pagos"} className="nav-link">
+                Pagos
+              </Link>
+            </li>
+            {currentUser && (
+              <li className="nav-item">
+                <Link to={"/users"} className="nav-link">
+                  Usuarios
+                </Link>
+              </li>
+            )}
+          </ul>
         </div>
+
+
 
         {currentUser ? (
           <div className="navbar-nav ml-auto">
@@ -124,7 +130,7 @@ const App: React.FC = () => {
             </li>
             <li className="nav-item">
               <a href="/login" className="nav-link" onClick={logOut}>
-                LogOut
+                Logout
               </a>
             </li>
           </div>
@@ -143,6 +149,10 @@ const App: React.FC = () => {
             </li> */}
           </div>
         )}
+
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
       </nav>
 
       <div className="container mt-3 border pt-2">
@@ -166,15 +176,15 @@ const App: React.FC = () => {
           <Route path="/users/:id" element={<UserForm />} />
           <Route path="/users/new" element={<UserForm />} />
           <Route path="/pagos" element={<Pagos />} />
-          <Route path="/listpayments/:subscriptionId" element={<ListPayments/>} />
-          <Route path="/listpayments/:new" element={<ListPaymentsForm/>} />
-          <Route path="/listpayments/:id" element={<ListPaymentsForm/>} />
-          <Route path="/clientDailyList" element={<ClientDailyLists/>} />
-          <Route path="/clientDailyList/:id" element={<ClientDailyListForm/>} />
-          <Route path="/subscriptions" element={<Subscriptions/>}   />
+          <Route path="/listpayments/:subscriptionId" element={<ListPayments />} />
+          <Route path="/listpayments/:new" element={<ListPaymentsForm />} />
+          <Route path="/listpayments/:id" element={<ListPaymentsForm />} />
+          <Route path="/clientDailyList" element={<ClientDailyLists />} />
+          <Route path="/clientDailyList/:id" element={<ClientDailyListForm />} />
+          <Route path="/subscriptions" element={<Subscriptions />} />
           <Route path="/subscription/new" element={<SubscriptionForm />} />
           <Route path="/subscription/:id" element={<SubscriptionForm />} />
-          <Route path="/processors" element={<Processors/>}   />
+          <Route path="/processors" element={<Processors />} />
           <Route path="/processor/new" element={<ProcessorForm />} />
           <Route path="/processor/:id" element={<ProcessorForm />} />
         </Routes>

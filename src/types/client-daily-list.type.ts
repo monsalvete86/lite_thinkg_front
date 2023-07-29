@@ -1,13 +1,20 @@
 export default interface IClientDailyList {
-    id?:number,
+    id?: number,
     operatorId: number,
     clientId: number,
     dailyListId: number,
     cliente?: Cliente,
-    [key: string]: any;
+    state?: string,
+    monthlyPayment?: string,
+    nextPaymentDate?:string,
+    user: User
 }
 
 interface Cliente {
     nombre: string,
-    apellido:string
+    apellido: string
+}
+
+interface User {
+    username: string
 }

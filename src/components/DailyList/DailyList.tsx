@@ -118,8 +118,8 @@ const DailyLists: React.FC = () => {
         </div>
       </div>
       <div className="list row">
-        <div className="col-md-12 list">
-          <table className="table table-striped table-bordered">
+        <div className="col-md-12 list table-responsive">
+          <table className="table table-striped table-bordered table-sm w-100">
             <thead>
               <tr className="text-center">
                 <th>Usuario</th>

@@ -90,9 +90,9 @@ const Products: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-12 list">
+                <div className="col-md-12 list table-responsive">
                   <table
-                      className="table table-striped table-bordered">
+                      className="table table-striped table-bordered table-sm w-100">
                     <thead>
                       <tr className="text-center">
                         <th>Code</th><th>Product Name</th><th>Stock</th><th colSpan={2}>Actions</th>

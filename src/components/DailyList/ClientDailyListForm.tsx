@@ -15,11 +15,6 @@ type Props = {
   date?: string | null
 }
 
-type List = {
-  clientId: number | string,
-  operatorId: number | string
-}
-
 const ClientDailyListForm: React.FC<Props> = (props: Props) => {
 
   let { state } = useLocation();

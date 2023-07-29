@@ -81,9 +81,9 @@ const Users: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-12 list">
+                <div className="col-md-12 list table-responsive">
                     <table
-                        className="table table-striped table-bordered">
+                        className="table table-striped table-bordered table-sm  w-100">
                         <thead>
                             <tr className="text-center">
                                 <th>Id</th><th>Username</th><th>email</th><th>Actions</th>
