@@ -9,6 +9,7 @@ import AlertSuccess from "../utils/AlertSuccess";
 
 const SubscriptionForm: React.FC = () => {
     const { id } = useParams();
+    const today = new Date().toISOString().split('T')[0];
 
     const initialState: ISubscription = {
         id: 0,
@@ -32,7 +33,7 @@ const SubscriptionForm: React.FC = () => {
         callcenterAnnotations: "",
         audio: "",
         state: "",
-        startCoverage: "",
+        startCoverage: today,
         endCoverage: "",
         processorId: 0,
         monthlyPayment: 0
@@ -104,15 +105,20 @@ const SubscriptionForm: React.FC = () => {
             <div className="col-12 col-md-6  border-right ">
                 <div className="form-group">
                     <label htmlFor="monthlyPayment">Pago Mensual</label>
-                    <input
-                        className="form-control"
-                        placeholder="Pago mensual"
-                        id="monthlyPayment"
-                        name="monthlyPayment"
-                        value={subscription?.monthlyPayment}
-                        type="number"
-                        onChange={handleNameChange}
-                    />
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">$</span>
+                        </div>
+                        <input
+                            className="form-control"
+                            placeholder="Pago mensual"
+                            id="monthlyPayment"
+                            name="monthlyPayment"
+                            value={subscription?.monthlyPayment}
+                            type="number"
+                            onChange={handleNameChange}
+                        />
+                    </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="migratoryProcess">Proceso migratorio</label>
@@ -127,15 +133,20 @@ const SubscriptionForm: React.FC = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="annualIncome">Ingresos anuales</label>
-                    <input
-                        className="form-control"
-                        placeholder="Ingresos anuales"
-                        id="annualIncome"
-                        name="annualIncome"
-                        value={subscription?.annualIncome}
-                        type="number"
-                        onChange={handleNameChange}
-                    />
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">$</span>
+                        </div>
+                        <input
+                            className="form-control"
+                            placeholder="Ingresos anuales"
+                            id="annualIncome"
+                            name="annualIncome"
+                            value={subscription?.annualIncome}
+                            type="number"
+                            onChange={handleNameChange}
+                        />
+                    </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="mainContributor">Principal contribuidor</label>
@@ -194,102 +205,143 @@ const SubscriptionForm: React.FC = () => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="monthlyPremium">Prima mensual</label>
-                    <input
-                        className="form-control"
-                        placeholder="Prima mensual"
-                        id="monthlyPremium"
-                        name="monthlyPremium"
-                        value={subscription?.monthlyPremium}
-                        type="number"
-                        onChange={handleNameChange}
-                    />
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">$</span>
+                        </div>
+                        <input
+                            className="form-control"
+                            placeholder="Prima mensual"
+                            id="monthlyPremium"
+                            name="monthlyPremium"
+                            value={subscription?.monthlyPremium}
+                            type="number"
+                            onChange={handleNameChange}
+                        />
+                    </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="maximumSpend">Gastos máximos</label>
-                    <input
-                        className="form-control"
-                        placeholder="Gastos máximos"
-                        id="maximumSpend"
-                        name="maximumSpend"
-                        value={subscription?.maximumSpend}
-                        type="number"
-                        onChange={handleNameChange}
-                    />
+                    <label htmlFor="maximumSpend" className=""><span>Gastos máximos</span> </label>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">$</span>
+                        </div>
+                        <input
+
+                            className="form-control"
+                            placeholder="Gastos máximos"
+                            id="maximumSpend"
+                            name="maximumSpend"
+                            value={subscription?.maximumSpend}
+                            type="number"
+                            onChange={handleNameChange}
+                        />
+                    </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="annualDeductible">Deducible anual</label>
-                    <input
-                        className="form-control"
-                        placeholder="Deducible anual"
-                        id="annualDeductible"
-                        name="annualDeductible"
-                        value={subscription?.annualDeductible}
-                        type="number"
-                        onChange={handleNameChange}
-                    />
+                    <label htmlFor="annualDeductible" className=""><span>Deducible anual</span> </label>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">$</span>
+                        </div>
+                        <input
+                            className="form-control"
+                            placeholder="Deducible anual"
+                            id="annualDeductible"
+                            name="annualDeductible"
+                            value={subscription?.annualDeductible}
+                            type="number"
+                            onChange={handleNameChange}
+                        />
+                    </div>
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="genericDrug">Medicamentos genericos</label>
-                    <input
-                        className="form-control"
-                        placeholder="Medicamentos genericos"
-                        id="genericDrug"
-                        name="genericDrug"
-                        value={subscription?.genericDrug}
-                        type="number"
-                        onChange={handleNameChange}
-                    />
+                    <label htmlFor="genericDrug" className=""><span>Medicamentos genericos</span> </label>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">$</span>
+                        </div>
+                        <input
+                            className="form-control"
+                            placeholder="Medicamentos genericos"
+                            id="genericDrug"
+                            name="genericDrug"
+                            value={subscription?.genericDrug}
+                            type="number"
+                            onChange={handleNameChange}
+                        />
+                    </div>
                 </div>
             </div>
             <div className="col-12 col-md-6 ">
                 <div className="form-group">
                     <label htmlFor="primaryDoctor">Medico principal</label>
-                    <input
-                        className="form-control"
-                        placeholder="Medico principal"
-                        id="primaryDoctor"
-                        name="primaryDoctor"
-                        value={subscription?.primaryDoctor}
-                        type="number"
-                        onChange={handleNameChange}
-                    />
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">$</span>
+                        </div>
+                        <input
+                            className="form-control"
+                            placeholder="Medico principal"
+                            id="primaryDoctor"
+                            name="primaryDoctor"
+                            value={subscription?.primaryDoctor}
+                            type="number"
+                            onChange={handleNameChange}
+                        />
+                    </div>
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="medicalSpecialist">Medico especialista</label>
-                    <input
-                        className="form-control"
-                        placeholder="Medico especialista"
-                        id="medicalSpecialist"
-                        name="medicalSpecialist"
-                        value={subscription?.medicalSpecialist}
-                        type="number"
-                        onChange={handleNameChange}
-                    />
+                    <label htmlFor="medicalSpecialist" className=""><span>Medico especialista</span></label>
+
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">$</span>
+                        </div>
+                        <input className="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Medico especialista"
+                            id="medicalSpecialist"
+                            name="medicalSpecialist"
+                            value={subscription?.medicalSpecialist}
+                            type="number"
+                            onChange={handleNameChange} />
+
+                    </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="emergencyRoom">Sala de emergencias</label>
-                    <input
-                        className="form-control"
-                        placeholder="Sala de emergencias"
-                        id="emergencyRoom"
-                        name="emergencyRoom"
-                        value={subscription?.emergencyRoom}
-                        type="number"
-                        onChange={handleNameChange}
-                    />
+                    <label htmlFor="emergencyRoom" className=""><span>Sala de emergencias</span></label>
+
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">%</span>
+                        </div>
+                        <input
+                            className="form-control"
+                            placeholder="Sala de emergencias"
+                            id="emergencyRoom"
+                            name="emergencyRoom"
+                            value={subscription?.emergencyRoom}
+                            type="number"
+                            onChange={handleNameChange} />
+                    </div>
+
                 </div>
                 <div className="form-group">
                     <label htmlFor="subsidy">Subsidio</label>
-                    <input
-                        className="form-control"
-                        placeholder="Subsidio"
-                        id="subsidy"
-                        name="subsidy"
-                        value={subscription?.subsidy}
-                        onChange={handleNameChange}
-                    />
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">$</span>
+                        </div>
+                        <input
+                            className="form-control"
+                            placeholder="Subsidio"
+                            id="subsidy"
+                            name="subsidy"
+                            value={subscription?.subsidy}
+                            onChange={handleNameChange}
+                        />
+                    </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="clientAnnotations">Anotaciones del cliente</label>
