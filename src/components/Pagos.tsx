@@ -93,8 +93,8 @@ const Pagos: React.FC = () => {
                     <td className="text-center">{row?.id}</td>
                     <td className="text-center">{row?.user?.name} {row?.user?.last_name}</td>
                     <td className="text-center">{row?.monthlyPayment}</td>
-                    <td className="text-center">{stateValidate(row?.pagos.length, row?.startCoverage.split('-')[2])}</td>
-                    <td className="text-center">{row?.startCoverage.split('-')[2]}</td>
+                    <td className="text-center">{row?.startCoverage && stateValidate(row?.pagos.length , row?.startCoverage.split('-')[2])}</td>
+                    <td className="text-center">{row?.startCoverage && row?.startCoverage.split('-')[2]}</td>
                     <td className="text-center">
                       <Link to={"/listpayments/" + row?.id} className="btn btn-primary">Pagos</Link>
                     </td>
