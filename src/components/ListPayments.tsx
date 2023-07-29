@@ -15,8 +15,8 @@ const ListPayments: React.FC = () => {
     retrieveListPayments();
   }, []);
 
-  const retrieveListPayments = () => {
-    PagoService.getPaymentSubscription(subscriptionId)
+  const retrieveListPayments = async () => {
+    await PagoService.getPaymentSubscription(subscriptionId)
       .then((response) => {
         setListPayments(response.data);
       })
@@ -75,7 +75,9 @@ const ListPayments: React.FC = () => {
           </table>
         </div>
       </div>
-      {showModal && <PagoForm id={auxId} isOpenModal={(hide)=>isActiveModal(hide)}></PagoForm>}
+      {showModal &&
+        <PagoForm id={auxId} isOpenModal={(hide)=>isActiveModal(hide)} retrieveListPayments={retrieveListPayments} />
+      }
     </div>
   );
 };
