@@ -17,8 +17,8 @@ const ListPayments: React.FC = () => {
     retrieveListPayments();
   }, []);
 
-  const retrieveListPayments = () => {
-    PagoService.getPaymentSubscription(subscriptionId)
+  const retrieveListPayments = async () => {
+    await PagoService.getPaymentSubscription(subscriptionId)
       .then((response) => {
         setListPayments(response.data);
       })
@@ -108,14 +108,9 @@ const ListPayments: React.FC = () => {
           </table>
         </div>
       </div>
-      {showModal && <PagoForm id={auxId} isOpenModal={(hide)=>isActiveModal(hide)}></PagoForm>}
-      {showAlert && (
-        <div className="alert alert-warning">
-          ¿Estás seguro de que deseas cancelar el pago?
-          <button className="btn btn-danger ml-2" onClick={handleConfirmCancel}>Aceptar</button>
-          <button className="btn btn-secondary ml-2" onClick={handleCancelAlert}>Cancelar</button>
-        </div>
-      )}
+      {showModal &&
+        <PagoForm id={auxId} isOpenModal={(hide)=>isActiveModal(hide)} retrieveListPayments={retrieveListPayments} />
+      }
     </div>
   );
 };

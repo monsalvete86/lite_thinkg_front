@@ -6,7 +6,8 @@ import { boolean } from "yup";
 
 type Props = {
   isOpenModal?: (hide:boolean) => void,
-  id: number | undefined
+  id: number | undefined,
+  retrieveListPayments?: any
 }
 
 const PagoForm: React.FC<Props> = (props) => {
@@ -22,7 +23,7 @@ const PagoForm: React.FC<Props> = (props) => {
     setFechaPago(value);
   };
 
-  const getPago = (id: number) => {
+  const getPago = (id: any) => {
     SubscriptionService.get(id)
     .then((response: any) => {
       const initialPagoState = {
@@ -48,7 +49,7 @@ const PagoForm: React.FC<Props> = (props) => {
     }
   }, [id]);
 
-  const savePago = () => {
+  const savePago = async () => {
     var data = {
       clientId: pago.clientId,
       subscriptionId: pago.subscriptionId,
@@ -78,8 +79,11 @@ const PagoForm: React.FC<Props> = (props) => {
         console.log(e);
       });
     }
-      // navigate("/pagos");
-      window.location.reload();
+
+    await props.retrieveListPayments();
+    if (props.isOpenModal) {
+      props.isOpenModal(false);
+    }
   };
 
 
