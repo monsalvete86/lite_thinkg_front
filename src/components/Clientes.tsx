@@ -86,7 +86,7 @@ const Clientes: React.FC = () => {
                       <td className="text-center">{row.direccion}</td>
                       <td className="text-center">{row.ciudad}</td>
                       <td className="text-center">
-                        <Link to={"/clientes/" + row?.id} className="btn btn-primary mr-2">Modificar</Link>                      
+                        <Link to={"/clientes/" + row?.id} className="btn btn-primary mr-2">Editar</Link>                      
                         <button onClick={() => cleanCliente(row.id)} className="btn btn-danger">Eliminar</button>
                       </td>
                     </tr>
