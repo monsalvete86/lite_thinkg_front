@@ -57,10 +57,10 @@ const Clientes: React.FC = () => {
         <div className="col-md-8"></div>
         <div className="col-md-8">
           <div className="input-group mb-3">
-          <input type="text" className="form-control" placeholder="Search by name or last name" value={searchCliente} onChange={handleSearch} />
+          <input type="text" className="form-control" placeholder="Buscar por nombre o apellido" value={searchCliente} onChange={handleSearch} />
             <div className="input-group-append">
-              <button className="btn btn-outline-secondary" type="button">Search</button>
-              <Link to={"/clientes/new"} className="ml-2 btn btn-primary">New</Link>
+              <button className="btn btn-outline-secondary" type="button">Buscar</button>
+              <Link to={"/clientes/new"} className="ml-2 btn btn-primary">Nuevo</Link>
             </div>
           </div>
         </div>
@@ -73,7 +73,7 @@ const Clientes: React.FC = () => {
                   <th>Telefono</th>
                   <th>Direccion</th>
                   <th>Ciudad</th>
-                  <th colSpan={2}>Actions</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -86,10 +86,8 @@ const Clientes: React.FC = () => {
                       <td className="text-center">{row.direccion}</td>
                       <td className="text-center">{row.ciudad}</td>
                       <td className="text-center">
-                        <Link to={"/clientes/" + row?.id} className="btn btn-primary">Edit</Link>
-                      </td>
-                      <td className="text-center">
-                        <button onClick={() => cleanCliente(row.id)} className="btn btn-danger">Delete</button>
+                        <Link to={"/clientes/" + row?.id} className="btn btn-primary mr-2">Modificar</Link>                      
+                        <button onClick={() => cleanCliente(row.id)} className="btn btn-danger">Eliminar</button>
                       </td>
                     </tr>
                   );

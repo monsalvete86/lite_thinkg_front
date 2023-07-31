@@ -46,7 +46,7 @@ const Processor: React.FC = () => {
                         <input
                             type="text"
                             className="form-control"
-                            placeholder="Search by title"
+                            placeholder="Buscar por nombre"
 
                         />
                         <div className="input-group-append">
@@ -55,13 +55,13 @@ const Processor: React.FC = () => {
                                 type="button"
 
                             >
-                                Search
+                                Buscar
                             </button>
                             <Link
                                 to={"/processor/new"}
                                 className="ml-2 btn btn-primary"
                             >
-                                New
+                                Nuevo
                             </Link>
 
                         </div>
@@ -72,9 +72,9 @@ const Processor: React.FC = () => {
                         className="table table-striped table-bordered">
                         <thead>
                             <tr className="text-center">
-                                <th>Code</th>
-                                <th>Processor </th>
-                                <th colSpan={2}>Actions</th>
+                                <th>Codigo</th>
+                                <th>Proecesadora </th>
+                                <th colSpan={2}>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,7 +90,7 @@ const Processor: React.FC = () => {
                                                 <Link to={"/processor/" + row?.id} className="btn btn-primary">Edit</Link>
                                             </td>
                                             <td className="text-center">
-                                                <button onClick={() => cleanProcessor(row.id)} className="btn btn-danger">Delete</button>
+                                                <button onClick={() => cleanProcessor(row.id)} className="btn btn-danger">Borrar</button>
                                             </td>
                                         </tr>
                                     )

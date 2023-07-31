@@ -124,7 +124,7 @@ const DailyLists: React.FC = () => {
               <tr className="text-center">
                 <th>Usuario</th>
                 <th>Fecha registro</th>
-                <th colSpan={2}>Actions</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -134,7 +134,7 @@ const DailyLists: React.FC = () => {
                     <tr key={row.id}>
                       <td>{row.user.username}</td>
                       <td>{row.date}</td>
-                      <td className="text-center">
+                      <td className="text-center mr-2">
                         {row.date === today() && <Link
                           to={`/clientDailyList/${row.id}`}
                           state={{ 'dailyListId': row.id, 'date': row.date }}
@@ -142,8 +142,6 @@ const DailyLists: React.FC = () => {
                         >
                           Editar
                         </Link>}
-                      </td>
-                      <td className="text-center">
                         <button className="btn btn-danger" onClick={() => removeItem(row.id)}>Eliminar</button>
                       </td>
                     </tr>

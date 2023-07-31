@@ -69,21 +69,21 @@ const App: React.FC = () => {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to={"/home"} className="nav-link">
                 Home
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
               <Link to={"/company"} className="nav-link">
                 Company
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to={"/products"} className="nav-link">
                 Products
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
               <Link to={"/clientes"} className="nav-link">
                 Clientes
@@ -164,13 +164,13 @@ const App: React.FC = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/tutorials" element={<TutorialsList />} />
           <Route path="/company" element={<Company />} />
-          <Route path="/products" element={<Products />} />
+          { /* <Route path="/products" element={<Products />} />
           <Route path="/products/new" element={<ProductForm />} />
           <Route path="/products/:id" element={<ProductForm />} />
+          <Route path="/tutorials/:id" element={<Tutorial />} /> */}
           <Route path="/clientes" element={<Clientes />} />
           <Route path="/clientes/new" element={<ClienteForm />} />
           <Route path="/clientes/:id" element={<ClienteForm />} />
-          <Route path="/tutorials/:id" element={<Tutorial />} />
           <Route path="/dailyList" element={<DailyList />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<UserForm />} />
