@@ -85,16 +85,16 @@ const Company: React.FC = () => {
   }, []);
 
   return (
-    <div className="submit-form">
+    <div className="submit-form container">
       {submitted && (
         <div>
           <h4>You company has been saved successfully!</h4>
         </div>
       ) }
       { (
-        <div>
-          <div className="form-group">
-            <label htmlFor="nameCompany">Company Name</label>
+        <div className="row">
+          <div className="form-group col-12">
+            <label htmlFor="nameCompany">Nombre Compañia</label>
             <input
               type="text"
               className="form-control"
@@ -106,8 +106,8 @@ const Company: React.FC = () => {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="direction">Direction</label>
+          <div className="form-group col-12">
+            <label htmlFor="direction">Dirección</label>
             <input
               type="text"
               className="form-control"
@@ -118,8 +118,8 @@ const Company: React.FC = () => {
               name="direction"
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="nit">NIT</label>
+          <div className="form-group col-sm-12 col-md-6">
+            <label htmlFor="nit">ID Legal</label>
             <input
               type="text"
               className="form-control"
@@ -130,8 +130,8 @@ const Company: React.FC = () => {
               name="nit"
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="telephone">Telephone</label>
+          <div className="form-group col-sm-12 col-md-6">
+            <label htmlFor="telephone">Telefono</label>
             <input
               type="text"
               className="form-control"
@@ -142,10 +142,11 @@ const Company: React.FC = () => {
               name="telephone"
             />
           </div>
-
-          <button onClick={saveCompany} className="btn btn-success">
-            Save
-          </button>
+          <div className="form-group col-12 modal-footer">
+            <button onClick={saveCompany} className="btn btn-success">
+              Guardar
+            </button>
+          </div>
         </div>
       )}
     </div>

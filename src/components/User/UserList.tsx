@@ -56,7 +56,7 @@ const Users: React.FC = () => {
                         <input
                             type="text"
                             className="form-control"
-                            placeholder="Search by title"
+                            placeholder="Buscar por usuario"
 
                         />
                         <div className="input-group-append">
@@ -65,7 +65,7 @@ const Users: React.FC = () => {
                                 type="button"
 
                             >
-                                Search
+                                Buscar
                             </button>
                             <Link
                                 to={"/users/new"}
@@ -86,7 +86,7 @@ const Users: React.FC = () => {
                         className="table table-striped table-bordered table-sm  w-100">
                         <thead>
                             <tr className="text-center">
-                                <th>Id</th><th>Username</th><th>email</th><th>Actions</th>
+                                <th>Id</th><th>Nombre Usuario</th><th>Email</th><th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>

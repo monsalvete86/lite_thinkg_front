@@ -117,7 +117,7 @@ const Subscriptions: React.FC = () => {
                             <th>Fecha próximo pago</th>
                             <th>Estado</th>
                             <th>Lista diaria</th>
-                            <th colSpan={2}>Actions</th>
+                            <th colSpan={2}>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -136,7 +136,7 @@ const Subscriptions: React.FC = () => {
                                             <Link to={"/subscription/" + row?.id} className="btn btn-primary">Editar</Link>
                                         </td>
                                         <td className="text-center">
-                                            <button onClick={() => cleanSubscription(row.id)} className="btn btn-danger">Delete</button>
+                                            <button onClick={() => cleanSubscription(row.id)} className="btn btn-danger">Borrar</button>
                                         </td>
                                     </tr>
                                 )

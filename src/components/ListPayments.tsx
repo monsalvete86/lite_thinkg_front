@@ -52,7 +52,7 @@ const ListPayments: React.FC = () => {
                 <th>Pago Mensual</th>
                 <th>Estado</th>
                 <th>Fecha Pago</th>
-                <th colSpan={1}>Actions</th>
+                <th colSpan={1}>Acciones</th>
               </tr>
             </thead>
             <tbody>

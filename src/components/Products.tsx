@@ -65,7 +65,7 @@ const Products: React.FC = () => {
                         <input
                             type="text"
                             className="form-control"
-                            placeholder="Search by title"
+                            placeholder="Buscar por titulo"
                             
                         />
                         <div className="input-group-append">
@@ -95,7 +95,7 @@ const Products: React.FC = () => {
                       className="table table-striped table-bordered table-sm w-100">
                     <thead>
                       <tr className="text-center">
-                        <th>Code</th><th>Product Name</th><th>Stock</th><th colSpan={2}>Actions</th>
+                        <th>Code</th><th>Product Name</th><th>Stock</th><th colSpan={2}>Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
