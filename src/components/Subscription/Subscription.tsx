@@ -106,9 +106,9 @@ const Subscriptions: React.FC = () => {
                     </div>
                 </div> */}
             </div>
-            <div className="w-100 list mt-5">
+            <div className="w-100 list mt-5 table-responsive">
                 <table
-                    className="table table-striped table-bordered">
+                    className="table table-striped table-bordered table-sm w-100">
                     <thead>
                         <tr className="text-center">
                             <th>Code</th>

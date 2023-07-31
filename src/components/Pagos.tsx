@@ -72,8 +72,8 @@ const Pagos: React.FC = () => {
             </PDFDownloadLink>
           </div>
         </div>
-        <div className="col-md-12 list">
-          <table className="table table-striped table-bordered">
+        <div className="col-md-12 list table-responsive">
+          <table className="table table-striped table-bordered table-sm w-100">
             <thead>
               <tr className="text-center">
                 <th>Cliente</th>

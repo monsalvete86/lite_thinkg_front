@@ -8,7 +8,7 @@ import AlertError from "../utils/AlertError";
 import AlertSuccess from "../utils/AlertSuccess";
 
 const SubscriptionForm: React.FC = () => {
-    const { id } = useParams();
+    const { id } = useParams() ;
     const today = new Date().toISOString().split('T')[0];
 
     const initialState: ISubscription = {
@@ -42,6 +42,7 @@ const SubscriptionForm: React.FC = () => {
     const [errorResponse, setErrorResponse] = useState(false)
     const [successResponse, setSuccessResponse] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [showErrors, setShowErrors] = useState(false)
 
 
     useEffect(() => {
@@ -49,15 +50,29 @@ const SubscriptionForm: React.FC = () => {
             SubscriptionService.get(id)
                 .then((result: any) => {
                     setSubscription(result.data)
+                    validateFields(subscription)
                 })
+
         }
     }, []);
 
+    const validateFields =(subscription : ISubscription) => {
+        if(!subscription.startCoverage || subscription.startCoverage === "0000-00-00") {
+            setShowErrors(true)
+            return false;
+        }
+
+        return true;
+    }
+
     const saveSubscription = () => {
+        if(!validateFields(subscription)){
+            return false;
+        }
         setLoading(true)
+       
         SubscriptionService.update(subscription.id, subscription)
             .then((response: any) => {
-                console.log(response.data);
                 setTimeout(() => {
                     setSuccessResponse(false)
                 }, 3000)
@@ -78,6 +93,7 @@ const SubscriptionForm: React.FC = () => {
     const handleNameChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
         setSubscription({ ...subscription, [name]: value });
+        validateFields(subscription)
     };
 
     const [processors, setProcessors] = useState<Array<IProcessor>>([]);
@@ -97,7 +113,7 @@ const SubscriptionForm: React.FC = () => {
     };
 
     return (
-        <div className="form form-row">
+        <form className="form form-row">
             {errorResponse && <AlertError></AlertError>}
             {successResponse && <AlertSuccess></AlertSuccess>}
             <h5 className="w-100 text-center text-primary"> Completar suscripción</h5>
@@ -395,7 +411,9 @@ const SubscriptionForm: React.FC = () => {
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="startCoverage">Inicio de cobertura</label>
+                    <label htmlFor="startCoverage">Inicio de cobertura
+                    <span className="text-danger"> (*)</span>
+                    </label>
                     <input
                         className="form-control"
                         placeholder="Inicio de cobertura"
@@ -404,7 +422,11 @@ const SubscriptionForm: React.FC = () => {
                         value={subscription?.startCoverage}
                         type="date"
                         onChange={handleNameChange}
+                        required
                     />
+                    {((!subscription?.startCoverage || subscription?.startCoverage === "0000-00-00") && showErrors ) && 
+                        <span className="text-danger small px-2"> Por favor, completar este campo</span>
+                    }
                 </div>
                 <div className="form-group">
                     <label htmlFor="endCoverage">Fin de cobertura</label>
@@ -439,15 +461,15 @@ const SubscriptionForm: React.FC = () => {
                         </Link>
                     </div>
                     <div className="col-6">
-                        {!loading && <button className="btn btn-success btn-block" title="Crear Producto" onClick={saveSubscription}>Guardar</button>}
-                        {loading && <button className="btn btn-success btn-block" title="Crear Producto" disabled>Guardando  <div className="spinner-border" role="status">
+                        {!loading && <button className="btn btn-success btn-block" type="button" title="Crear Producto" onClick={saveSubscription}>Guardar</button>}
+                        {loading && <button className="btn btn-success btn-block" type="button" title="Crear Producto" disabled>Guardando  <div className="spinner-border" role="status">
                             <span className="sr-only">Loading...</span>
                         </div></button>}
                     </div>
                 </div>
 
             </div>
-        </div>
+        </form>
     );
 };
 
