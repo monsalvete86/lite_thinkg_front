@@ -23,8 +23,8 @@ const PagoForm: React.FC<Props> = (props) => {
     setFechaPago(value);
   };
 
-  const getPago = (id: any) => {
-    SubscriptionService.get(id)
+  const getPago = async (id: any) => {
+    await SubscriptionService.get(id)
     .then((response: any) => {
       const initialPagoState = {
         clientId: response.data.clientId,
@@ -82,6 +82,7 @@ const PagoForm: React.FC<Props> = (props) => {
 
     await props.retrieveListPayments();
     if (props.isOpenModal) {
+      getPago(id)
       props.isOpenModal(false);
     }
   };

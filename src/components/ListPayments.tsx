@@ -33,7 +33,6 @@ const ListPayments: React.FC = () => {
 
   const handleCancelPayment = (paymentId: number) => {
     setSelectedPaymentId(paymentId);
-    setShowAlert(true);
   };
 
   const handleConfirmCancel = () => {
@@ -47,7 +46,6 @@ const ListPayments: React.FC = () => {
     PagoService.remove(selectedPaymentId)
       .then(() => {
         // Cerrar la alerta y reiniciar el estado del pago seleccionado
-        setShowAlert(false);
         setSelectedPaymentId(null);
         // Actualizar la lista de pagos después de la cancelación
         retrieveListPayments();
@@ -98,8 +96,14 @@ const ListPayments: React.FC = () => {
                     <td className="text-center">{row.statePago? 'Activo' : 'Cancelado'}</td>
                     <td className="text-center">{row?.fechaPago}</td>
                     <td className="text-center">
-                      <button className="btn btn-danger"  onClick={() => handleCancelPayment(row?.id? row?.id : 0)}>
-                          Cancelar
+                      <button 
+                        type="button"
+                        className="btn btn-danger"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                        onClick={() => handleCancelPayment(row?.id? row?.id : 0)}
+                      >
+                        Cancelar
                       </button>
                     </td>
                   </tr>
@@ -111,7 +115,34 @@ const ListPayments: React.FC = () => {
       {showModal &&
         <PagoForm id={auxId} isOpenModal={(hide)=>isActiveModal(hide)} retrieveListPayments={retrieveListPayments} />
       }
+      <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              Esta seguro de cancelar este pago?
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button
+                type="button"
+                className="btn btn-success"
+                data-dismiss="modal" 
+                onClick={() => handleConfirmCancel()}
+              >
+                Aceptar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    
   );
 };
 
