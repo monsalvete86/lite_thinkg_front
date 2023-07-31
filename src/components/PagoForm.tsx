@@ -86,7 +86,6 @@ const PagoForm: React.FC<Props> = (props) => {
     }
   };
 
-
   const handleCancel = () => {
     if (props.isOpenModal) {
       props.isOpenModal(false); // Cierra el modal al hacer clic en el botón "Cancelar"

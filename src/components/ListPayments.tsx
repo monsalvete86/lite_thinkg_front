@@ -7,6 +7,8 @@ import PagoForm from "./PagoForm";
 const ListPayments: React.FC = () => {
   const [listpayments, setListPayments] = useState<Array<IPago>>([]);
   const [showModal, setShowModal] = useState(false);
+  const [selectedPaymentId, setSelectedPaymentId] = useState<number | null>(null);
+  const [showAlert, setShowAlert] = useState(false);
 
 
   const { subscriptionId } = useParams() ;
@@ -28,6 +30,37 @@ const ListPayments: React.FC = () => {
   const isActiveModal = (isShow: boolean = false) => {
     setShowModal(isShow)
   }
+
+  const handleCancelPayment = (paymentId: number) => {
+    setSelectedPaymentId(paymentId);
+    setShowAlert(true);
+  };
+
+  const handleConfirmCancel = () => {
+    if (!selectedPaymentId) {
+      // No hay un pago seleccionado para cancelar, no deberíamos llegar aquí, pero por seguridad.
+      console.error("No hay un ID de pago seleccionado para cancelar.");
+      return;
+    }
+
+    // Llamar a la función remove del servicio con el ID del pago seleccionado
+    PagoService.remove(selectedPaymentId)
+      .then(() => {
+        // Cerrar la alerta y reiniciar el estado del pago seleccionado
+        setShowAlert(false);
+        setSelectedPaymentId(null);
+        // Actualizar la lista de pagos después de la cancelación
+        retrieveListPayments();
+      })
+      .catch((error) => {
+        console.log("Error al cancelar el pago:", error);
+      });
+  };
+
+  const handleCancelAlert = () => {
+    setShowAlert(false);
+    setSelectedPaymentId(null);
+  };
 
   return (
     <div>
@@ -65,7 +98,7 @@ const ListPayments: React.FC = () => {
                     <td className="text-center">{row.statePago? 'Activo' : 'Cancelado'}</td>
                     <td className="text-center">{row?.fechaPago}</td>
                     <td className="text-center">
-                      <button className="btn btn-danger">
+                      <button className="btn btn-danger"  onClick={() => handleCancelPayment(row?.id? row?.id : 0)}>
                           Cancelar
                       </button>
                     </td>
