@@ -96,7 +96,7 @@ const ListPayments: React.FC = () => {
                     <td className="text-center">{row.statePago? 'Activo' : 'Cancelado'}</td>
                     <td className="text-center">{row?.fechaPago}</td>
                     <td className="text-center">
-                      <button 
+                      <button
                         type="button"
                         className="btn btn-danger"
                         data-toggle="modal"
@@ -132,7 +132,7 @@ const ListPayments: React.FC = () => {
               <button
                 type="button"
                 className="btn btn-success"
-                data-dismiss="modal" 
+                data-dismiss="modal"
                 onClick={() => handleConfirmCancel()}
               >
                 Aceptar
@@ -142,7 +142,6 @@ const ListPayments: React.FC = () => {
         </div>
       </div>
     </div>
-    
   );
 };
 

@@ -1,8 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import * as PagoService from "../services/pago.service";
 import { Link } from "react-router-dom";
-import ReportPDF from "./ReportPDF";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 
 
 const Pagos: React.FC = () => {
@@ -55,7 +53,7 @@ const Pagos: React.FC = () => {
         </div>
       </div>
       <div className="list row">
-        <div className="col-md-8">
+        <div className="col-md-12">
           <label htmlFor="stateSubscription">Estado de pagos</label>
           <div className="input-group mb-3">
             <select name="statePayment" id="statePayment" className="custom-select" onChange={handleStatePaymentChange}>
@@ -67,9 +65,6 @@ const Pagos: React.FC = () => {
             <button className="btn btn-outline-success" type="button" onClick={retrievePayment}>
               Buscar
             </button>
-            <PDFDownloadLink document={<ReportPDF pagos={pagos} />} fileName="report.pdf">
-              <button className="ml-2 btn btn-danger">Download PDF</button>
-            </PDFDownloadLink>
           </div>
         </div>
         <div className="col-md-12 list table-responsive">

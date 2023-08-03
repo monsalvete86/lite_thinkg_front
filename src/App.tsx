@@ -10,7 +10,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
-import Tutorial from "./components/Tutorial";
+import Reports from "./components/Reports";
 import TutorialsList from "./components/TutorialsList";
 import Company from "./components/Company";
 import EventBus from "./common/EventBus";
@@ -79,11 +79,6 @@ const App: React.FC = () => {
                 Company
               </Link>
             </li>
-            {/* <li className="nav-item">
-              <Link to={"/products"} className="nav-link">
-                Products
-              </Link>
-            </li> */}
             <li className="nav-item">
               <Link to={"/clientes"} className="nav-link">
                 Clientes
@@ -116,10 +111,13 @@ const App: React.FC = () => {
                 </Link>
               </li>
             )}
+            <li className="nav-item">
+              <Link to={"/reports"} className="nav-link">
+                Reports
+              </Link>
+            </li>
           </ul>
         </div>
-
-
 
         {currentUser ? (
           <div className="navbar-nav ml-auto">
@@ -166,8 +164,8 @@ const App: React.FC = () => {
           <Route path="/company" element={<Company />} />
           { /* <Route path="/products" element={<Products />} />
           <Route path="/products/new" element={<ProductForm />} />
-          <Route path="/products/:id" element={<ProductForm />} />
-          <Route path="/tutorials/:id" element={<Tutorial />} /> */}
+          <Route path="/products/:id" element={<ProductForm />} />*/}
+          <Route path="/reports" element={<Reports />} />
           <Route path="/clientes" element={<Clientes />} />
           <Route path="/clientes/new" element={<ClienteForm />} />
           <Route path="/clientes/:id" element={<ClienteForm />} />

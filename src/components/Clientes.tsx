@@ -2,13 +2,9 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import * as ClienteService from "../services/cliente.service";
 import ICliente from '../types/cliente.type';
 import { Link } from "react-router-dom";
-import ReportPDF from "./ReportPDF";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const Clientes: React.FC = () => {
   const [clientes, setClientes] = useState<Array<ICliente>>([]);
-  const [currentCliente, setCurrentCliente] = useState<ICliente | null>(null);
-  const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const [searchCliente, setSearchClientes] = useState<string>("");
 
   useEffect(() => {
@@ -86,7 +82,7 @@ const Clientes: React.FC = () => {
                       <td className="text-center">{row.direccion}</td>
                       <td className="text-center">{row.ciudad}</td>
                       <td className="text-center">
-                        <Link to={"/clientes/" + row?.id} className="btn btn-primary mr-2">Editar</Link>                      
+                        <Link to={"/clientes/" + row?.id} className="btn btn-primary mr-2">Editar</Link>
                         <button onClick={() => cleanCliente(row.id)} className="btn btn-danger">Eliminar</button>
                       </td>
                     </tr>
