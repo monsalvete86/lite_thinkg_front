@@ -2,10 +2,8 @@ import React, { useState, useEffect, ChangeEvent, MouseEventHandler } from "reac
 import * as DailyListService from "../../services/daily-list.service";
 import IDailyList from "../../types/dailyList.type";
 import { Link } from "react-router-dom";
-import ReportPDF from "../ReportPDF";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import DailyListForm from "./DailyListForm";
-import { response } from "express";
+
 
 const DailyLists: React.FC = () => {
 
@@ -132,8 +130,8 @@ const DailyLists: React.FC = () => {
                 dailyList.map((row, index) => {
                   return (
                     <tr key={row.id}>
-                      <td>{row.user.username}</td>
-                      <td>{row.date}</td>
+                      <td className="text-center">{row.user.username}</td>
+                      <td className="text-center">{row.date}</td>
                       <td className="text-center mr-2">
                         {row.date === today() && <Link
                           to={`/clientDailyList/${row.id}`}

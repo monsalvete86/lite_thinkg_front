@@ -41,7 +41,7 @@ const Processor: React.FC = () => {
                 <div className="col-md-8">
 
                 </div>
-                <div className="col-md-8">
+                <div className="col-md-12">
                     <div className="input-group mb-3">
                         <input
                             type="text"

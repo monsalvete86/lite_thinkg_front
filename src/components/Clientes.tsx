@@ -51,7 +51,7 @@ const Clientes: React.FC = () => {
       </div>
       <div className="list row">
         <div className="col-md-8"></div>
-        <div className="col-md-8">
+        <div className="col-md-12">
           <div className="input-group mb-3">
           <input type="text" className="form-control" placeholder="Buscar por nombre o apellido" value={searchCliente} onChange={handleSearch} />
             <div className="input-group-append">
@@ -66,6 +66,7 @@ const Clientes: React.FC = () => {
                 <tr className="text-center">
                   <th>Nombre</th>
                   <th>Apellido</th>
+                  <th>Apellido_2</th>
                   <th>Telefono</th>
                   <th>Direccion</th>
                   <th>Ciudad</th>
@@ -78,6 +79,7 @@ const Clientes: React.FC = () => {
                     <tr key={row.id}>
                       <td className="text-center">{row.nombre}</td>
                       <td className="text-center">{row.apellido}</td>
+                      <td className="text-center">{row.apellido_2}</td>
                       <td className="text-center">{row.telefono}</td>
                       <td className="text-center">{row.direccion}</td>
                       <td className="text-center">{row.ciudad}</td>

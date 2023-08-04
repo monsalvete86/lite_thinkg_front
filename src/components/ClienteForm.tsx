@@ -16,6 +16,7 @@ const ClienteForm: React.FC<MyProps> = (props) => {
     id: null,
     nombre: "",
     apellido: "",
+    apellido_2: "",
     telefono: 0,
     direccion: "",
     ciudad: "",
@@ -43,7 +44,7 @@ const ClienteForm: React.FC<MyProps> = (props) => {
     });
   };
 
-  useEffect(() => { 
+  useEffect(() => {
     if (id) {
       ClientesService.get(id)
         .then((result: any) => {
@@ -58,6 +59,7 @@ const ClienteForm: React.FC<MyProps> = (props) => {
     var data = {
       nombre: cliente.nombre,
       apellido: cliente.apellido,
+      apellido_2: cliente.apellido_2,
       telefono: cliente.telefono,
       direccion: cliente.direccion,
       ciudad: cliente.ciudad,
@@ -138,6 +140,18 @@ const ClienteForm: React.FC<MyProps> = (props) => {
           />
         </div>
         <div className="form-group col-sm-12 col-md-6">
+          <label htmlFor="apellido_2">Apellido_2</label>
+          <input
+            type="text"
+            className="form-control"
+            id="apellido_2"
+            required
+            value={cliente.apellido_2}
+            onChange={handleInputChange}
+            name="apellido_2"
+          />
+        </div>
+        <div className="form-group col-sm-12 col-md-6">
           <label htmlFor="direccion">Direccion</label>
           <input
             type="text"
@@ -173,7 +187,7 @@ const ClienteForm: React.FC<MyProps> = (props) => {
             name="ciudad"
           />
         </div>
-        {!isLoading && 
+        {!isLoading &&
           (
             <div className="modal-footer col-12">
               <button className="btn btn-success" onClick={saveCliente}>Guardar</button>

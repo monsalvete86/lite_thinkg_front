@@ -10,7 +10,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
-import Reports from "./components/Reports";
+import Reports from "./components/Reports/Reports";
 import TutorialsList from "./components/TutorialsList";
 import Company from "./components/Company";
 import EventBus from "./common/EventBus";
