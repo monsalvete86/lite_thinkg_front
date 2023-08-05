@@ -14,11 +14,13 @@ import Reports from "./components/Reports/Reports";
 import TutorialsList from "./components/TutorialsList";
 import Company from "./components/Company";
 import EventBus from "./common/EventBus";
-import Products from "./components/Products";
-import ProductForm from "./components/ProductForm";
+//import Products from "./components/Products";
+//import ProductForm from "./components/ProductForm";
 import Clientes from "./components/Clientes";
 import ClienteForm from "./components/ClienteForm";
+import ClienteReport from "./components/ClienteReport";
 import Pagos from "./components/Pagos";
+import PagoReport from "./components/PagoReport";
 import ListPayments from "./components/ListPayments";
 import ListPaymentsForm from "./components/ListPayments";
 import DailyList from "./components/DailyList/DailyList";
@@ -26,10 +28,12 @@ import ClientDailyLists from "./components/DailyList/ClientDailyList";
 import ClientDailyListForm from "./components/DailyList/ClientDailyListForm";
 import SubscriptionForm from "./components/Subscription/SubscriptionForm";
 import Subscriptions from "./components/Subscription/Subscription";
+import SubscriptionReport from "./components/Subscription/SubscriptionReport";
 import ProcessorForm from "./components/Processor/ProcessorForm";
 import Processors from "./components/Processor/ProcessorList";
 import Users from "./components/User/UserList";
 import UserForm from "./components/User/UserForm";
+import UserReport from "./components/User/UserReport";
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
@@ -169,11 +173,14 @@ const App: React.FC = () => {
           <Route path="/clientes" element={<Clientes />} />
           <Route path="/clientes/new" element={<ClienteForm />} />
           <Route path="/clientes/:id" element={<ClienteForm />} />
+          <Route path="/clienteReports" element={<ClienteReport />} />
           <Route path="/dailyList" element={<DailyList />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<UserForm />} />
           <Route path="/users/new" element={<UserForm />} />
+          <Route path="/userReport" element={<UserReport />} />
           <Route path="/pagos" element={<Pagos />} />
+          <Route path="/pagoReport" element={<PagoReport />} />
           <Route path="/listpayments/:subscriptionId" element={<ListPayments />} />
           <Route path="/listpayments/:new" element={<ListPaymentsForm />} />
           <Route path="/listpayments/:id" element={<ListPaymentsForm />} />
@@ -182,6 +189,7 @@ const App: React.FC = () => {
           <Route path="/subscriptions" element={<Subscriptions />} />
           <Route path="/subscription/new" element={<SubscriptionForm />} />
           <Route path="/subscription/:id" element={<SubscriptionForm />} />
+          <Route path="/subscriptionReport" element={<SubscriptionReport />} />
           <Route path="/processors" element={<Processors />} />
           <Route path="/processor/new" element={<ProcessorForm />} />
           <Route path="/processor/:id" element={<ProcessorForm />} />
