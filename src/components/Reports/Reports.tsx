@@ -76,23 +76,23 @@ const Report = () => {
           <table className="table table-striped table-bordered table-sm w-100">
             <thead>
               <tr className="text-center">
-                <th>Example</th>
-                <th>Example</th>
-                <th>Example</th>
-                <th>Example</th>
-                <th>Example</th>
-                <th>Example</th>
+                <th>usuarios</th>
+                <th>clientes</th>
+                <th>suscripciones</th>
+                <th>pagos</th>
+                <th>procesadoras</th>
+                <th>compañias</th>
                 {/*<th colSpan={2}>Acciones</th>*/}
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="text-center">example</td>
-                <td className="text-center">example</td>
-                <td className="text-center">example</td>
-                <td className="text-center">example</td>
-                <td className="text-center">example</td>
-                <td className="text-center">example</td>
+                <td className="text-center">-</td>
+                <td className="text-center">-</td>
+                <td className="text-center">-</td>
+                <td className="text-center">-</td>
+                <td className="text-center">-</td>
+                <td className="text-center">-</td>
                 {/*<td className="text-center">
                   <button className="btn btn-primary">Example</button>
                 </td>
