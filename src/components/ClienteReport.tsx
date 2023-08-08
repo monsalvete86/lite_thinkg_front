@@ -73,7 +73,6 @@ const ClienteReport = () => {
               <tr className="text-center">
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Apellido_2</th>
                 <th>Teléfono</th>
                 <th>Dirección</th>
                 <th>Ciudad</th>
@@ -84,9 +83,8 @@ const ClienteReport = () => {
               <tr>
                 <td className="text-center">Andrés</td>
                 <td className="text-center">pupilales	</td>
-                <td className="text-center">Bastidas</td>
                 <td className="text-center">2147483647</td>
-                <td className="text-center">calle 80 # 20 - 52	</td>
+                <td className="text-center">calle 80 # 20 - 52</td>
                 <td className="text-center">Caquetá</td>
                 {/*<td className="text-center">
                   <button className="btn btn-primary">Example</button>

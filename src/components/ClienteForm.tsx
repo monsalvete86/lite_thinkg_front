@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import {  Link, useNavigate, useParams } from 'react-router-dom';
 import * as ClientesService from "../services/cliente.service";
-import ICliente from "../types/cliente.type";
+
 
 type MyProps = {
   id?: number | string,
@@ -16,7 +16,6 @@ const ClienteForm: React.FC<MyProps> = (props) => {
     id: null,
     nombre: "",
     apellido: "",
-    apellido_2: "",
     telefono: 0,
     direccion: "",
     ciudad: "",
@@ -27,22 +26,21 @@ const ClienteForm: React.FC<MyProps> = (props) => {
   const [banEdit, setBanEdit] = useState<number>(0);
   let navigate = useNavigate();
 
-
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-  const { name, value } = event.target;
-  setCliente({ ...cliente, [name]: value });
+    const { name, value } = event.target;
+    setCliente({ ...cliente, [name]: value });
   };
 
   const getCliente = (id: number | string) => {
-  ClientesService.get(id)
-    .then((response: any) => {
-    setCliente(response.data);
-    console.log(response.data);
-    })
-    .catch((e: Error) => {
-    console.log(e);
-    });
+    ClientesService.get(id)
+      .then((response: any) => {
+      setCliente(response.data);
+      })
+      .catch((e: Error) => {
+      console.log(e);
+      });
   };
+
 
   useEffect(() => {
     if (id) {
@@ -59,7 +57,6 @@ const ClienteForm: React.FC<MyProps> = (props) => {
     var data = {
       nombre: cliente.nombre,
       apellido: cliente.apellido,
-      apellido_2: cliente.apellido_2,
       telefono: cliente.telefono,
       direccion: cliente.direccion,
       ciudad: cliente.ciudad,
@@ -137,18 +134,6 @@ const ClienteForm: React.FC<MyProps> = (props) => {
             value={cliente.apellido}
             onChange={handleInputChange}
             name="apellido"
-          />
-        </div>
-        <div className="form-group col-sm-12 col-md-6">
-          <label htmlFor="apellido_2">Apellido_2</label>
-          <input
-            type="text"
-            className="form-control"
-            id="apellido_2"
-            required
-            value={cliente.apellido_2}
-            onChange={handleInputChange}
-            name="apellido_2"
           />
         </div>
         <div className="form-group col-sm-12 col-md-6">
