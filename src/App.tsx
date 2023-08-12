@@ -18,9 +18,9 @@ import EventBus from "./common/EventBus";
 //import ProductForm from "./components/ProductForm";
 import Clientes from "./components/Clientes";
 import ClienteForm from "./components/ClienteForm";
-import ClienteReport from "./components/ClienteReport";
+import ClienteReport from "./components/Reports/ClienteReport";
 import Pagos from "./components/Pagos";
-import PagoReport from "./components/PagoReport";
+import PagoReport from "./components/Reports/PagoReport";
 import ListPayments from "./components/ListPayments";
 import ListPaymentsForm from "./components/ListPayments";
 import DailyList from "./components/DailyList/DailyList";
@@ -28,12 +28,12 @@ import ClientDailyLists from "./components/DailyList/ClientDailyList";
 import ClientDailyListForm from "./components/DailyList/ClientDailyListForm";
 import SubscriptionForm from "./components/Subscription/SubscriptionForm";
 import Subscriptions from "./components/Subscription/Subscription";
-import SubscriptionReport from "./components/Subscription/SubscriptionReport";
+import SubscriptionReport from "./components/Reports/SubcriptionsRepot";
 import ProcessorForm from "./components/Processor/ProcessorForm";
 import Processors from "./components/Processor/ProcessorList";
 import Users from "./components/User/UserList";
 import UserForm from "./components/User/UserForm";
-import UserReport from "./components/User/UserReport";
+import UserReport from "./components/Reports/UserReport";
 
 const App: React.FC = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);

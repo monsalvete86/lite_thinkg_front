@@ -2,7 +2,6 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import * as PagoService from "../services/pago.service";
 import { Link } from "react-router-dom";
 
-
 const Pagos: React.FC = () => {
   const [pagos, setPagos] = useState<Array<any>>();
   const [searchStatePayment, setSearchStatePayment] = useState(true);
@@ -23,9 +22,7 @@ const Pagos: React.FC = () => {
 
   useEffect(() => {
     retrievePayment();
-    console.log('paymentStateFilter')
-    console.log(paymentStateFilter)
-  }, [paymentStateFilter]);
+  }, []);
 
   const handleStatePaymentChange = (text: ChangeEvent<HTMLSelectElement>) => {
     setPaymentStateFilter(text.target.value);

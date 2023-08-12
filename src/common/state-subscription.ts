@@ -1,8 +1,8 @@
 let states = [
-    { value: 'GENERATED', label: 'Generada' },
     { value: 'ACCEPTED', label: 'Aceptada' },
-    { value: 'REJECTED', label: 'Rechazada' },
-    { value: 'CANCELED', label: 'Cancelada' }
+    { value: 'CANCELED', label: 'Cancelada' },
+    { value: 'GENERATED', label: 'Generada' },
+    { value: 'REJECTED', label: 'Rechazada' }
 ]
 
 export default states;
